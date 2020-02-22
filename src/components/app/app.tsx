@@ -11,7 +11,10 @@ const App = () => (
     <>
         <Header />
         <Switch>
-            <Route exact path="/" component={AuthLayout} />
+            <Route path="/login">
+                <AuthLayout isReg />
+            </Route>
+            <Route path="/registration" component={AuthLayout} />
         </Switch>
     </>
 );

@@ -1,3 +1,3 @@
-import AuthLayout from "./auth-layout.tsx";
+import AuthLayout from "./auth-layout";
 
 export default AuthLayout;

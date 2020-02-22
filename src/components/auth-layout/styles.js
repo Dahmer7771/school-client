@@ -11,8 +11,6 @@ const useAuthStyles = makeStyles((theme) => ({
             minHeight: "calc(100% - 48px)",
         },
         display: "flex",
-        // flexDirection: "column",
-
     },
     authInner: {
         flex: 1,
@@ -24,6 +22,8 @@ const useAuthStyles = makeStyles((theme) => ({
         margin: theme.spacing(3),
         padding: theme.spacing(2, 4),
         width: "100%",
+    },
+    form: {
         display: "flex",
         flexDirection: "column",
     },
@@ -33,8 +33,9 @@ const useAuthStyles = makeStyles((theme) => ({
     email: {
         margin: theme.spacing(0, 0, 1, 0),
     },
-    emailHelper: {
+    helper: {
         marginTop: theme.spacing(1),
+        color: "#f00",
     },
     button: {
         margin: `${theme.spacing(2)}px auto ${theme.spacing(1)}px`,
