@@ -18,5 +18,5 @@ export const passwordErrors: ValidationError = {
 };
 
 export const passwordConfirmErrors: ValidationError = {
-    match: "Passwords does not match",
+    validate: "Passwords does not match",
 };

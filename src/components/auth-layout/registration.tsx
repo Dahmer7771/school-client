@@ -15,6 +15,7 @@ interface FormData {
     email: string,
     name: string,
     password: string,
+    passwordConfirm: string
 }
 
 const regExp = {
@@ -25,13 +26,11 @@ const regExp = {
 
 const Registration: React.FunctionComponent<any> = () => {
     const classes = useAuthStyles();
-    const { register, handleSubmit, errors } = useForm<FormData>();
+    const {
+        register, handleSubmit, watch, errors,
+    } = useForm<FormData>();
 
     const onSubmit = (data: Record<string, any>) => {
-        if (data.password !== data.passwordConfirm) {
-            console.log("!!!");
-            return;
-        }
         console.log(data);
     };
 
@@ -44,6 +43,7 @@ const Registration: React.FunctionComponent<any> = () => {
                 <InputLabel htmlFor="email">Email address</InputLabel>
                 <Input
                     name="email"
+                    type="email"
                     inputRef={register({ required: true, pattern: regExp.email })}
                 />
                 {errors.email
@@ -57,6 +57,7 @@ const Registration: React.FunctionComponent<any> = () => {
                 <InputLabel htmlFor="name">Name</InputLabel>
                 <Input
                     name="name"
+                    type="text"
                     inputRef={register({ required: true, minLength: 2, pattern: regExp.name })}
                 />
                 {errors.name
@@ -70,6 +71,7 @@ const Registration: React.FunctionComponent<any> = () => {
                 <InputLabel htmlFor="password">Password</InputLabel>
                 <Input
                     name="password"
+                    type="password"
                     inputRef={register({ required: true, minLength: 6, pattern: regExp.password })}
                 />
                 {errors.password
@@ -83,12 +85,13 @@ const Registration: React.FunctionComponent<any> = () => {
                 <InputLabel htmlFor="password-confirm">Confirm password</InputLabel>
                 <Input
                     name="passwordConfirm"
-                    inputRef={register({ required: true, minLength: 6 })}
+                    type="password"
+                    inputRef={register({ validate: (value) => value === watch("password") })}
                 />
-                {errors.email
+                {errors.passwordConfirm
                 && (
                     <FormHelperText className={classes.helper} id="email-helper-text">
-                        { emailErrors[errors.email.type] }
+                        { passwordConfirmErrors[errors.passwordConfirm.type] }
                     </FormHelperText>
                 )}
             </FormControl>
