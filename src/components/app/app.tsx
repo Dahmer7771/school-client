@@ -5,15 +5,13 @@ import {
     Route,
 } from "react-router-dom";
 import Header from "../header";
-import AuthLayout from "../auth-layout";
+import AuthLayout from "../layouts/auth/index";
 
 const App = () => (
     <>
         <Header />
         <Switch>
-            <Route path="/login">
-                <AuthLayout isReg />
-            </Route>
+            <Route path="/login" component={() => <AuthLayout isReg />} />
             <Route path="/registration" component={AuthLayout} />
         </Switch>
     </>

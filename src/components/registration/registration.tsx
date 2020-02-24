@@ -3,41 +3,41 @@ import {
     Button, FormControl, FormHelperText, Input, InputLabel, Typography,
 } from "@material-ui/core";
 import { useForm } from "react-hook-form";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
 import {
     emailErrors,
     nameErrors,
     passwordErrors,
     passwordConfirmErrors,
-} from "./validation";
+    regExp,
+} from "../../validation";
+import {
+    FormData, RegistrationProps, UserRegistrationInfo,
+} from "../../types";
+import withSchoolService from "../hoc/with-school-service";
 import useAuthStyles from "./styles";
+import { registration as registrationAction } from "../../actions";
 
-interface FormData {
-    email: string,
-    name: string,
-    password: string,
-    passwordConfirm: string
-}
-
-const regExp = {
-    email: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    name: /^(\d*([a-zA-Z]{1,})\d*)*$/,
-    password: /^[A-Za-z0-9]+$/,
-};
-
-const Registration: React.FunctionComponent<any> = () => {
+const Registration: React.FC<RegistrationProps> = ({ registration }) => {
     const classes = useAuthStyles();
     const {
         register, handleSubmit, watch, errors,
     } = useForm<FormData>();
 
-    const onSubmit = (data: Record<string, any>) => {
-        console.log(data);
+    const onSubmit = (data: UserRegistrationInfo) => {
+        const registrationData = {
+            email: data.email,
+            name: data.name,
+            password: data.password,
+        };
+        registration(registrationData);
     };
 
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
             <Typography variant="h5" align="center" gutterBottom>
-                Login
+                Sign up
             </Typography>
             <FormControl className={classes.email}>
                 <InputLabel htmlFor="email">Email address</InputLabel>
@@ -95,9 +95,16 @@ const Registration: React.FunctionComponent<any> = () => {
                     </FormHelperText>
                 )}
             </FormControl>
-            <Button type="submit" variant="contained" color="primary" className={classes.button}>Log in</Button>
+            <Button type="submit" variant="contained" color="primary" className={classes.button}>Sign up</Button>
         </form>
     );
 };
 
-export default Registration;
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: RegistrationProps) => bindActionCreators({
+    registration: (userInfo: UserRegistrationInfo) => registrationAction(
+        ownProps.schoolService,
+        userInfo,
+    )(),
+}, dispatch);
+
+export default withSchoolService()(connect(null, mapDispatchToProps)(Registration));

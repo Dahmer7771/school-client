@@ -7,6 +7,9 @@ interface State {
         imageSrc: string,
     }[],
     isAuth: boolean,
+    authentication: boolean,
+    authSuccess: boolean,
+    authError: boolean,
 }
 
 interface Action {
@@ -14,15 +17,43 @@ interface Action {
     payload?: any;
 }
 
+const loginRequest = (state: State) => ({
+    ...state,
+    authentication: true,
+    authError: false,
+    isAuth: false,
+});
+
+const loginSuccess = (state: State) => ({
+    ...state,
+    authentication: false,
+    authError: false,
+    isAuth: true,
+});
+
+const loginError = (state: State) => ({
+    ...state,
+    authentication: false,
+    isAuth: false,
+    authError: true,
+});
+
 const initialState: State = {
     posts: [],
     isAuth: false,
+    authentication: false,
+    authSuccess: false,
+    authError: false,
 };
 
-const rootReducer = (state = initialState, action: Action) => {
+const rootReducer = (state: State = initialState, action: Action) => {
     switch (action.type) {
-    case "init":
-        return state;
+    case "LOGIN_REQUEST":
+        return loginRequest(state);
+    case "LOGIN_SUCCESS":
+        return loginSuccess(state);
+    case "LOGIN_ERROR":
+        return loginError(state);
     default:
         return state;
     }

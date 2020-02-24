@@ -1,14 +1,14 @@
 import React from "react";
 import { Paper } from "@material-ui/core";
 import useAuthStyles from "./styles";
-import Autorization from "./autorization";
-import Registration from "./registration";
+import Registration from "../../registration/registration";
+import LogIn from "../../log-in/log-in";
 
-interface AuthLayout {
+interface Auth {
     isReg: boolean
 }
 
-const AuthLayout = ({ isReg = false }: AuthLayout) => {
+const AuthLayout = ({ isReg = false }: Auth) => {
     const classes = useAuthStyles();
 
 
@@ -17,7 +17,7 @@ const AuthLayout = ({ isReg = false }: AuthLayout) => {
             <div className={classes.authInner}>
                 <Paper className={classes.paper} elevation={2}>
                     {isReg
-                        ? <Autorization />
+                        ? <LogIn />
                         : <Registration />}
                 </Paper>
             </div>
