@@ -11,12 +11,16 @@ const Slider = () => (
         </Typography>
         <Carousel showStatus={false}>
             <div>
-                <img src="./images/logo.png" alt="logo" />
+                <img src="./images/1.jpg" alt="logo" />
                 <p className="legend">Legend 1</p>
             </div>
             <div>
-                <img src="./images/logo.png" alt="logo" />
+                <img src="./images/1.jpg" alt="logo" />
                 <p className="legend">Legend 2</p>
+            </div>
+            <div>
+                <img src="./images/1.jpg" alt="logo" />
+                <p className="legend">Legend 3</p>
             </div>
             <div>
                 <img src="./images/logo.png" alt="logo" />

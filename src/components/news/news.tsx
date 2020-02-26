@@ -26,18 +26,19 @@ const Post = ({ title, date, user, author, text }: any) => {
                     <Typography variant="subtitle1" color="textSecondary">
                         Mac Miller
                     </Typography>
-                    <Typography variant="body2" color="textPrimary" component="p">
+                    <Typography className={classes.cardText} variant="body2" color="textPrimary" component="p">
+                        This impressive paella is a perfect party
+                        dish and a fun meal to cook together with your
+                        guests. Add 1 cup of frozen peas along with the mussels, if you like.
                         This impressive paella is a perfect party
                         dish and a fun meal to cook together with your
                         guests. Add 1 cup of frozen peas along with the mussels, if you like.
                     </Typography>
                 </CardContent>
             </div>
-            <CardMedia
-                className={classes.cover}
-                image="./images/logo.png"
-                title="Live from space album cover"
-            />
+            <div className={classes.imageContainer}>
+                <img src="./images/1.jpg" alt="post" className={classes.postImage} />
+            </div>
         </Card>
     );
 };
