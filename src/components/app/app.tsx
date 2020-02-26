@@ -4,12 +4,14 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
-import Header from "../header";
+import ElevationHeader from "../header";
 import AuthLayout from "../layouts/auth/index";
+import SideMenu from "../side-menu";
 
 const App = () => (
     <>
-        <Header />
+        <ElevationHeader />
+        <SideMenu />
         <Switch>
             <Route path="/login" component={() => <AuthLayout isReg />} />
             <Route path="/registration" component={AuthLayout} />

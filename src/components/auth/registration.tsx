@@ -19,7 +19,7 @@ import withSchoolService from "../hoc/with-school-service";
 import useAuthStyles from "./styles";
 import { registration as registrationAction } from "../../actions";
 
-const Registration: React.FC<RegistrationProps> = ({ registration }) => {
+const Registration: React.FC<RegistrationProps> = ({ registration }): JSX.Element => {
     const classes = useAuthStyles();
     const {
         register, handleSubmit, watch, errors,

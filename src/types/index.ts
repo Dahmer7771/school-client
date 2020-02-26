@@ -44,8 +44,13 @@ export interface State {
             date: Date,
             imageSrc: string,
     }[],
-        isAuth: boolean,
-        authentication: boolean,
-        authSuccess: boolean,
-        authError: boolean,
+    isAuth: boolean,
+    authentication: boolean,
+    authSuccess: boolean,
+    authError: boolean,
+    isMenuOpen: boolean,
+}
+
+export interface ElevationScrollProps {
+    children: React.ReactElement;
 }

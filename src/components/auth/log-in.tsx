@@ -10,13 +10,11 @@ import {
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
-import {
-    FormData, UserLoginInfo, LoginProps,
-} from "../../types";
+import { FormData, UserLoginInfo, LoginProps } from "../../types";
 import { login as loginAction } from "../../actions";
-import useAuthStyles from "./styles";
 import { emailErrors, passwordErrors, regExp } from "../../validation";
 import withSchoolService from "../hoc/with-school-service";
+import useAuthStyles from "./styles";
 
 const LogIn: React.FC<LoginProps> = ({ login }): JSX.Element => {
     const classes = useAuthStyles();
@@ -66,7 +64,6 @@ const LogIn: React.FC<LoginProps> = ({ login }): JSX.Element => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: LoginProps) => bindActionCreators({
-    // login: (userInfo: UserLoginInfo) => loginAction(ownProps.schoolService, userInfo)(),
     login: (userInfo: UserLoginInfo) => loginAction(
         ownProps.schoolService,
         userInfo,

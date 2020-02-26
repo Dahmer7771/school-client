@@ -4,6 +4,10 @@ const useHeaderStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
+    header: {
+        position: "sticky",
+        top: 0,
+    },
     menuButton: {
         marginRight: theme.spacing(2),
     },

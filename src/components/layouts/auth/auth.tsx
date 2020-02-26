@@ -1,8 +1,8 @@
 import React from "react";
 import { Paper } from "@material-ui/core";
 import useAuthStyles from "./styles";
-import Registration from "../../registration/registration";
-import LogIn from "../../log-in/log-in";
+import Registration from "../../auth/registration";
+import LogIn from "../../auth/log-in";
 
 interface Auth {
     isReg: boolean
