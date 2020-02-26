@@ -15,8 +15,10 @@ const App = () => (
     <>
         <ElevationHeader />
         <SideMenu />
-        <Main>
-            <Switch>
+        <Switch>
+            <Route path="/login" component={() => <AuthLayout isReg />} />
+            <Route path="/registration" component={AuthLayout} />
+            <Main>
                 <Route
                     exact
                     path="/"
@@ -27,10 +29,8 @@ const App = () => (
                         </>
                     )}
                 />
-                <Route path="/login" component={() => <AuthLayout isReg />} />
-                <Route path="/registration" component={AuthLayout} />
-            </Switch>
-        </Main>
+            </Main>
+        </Switch>
     </>
 );
 
