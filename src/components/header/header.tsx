@@ -46,8 +46,9 @@ const ElevationScroll = (props: ElevationScrollProps) => {
     });
 };
 
-const ElevationHeader = ({ toggleMenu }: any) => {
+const ElevationHeader = ({ toggleMenu, isAuth }: any) => {
     const classes = useHeaderStyles();
+    console.log("isAuth", isAuth);
 
     return (
         <>
@@ -63,10 +64,15 @@ const ElevationHeader = ({ toggleMenu }: any) => {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography variant="h6" className={classes.title}>
-                            <Link to="/">School 13</Link>
-                        </Typography>
-                        <AuthLink />
+                        <div className={classes.headerTitleWrapper}>
+                            <img className={classes.logo} alt="logo" src="./images/logo.png" />
+                            <Typography variant="h6" className={classes.title}>
+                                <Link to="/">
+                                    Конотопська гивназия
+                                </Link>
+                            </Typography>
+                        </div>
+                        {isAuth ? null : <AuthLink />}
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>
@@ -74,8 +80,12 @@ const ElevationHeader = ({ toggleMenu }: any) => {
     );
 };
 
+const mapStateToProps = ({ isAuth }: any) => ({
+    isAuth,
+});
+
 const mapDispatchToProps = {
     toggleMenu: toggleMenuAction,
 };
 
-export default connect(null, mapDispatchToProps)(ElevationHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(ElevationHeader);

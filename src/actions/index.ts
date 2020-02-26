@@ -38,7 +38,6 @@ const registrationRequest = (): Action => ({
     type: "REGISTRATION_REQUEST",
 });
 
-
 const registrationSuccess = (): Action => ({
     type: "REGISTRATION_SUCCESS",
 });
