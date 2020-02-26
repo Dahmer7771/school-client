@@ -9,21 +9,28 @@ import AuthLayout from "../layouts/auth/index";
 import SideMenu from "../side-menu";
 import Slider from "../slider";
 import Main from "../layouts/main/main";
+import News from "../news/news";
 
 const App = () => (
     <>
         <ElevationHeader />
         <SideMenu />
-        <Switch>
-            <Route path="/login" component={() => <AuthLayout isReg />} />
-            <Route path="/registration" component={AuthLayout} />
-            <Route render={() => (
-                <Main>
-                    <Slider />
-                </Main>
-            )}
-            />
-        </Switch>
+        <Main>
+            <Switch>
+                <Route
+                    exact
+                    path="/"
+                    render={() => (
+                        <>
+                            <Slider />
+                            <News />
+                        </>
+                    )}
+                />
+                <Route path="/login" component={() => <AuthLayout isReg />} />
+                <Route path="/registration" component={AuthLayout} />
+            </Switch>
+        </Main>
     </>
 );
 
