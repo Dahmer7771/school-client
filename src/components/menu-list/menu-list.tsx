@@ -15,7 +15,7 @@ const authorizedUserMenuList = [
     {
         id: 2,
         title: "Личный кабинет",
-        route: "/cabinet",
+        route: "/profile",
     },
     {
         id: 3,
@@ -29,11 +29,6 @@ const unauthorizedUserMenuList = [
         id: 1,
         title: "Посты",
         route: "/posts",
-    },
-    {
-        id: 2,
-        title: "Личный кабинет",
-        route: "/cabinet",
     },
 ];
 
@@ -58,7 +53,7 @@ const MenuList = ({ isAuth }: any) => {
     );
 };
 
-const mapStateToProps = ({ isAuth }: any) => ({
+const mapStateToProps = ({ authReducer: { isAuth } }: any) => ({
     isAuth,
 });
 

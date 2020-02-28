@@ -1,62 +1,59 @@
-import { State, Action } from "../types";
+import {
+    Action, AuthReducerState,
+} from "../types";
 
-const loginRequest = (state: State) => ({
+const loginRequest = (state: AuthReducerState) => ({
     ...state,
     authentication: true,
     authError: false,
     isAuth: false,
 });
 
-const loginSuccess = (state: State) => ({
+const loginSuccess = (state: AuthReducerState) => ({
     ...state,
     authentication: false,
     authError: false,
     isAuth: true,
 });
 
-const loginError = (state: State) => ({
+const loginError = (state: AuthReducerState) => ({
     ...state,
     authentication: false,
     isAuth: false,
     authError: true,
 });
 
-const registrationRequest = (state: State) => ({
+const registrationRequest = (state: AuthReducerState) => ({
     ...state,
     authentication: true,
     authError: false,
     isAuth: false,
 });
 
-const registrationSuccess = (state: State) => ({
+const registrationSuccess = (state: AuthReducerState) => ({
     ...state,
     authentication: false,
     authError: false,
     isAuth: true,
 });
 
-const registrationError = (state: State) => ({
+const registrationError = (state: AuthReducerState) => ({
     ...state,
     authentication: false,
     isAuth: false,
     authError: true,
 });
 
-const toggleMenu = (state: State) => ({
-    ...state,
-    isMenuOpen: !state.isMenuOpen,
-});
+const authReducer = (state: AuthReducerState, action: Action) => {
+    if (state === undefined) {
+        return {
+            isAuth: true,
+            authentication: false,
+            authSuccess: false,
+            authError: false,
+        };
+    }
 
-const initialState: State = {
-    posts: [],
-    isAuth: false,
-    authentication: false,
-    authSuccess: false,
-    authError: false,
-    isMenuOpen: false,
-};
-
-const rootReducer = (state: State = initialState, action: Action) => {
     switch (action.type) {
     case "LOGIN_REQUEST":
         return loginRequest(state);
@@ -70,11 +67,9 @@ const rootReducer = (state: State = initialState, action: Action) => {
         return registrationSuccess(state);
     case "REGISTRATION_ERROR":
         return registrationError(state);
-    case "TOGGLE_MENU":
-        return toggleMenu(state);
     default:
         return state;
     }
 };
 
-export default rootReducer;
+export default authReducer;

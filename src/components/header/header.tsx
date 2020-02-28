@@ -10,8 +10,8 @@ import {
     useScrollTrigger, CssBaseline,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
-import { ElevationScrollProps } from "../../types";
-import { toggleMenu as toggleMenuAction } from "../../actions";
+import { ElevationHeaderProps, ElevationScrollProps } from "../../types";
+import { menuActions } from "../../actions";
 import useHeaderStyles from "./styles";
 
 const AuthLink = () => {
@@ -19,17 +19,14 @@ const AuthLink = () => {
     const location = useLocation();
 
     switch (location.pathname) {
-    case "/":
     case "/login":
         return (
-            <Button onClick={() => history.push("/registration")} color="inherit">Sign up</Button>
-        );
-    case "/registration":
-        return (
-            <Button onClick={() => history.push("/login")} color="inherit">Sign in</Button>
+            <Button onClick={() => history.push("/registration")} color="inherit">Регистрация</Button>
         );
     default:
-        return null;
+        return (
+            <Button onClick={() => history.push("/login")} color="inherit">Войти</Button>
+        );
     }
 };
 
@@ -46,9 +43,8 @@ const ElevationScroll = (props: ElevationScrollProps) => {
     });
 };
 
-const ElevationHeader = ({ toggleMenu, isAuth }: any) => {
+const ElevationHeader = ({ showMenu, isAuth }: ElevationHeaderProps) => {
     const classes = useHeaderStyles();
-    console.log("isAuth", isAuth);
 
     return (
         <>
@@ -58,7 +54,7 @@ const ElevationHeader = ({ toggleMenu, isAuth }: any) => {
                     <Toolbar>
                         <IconButton
                             edge="start"
-                            onClick={toggleMenu}
+                            onClick={() => showMenu()}
                             className={classes.menuButton}
                             color="inherit"
                         >
@@ -85,7 +81,7 @@ const mapStateToProps = ({ isAuth }: any) => ({
 });
 
 const mapDispatchToProps = {
-    toggleMenu: toggleMenuAction,
+    showMenu: menuActions.showMenu,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ElevationHeader);

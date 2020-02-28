@@ -17,7 +17,7 @@ import {
 } from "../../types";
 import withSchoolService from "../hoc/with-school-service";
 import useAuthStyles from "./styles";
-import { registration as registrationAction } from "../../actions";
+import { authActions } from "../../actions";
 
 const Registration: React.FC<RegistrationProps> = ({ registration }): JSX.Element => {
     const classes = useAuthStyles();
@@ -32,6 +32,7 @@ const Registration: React.FC<RegistrationProps> = ({ registration }): JSX.Elemen
             password: data.password,
         };
         registration(registrationData);
+        console.log("qwe");
     };
 
     return (
@@ -101,7 +102,7 @@ const Registration: React.FC<RegistrationProps> = ({ registration }): JSX.Elemen
 };
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: RegistrationProps) => bindActionCreators({
-    registration: (userInfo: UserRegistrationInfo) => registrationAction(
+    registration: (userInfo: UserRegistrationInfo) => authActions.registration(
         ownProps.schoolService,
         userInfo,
     )(),

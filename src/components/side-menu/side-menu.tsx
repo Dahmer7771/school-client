@@ -2,11 +2,12 @@ import React from "react";
 import { connect } from "react-redux";
 import { Drawer, IconButton, Divider } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import { SideMenuProps } from "../../types";
 import useSideMenuStyles from "./styles";
-import { toggleMenu as toggleMenuAction } from "../../actions";
+import { menuActions } from "../../actions";
 import MenuList from "../menu-list";
 
-const SideMenu = ({ isMenuOpen, toggleMenu }: any) => {
+const SideMenu = ({ isMenuOpen, hideMenu }: SideMenuProps) => {
     const classes = useSideMenuStyles();
 
     return (
@@ -20,7 +21,7 @@ const SideMenu = ({ isMenuOpen, toggleMenu }: any) => {
             }}
         >
             <div className={classes.drawerHeader}>
-                <IconButton onClick={toggleMenu}>
+                <IconButton onClick={() => hideMenu()}>
                     <ChevronLeftIcon />
                 </IconButton>
             </div>
@@ -30,12 +31,12 @@ const SideMenu = ({ isMenuOpen, toggleMenu }: any) => {
     );
 };
 
-const mapStateToProps = ({ isMenuOpen }: any) => ({
+const mapStateToProps = ({ menuReducer: { isMenuOpen } }: any) => ({
     isMenuOpen,
 });
 
 const mapDispatchToProps = {
-    toggleMenu: toggleMenuAction,
+    hideMenu: menuActions.hideMenu,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideMenu);

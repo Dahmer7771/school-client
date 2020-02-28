@@ -26,10 +26,8 @@ class SchoolService {
         });
 
         if (!res.ok) {
-            const message = await res.json();
-            throw new Error(`Could not fetch ${url},`
-                + `received ${res.status}`
-                + `${message}`);
+            const resJSON = await res.json();
+            throw new Error(resJSON.message);
         }
 
         return await res.json();

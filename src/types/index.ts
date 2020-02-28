@@ -36,21 +36,33 @@ export interface RegistrationProps {
     registration: (data: UserRegistrationInfo) => void,
 }
 
-export interface State {
-    posts: {
-        title: string,
-            text: string,
-            user: string,
-            date: Date,
-            imageSrc: string,
-    }[],
+export interface ElevationScrollProps {
+    children: React.ReactElement;
+}
+
+export interface PostProps {
+    id: number,
+    author: string,
+    title: string,
+    authorFirstChar: string,
+    text: string,
+    date: string,
+    image: string,
+}
+
+export interface SideMenuProps {
+    hideMenu: () => Action,
+    isMenuOpen: boolean,
+}
+
+export interface ElevationHeaderProps {
+    showMenu: () => Action,
+    isAuth: boolean,
+}
+
+export interface AuthReducerState {
     isAuth: boolean,
     authentication: boolean,
     authSuccess: boolean,
     authError: boolean,
-    isMenuOpen: boolean,
-}
-
-export interface ElevationScrollProps {
-    children: React.ReactElement;
 }

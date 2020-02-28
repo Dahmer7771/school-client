@@ -1,77 +1,9 @@
-import {
-    Action, UserRegistrationInfo, UserLoginInfo, SchoolService,
-} from "../types";
-
-const loginRequest = (): Action => ({
-    type: "LOGIN_REQUEST",
-});
-
-
-const loginSuccess = (): Action => ({
-    type: "LOGIN_SUCCESS",
-});
-
-
-const loginError = (): Action => ({
-    type: "LOGIN_ERROR",
-});
-
-
-const login = (
-    schoolService: SchoolService,
-    userInfo: UserLoginInfo,
-) => () => async (dispatch: any) => {
-    let responseData = {};
-
-    dispatch(loginRequest());
-    try {
-        responseData = await schoolService.login(userInfo);
-        dispatch(loginSuccess());
-        console.log(responseData);
-    } catch (e) {
-        console.log(responseData);
-        loginError();
-    }
-};
-
-const registrationRequest = (): Action => ({
-    type: "REGISTRATION_REQUEST",
-});
-
-const registrationSuccess = (): Action => ({
-    type: "REGISTRATION_SUCCESS",
-});
-
-const registrationError = (): Action => ({
-    type: "REGISTRATION_ERROR",
-});
-
-const registration = (
-    schoolService: SchoolService,
-    userInfo: UserRegistrationInfo,
-) => () => async (dispatch: any) => {
-    dispatch(registrationRequest());
-    try {
-        const responseData = await schoolService.registration(userInfo);
-        dispatch(registrationSuccess());
-        console.log(responseData);
-    } catch (e) {
-        dispatch(registrationError());
-    }
-};
-
-const toggleMenu = (): Action => ({
-    type: "TOGGLE_MENU",
-});
+import alertActions from "./alert.actions";
+import authActions from "./auth.actions";
+import menuActions from "./menu.actions";
 
 export {
-    loginRequest,
-    loginSuccess,
-    loginError,
-    login,
-    registrationRequest,
-    registrationSuccess,
-    registrationError,
-    registration,
-    toggleMenu,
+    alertActions,
+    authActions,
+    menuActions,
 };

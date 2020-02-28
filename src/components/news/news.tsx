@@ -1,50 +1,29 @@
 import React from "react";
 import {
-    Typography, Card, CardContent, CardMedia, CardHeader, Avatar, Divider,
+    Typography, Divider, Grid,
 } from "@material-ui/core";
-import useStyles from "./styles";
-
-const Post = ({ title, date, user, author, text }: any) => {
-    const classes = useStyles();
-
-    return (
-        <Card className={classes.root}>
-            <div className={classes.details}>
-                <CardHeader
-                    avatar={(
-                        <Avatar aria-label="recipe" className={classes.avatar}>
-                            R
-                        </Avatar>
-                    )}
-                    title="Shrimp and Chorizo Paella"
-                    subheader="September 14, 2016"
-                />
-                <CardContent className={classes.content}>
-                    <Typography component="h5" variant="h5">
-                        Live From Space
-                    </Typography>
-                    <Typography variant="subtitle1" color="textSecondary">
-                        Mac Miller
-                    </Typography>
-                    <Typography className={classes.cardText} variant="body2" color="textPrimary" component="p">
-                        This impressive paella is a perfect party
-                        dish and a fun meal to cook together with your
-                        guests. Add 1 cup of frozen peas along with the mussels, if you like.
-                        This impressive paella is a perfect party
-                        dish and a fun meal to cook together with your
-                        guests. Add 1 cup of frozen peas along with the mussels, if you like.
-                    </Typography>
-                </CardContent>
-            </div>
-            <div className={classes.imageContainer}>
-                <img src="./images/1.jpg" alt="post" className={classes.postImage} />
-            </div>
-        </Card>
-    );
-};
+import useNewsStyles from "./styles";
+import Post from "../post/post";
 
 const News = () => {
-    const classes = useStyles();
+    const classes = useNewsStyles();
+    const date = new Date();
+    const postTemplate = {
+        id: Math.random(),
+        title: "Post title",
+        image: "./images/1.jpg",
+        date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
+        authorFirstChar: "Mac Miller"[0].toUpperCase(),
+        author: "Mac Miller",
+        text: "This impressive paella is a perfect party\n"
+            + "dish and a fun meal to cook together with your\n"
+            + "guests. Add 1 cup of frozen peas along with the mussels, if you like.\n"
+            + "This impressive paella is a perfect party\n"
+            + "dish and a fun meal to cook together with your\n"
+            + "guests. Add 1 cup of frozen peas along with the mussels, if you like.",
+    };
+
+    const posts = new Array(10).fill(postTemplate);
 
     return (
         <div>
@@ -52,11 +31,15 @@ const News = () => {
                 Посты
             </Typography>
             <Divider className={classes.divider} />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
-            <Post />
+            <div>
+                <Grid container spacing={3}>
+                    {posts.map((post) => (
+                        <Grid item xs={12} sm={6} md={4}>
+                            <Post {...post} />
+                        </Grid>
+                    ))}
+                </Grid>
+            </div>
         </div>
     );
 };

@@ -8,7 +8,8 @@ import ElevationHeader from "../header";
 import AuthLayout from "../layouts/auth/index";
 import SideMenu from "../side-menu";
 import Slider from "../slider";
-import Main from "../layouts/main/main";
+import MainLayout from "../layouts/main/main";
+import Profile from "../layouts/profile/profile";
 import News from "../news/news";
 
 const App = () => (
@@ -18,7 +19,9 @@ const App = () => (
         <Switch>
             <Route path="/login" component={() => <AuthLayout isReg />} />
             <Route path="/registration" component={AuthLayout} />
-            <Main>
+            <Route path="/profile" component={Profile} />
+            <MainLayout>
+                <Route path="/posts" component={News} />
                 <Route
                     exact
                     path="/"
@@ -29,7 +32,7 @@ const App = () => (
                         </>
                     )}
                 />
-            </Main>
+            </MainLayout>
         </Switch>
     </>
 );
