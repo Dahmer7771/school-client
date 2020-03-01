@@ -28,11 +28,13 @@ export interface SchoolService {
 
 export interface LoginProps {
     schoolService: SchoolService,
+    authentication: boolean,
     login: (data: UserLoginInfo) => void,
 }
 
 export interface RegistrationProps {
     schoolService: SchoolService,
+    authentication: boolean,
     registration: (data: UserRegistrationInfo) => void,
 }
 

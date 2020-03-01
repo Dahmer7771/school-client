@@ -9,7 +9,6 @@ const loginRequest = (): Action => ({
     type: "LOGIN_REQUEST",
 });
 
-
 const loginSuccess = (currentUser: User): Action => ({
     type: "LOGIN_SUCCESS",
     payload: currentUser,

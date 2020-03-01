@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import {
     Button,
     FormControl,
@@ -16,14 +17,17 @@ import { emailErrors, passwordErrors, regExp } from "../../validation";
 import withSchoolService from "../hoc/with-school-service";
 import useAuthStyles from "./styles";
 
-const LogIn: React.FC<LoginProps> = ({ login }): JSX.Element => {
+const LogIn: React.FC<LoginProps> = ({ login, authentication }): JSX.Element => {
     const classes = useAuthStyles();
+    const history = useHistory();
+
     const {
         register, handleSubmit, errors,
     } = useForm<FormData>();
 
     const onSubmit = (data: UserLoginInfo) => {
         login(data);
+        history.push("/");
     };
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -58,10 +62,22 @@ const LogIn: React.FC<LoginProps> = ({ login }): JSX.Element => {
                         </FormHelperText>
                     )}
             </FormControl>
-            <Button type="submit" variant="contained" color="primary" className={classes.button}>Sign in</Button>
+            <Button
+                disabled={authentication}
+                type="submit"
+                variant="contained"
+                color="primary"
+                className={classes.button}
+            >
+                Sign in
+            </Button>
         </form>
     );
 };
+
+const mapStateToProps = ({ authReducer: { authentication } }: any) => ({
+    authentication,
+});
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: LoginProps) => bindActionCreators({
     login: (userInfo: UserLoginInfo) => authActions.login(
@@ -70,4 +86,4 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: LoginProps) => bindAct
     )(),
 }, dispatch);
 
-export default withSchoolService()(connect(null, mapDispatchToProps)(LogIn));
+export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(LogIn));
