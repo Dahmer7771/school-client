@@ -4,11 +4,13 @@ const useAuthStyles = makeStyles((theme) => ({
     auth: {
         maxWidth: "520px",
         margin: "0 auto",
-        [theme.breakpoints.up("sm")]: {
-            minHeight: "calc(100% - 64px)",
-        },
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        width: "450px",
         [theme.breakpoints.down("xs")]: {
-            minHeight: "calc(100% - 48px)",
+            width: "320px",
         },
         display: "flex",
     },
@@ -19,7 +21,7 @@ const useAuthStyles = makeStyles((theme) => ({
         justifyContent: "center",
     },
     paper: {
-        margin: theme.spacing(3),
+        margin: theme.spacing(1),
         padding: theme.spacing(2, 4),
         width: "100%",
     },
