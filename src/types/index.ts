@@ -52,6 +52,7 @@ export interface PostProps {
 
 export interface SideMenuProps {
     hideMenu: () => Action,
+    showMenu: () => Action,
     isMenuOpen: boolean,
 }
 
@@ -65,4 +66,17 @@ export interface AuthReducerState {
     authentication: boolean,
     authSuccess: boolean,
     authError: boolean,
+    currentUser: User,
 }
+
+export interface User {
+    name: string,
+    email: string,
+    token: string,
+}
+
+export interface LogoutButtonProps {
+    logout: () => void,
+}
+
+export type ErrorMessage = string

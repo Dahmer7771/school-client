@@ -17,11 +17,6 @@ const authorizedUserMenuList = [
         title: "Личный кабинет",
         route: "/profile",
     },
-    {
-        id: 3,
-        title: "Выход",
-        route: "/exit",
-    },
 ];
 
 const unauthorizedUserMenuList = [

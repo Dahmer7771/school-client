@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import {
-    Action, UserRegistrationInfo, UserLoginInfo, SchoolService,
+    Action, UserRegistrationInfo, UserLoginInfo, SchoolService, User,
 } from "../types";
 
 // //////////////////////////LOGIN/////////////////////////////////////////
@@ -10,10 +10,10 @@ const loginRequest = (): Action => ({
 });
 
 
-const loginSuccess = (): Action => ({
+const loginSuccess = (currentUser: User): Action => ({
     type: "LOGIN_SUCCESS",
+    payload: currentUser,
 });
-
 
 const loginError = (): Action => ({
     type: "LOGIN_ERROR",
@@ -23,27 +23,32 @@ const login = (
     schoolService: SchoolService,
     userInfo: UserLoginInfo,
 ) => () => async (dispatch: Dispatch) => {
-    let responseData: {
-        token?: string;
-    } = {
+    let responseData: any = {
         token: "",
     };
 
     dispatch(loginRequest());
     try {
         responseData = await schoolService.login(userInfo);
-        dispatch(loginSuccess());
-        console.log(responseData.token);
-        if (responseData.token != null) localStorage.setItem("school-user-jwt", responseData.token);
+        const user = {
+            name: responseData.name,
+            email: responseData.email,
+            token: responseData.token,
+        };
+        if (responseData.token != null) {
+            localStorage.setItem("school-user-with-jwt", JSON.stringify(responseData));
+            console.log("SUCCESS");
+            dispatch(loginSuccess(user));
+        }
     } catch (e) {
-        console.log(responseData);
         console.log(e);
         loginError();
     }
 };
 
-const logout = () => {
-
+const logout = () => (dispatch: Dispatch) => {
+    localStorage.removeItem("school-user-with-jwt");
+    dispatch({ type: "LOGOUT" });
 };
 
 // ////////////////////////////REGISTRATION//////////////////////////////////

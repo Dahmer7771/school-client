@@ -31,8 +31,8 @@ const Registration: React.FC<RegistrationProps> = ({ registration }): JSX.Elemen
             name: data.name,
             password: data.password,
         };
+        console.log(registrationData);
         registration(registrationData);
-        console.log("qwe");
     };
 
     return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -13,8 +13,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { ElevationHeaderProps, ElevationScrollProps } from "../../types";
 import { menuActions } from "../../actions";
 import useHeaderStyles from "./styles";
+import LogoutButton from "../logout-button/logout-button";
 
-const AuthLink = () => {
+const AuthButton = () => {
     const history = useHistory();
     const location = useLocation();
 
@@ -46,6 +47,10 @@ const ElevationScroll = (props: ElevationScrollProps) => {
 const ElevationHeader = ({ showMenu, isAuth }: ElevationHeaderProps) => {
     const classes = useHeaderStyles();
 
+    useEffect(() => {
+        console.log(isAuth);
+    });
+
     return (
         <>
             <CssBaseline />
@@ -68,7 +73,7 @@ const ElevationHeader = ({ showMenu, isAuth }: ElevationHeaderProps) => {
                                 </Link>
                             </Typography>
                         </div>
-                        {isAuth ? null : <AuthLink />}
+                        {isAuth ? <LogoutButton /> : <AuthButton />}
                     </Toolbar>
                 </AppBar>
             </ElevationScroll>
@@ -76,7 +81,7 @@ const ElevationHeader = ({ showMenu, isAuth }: ElevationHeaderProps) => {
     );
 };
 
-const mapStateToProps = ({ isAuth }: any) => ({
+const mapStateToProps = ({ authReducer: { isAuth } }: any) => ({
     isAuth,
 });
 

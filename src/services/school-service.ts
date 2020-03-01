@@ -27,7 +27,8 @@ class SchoolService {
 
         if (!res.ok) {
             const resJSON = await res.json();
-            throw new Error(resJSON.message);
+            // throw new Error(resJSON.message);
+            throw resJSON.message;
         }
 
         return await res.json();
