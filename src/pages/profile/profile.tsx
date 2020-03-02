@@ -2,9 +2,9 @@ import React from "react";
 import {
     Container, Grid,
 } from "@material-ui/core";
-import Timetable from "../../timetable";
+import Timetable from "../../components/timetable/index";
 import useProfileStyles from "./styles";
-import ProfileDetails from "../../profile-details";
+import ProfileDetails from "../../components/profile-details/index";
 
 const Profile = () => {
     const classes = useProfileStyles();

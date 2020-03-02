@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { SchoolServiceProvider } from "./components/school-service-context";
-import App from "./components/app";
+import App from "./app";
 import store from "./store";
 import theme from "./theme";
 import SchoolService from "./services/school-service";

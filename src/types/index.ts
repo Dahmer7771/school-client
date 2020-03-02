@@ -29,13 +29,13 @@ export interface SchoolService {
 export interface LoginProps {
     schoolService: SchoolService,
     authentication: boolean,
-    login: (data: UserLoginInfo) => void,
+    login: (data: UserLoginInfo, history: any) => void,
 }
 
 export interface RegistrationProps {
     schoolService: SchoolService,
     authentication: boolean,
-    registration: (data: UserRegistrationInfo) => void,
+    registration: (data: UserRegistrationInfo, history: any) => void,
 }
 
 export interface ElevationScrollProps {
@@ -69,6 +69,7 @@ export interface AuthReducerState {
     authSuccess: boolean,
     authError: boolean,
     currentUser: User,
+    errorMessage: string,
 }
 
 export interface User {
@@ -79,6 +80,20 @@ export interface User {
 
 export interface LogoutButtonProps {
     logout: () => void,
+}
+
+export interface ModalProps {
+    title: string,
+    text: string,
+    isModalOpen: boolean,
+    hideModal: () => Action,
+    close: () => Action,
+}
+
+export interface AuthLayoutProps {
+    authError: boolean,
+    errorMessage: string,
+    clearAuthError: () => Action,
 }
 
 export type ErrorMessage = string

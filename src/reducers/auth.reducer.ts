@@ -17,11 +17,12 @@ const loginSuccess = (state: AuthReducerState, action: Action) => ({
     currentUser: action.payload,
 });
 
-const loginError = (state: AuthReducerState) => ({
+const loginError = (state: AuthReducerState, action: any) => ({
     ...state,
     authentication: false,
     isAuth: false,
     authError: true,
+    errorMessage: action.payload.message,
 });
 
 const logout = (state: AuthReducerState) => ({
@@ -44,11 +45,18 @@ const registrationSuccess = (state: AuthReducerState) => ({
     isAuth: true,
 });
 
-const registrationError = (state: AuthReducerState) => ({
+const registrationError = (state: AuthReducerState, action: any) => ({
     ...state,
     authentication: false,
     isAuth: false,
     authError: true,
+    errorMessage: action.payload.message,
+});
+
+const clearAuthError = (state: AuthReducerState) => ({
+    ...state,
+    authError: false,
+    errorMessage: "",
 });
 
 const authReducer = (state: AuthReducerState, action: Action) => {
@@ -59,6 +67,7 @@ const authReducer = (state: AuthReducerState, action: Action) => {
             authSuccess: false,
             authError: false,
             currentUser: null,
+            errorMessage: "",
         };
     }
 
@@ -68,7 +77,7 @@ const authReducer = (state: AuthReducerState, action: Action) => {
     case "LOGIN_SUCCESS":
         return loginSuccess(state, action);
     case "LOGIN_ERROR":
-        return loginError(state);
+        return loginError(state, action);
     case "LOGOUT":
         return logout(state);
     case "REGISTRATION_REQUEST":
@@ -76,7 +85,9 @@ const authReducer = (state: AuthReducerState, action: Action) => {
     case "REGISTRATION_SUCCESS":
         return registrationSuccess(state);
     case "REGISTRATION_ERROR":
-        return registrationError(state);
+        return registrationError(state, action);
+    case "CLEAR_AUTH_ERROR":
+        return clearAuthError(state);
     default:
         return state;
     }

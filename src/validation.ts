@@ -23,6 +23,6 @@ export const passwordConfirmErrors: ValidationError = {
 
 export const regExp = {
     email: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-    name: /^(\d*([a-zA-Z]{1,})\d*)*$/,
+    name: /^(\d*([a-zA-Zа-яА-Я]{1,})\d*)*$/,
     password: /^[A-Za-z0-9]+$/,
 };

@@ -26,8 +26,7 @@ const LogIn: React.FC<LoginProps> = ({ login, authentication }): JSX.Element => 
     } = useForm<FormData>();
 
     const onSubmit = (data: UserLoginInfo) => {
-        login(data);
-        history.push("/");
+        login(data, history);
     };
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -80,9 +79,10 @@ const mapStateToProps = ({ authReducer: { authentication } }: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: LoginProps) => bindActionCreators({
-    login: (userInfo: UserLoginInfo) => authActions.login(
+    login: (userInfo: UserLoginInfo, history) => authActions.login(
         ownProps.schoolService,
         userInfo,
+        history,
     )(),
 }, dispatch);
 
