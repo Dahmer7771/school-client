@@ -96,4 +96,10 @@ export interface AuthLayoutProps {
     clearAuthError: () => Action,
 }
 
+export interface TabPanelProps {
+    children?: React.ReactNode;
+    index: any;
+    value: any;
+}
+
 export type ErrorMessage = string

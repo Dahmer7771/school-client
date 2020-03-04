@@ -17,6 +17,11 @@ const authorizedUserMenuList = [
         title: "Личный кабинет",
         route: "/profile",
     },
+    {
+        id: 3,
+        title: "Администрирование",
+        route: "/administration",
+    },
 ];
 
 const unauthorizedUserMenuList = [

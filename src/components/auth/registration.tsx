@@ -20,7 +20,9 @@ import withSchoolService from "../hoc/with-school-service";
 import useAuthStyles from "./styles";
 import { authActions } from "../../actions";
 
-const Registration: React.FC<RegistrationProps> = ({ registration }): JSX.Element => {
+const Registration: React.FC<RegistrationProps> = ({
+    registration, authentication,
+}): JSX.Element => {
     const classes = useAuthStyles();
     const history = useHistory();
     const {
@@ -98,10 +100,22 @@ const Registration: React.FC<RegistrationProps> = ({ registration }): JSX.Elemen
                     </FormHelperText>
                 )}
             </FormControl>
-            <Button type="submit" variant="contained" color="primary" className={classes.button}>Sign up</Button>
+            <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={authentication}
+                className={classes.button}
+            >
+                Sign up
+            </Button>
         </form>
     );
 };
+
+const mapStateToProps = ({ authReducer: { authentication } }: any) => ({
+    authentication,
+});
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: RegistrationProps) => bindActionCreators({
     registration: (userInfo: UserRegistrationInfo, history: any) => authActions.registration(
@@ -111,4 +125,4 @@ const mapDispatchToProps = (dispatch: Dispatch, ownProps: RegistrationProps) => 
     )(),
 }, dispatch);
 
-export default withSchoolService()(connect(null, mapDispatchToProps)(Registration));
+export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(Registration));

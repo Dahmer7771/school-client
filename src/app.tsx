@@ -4,13 +4,13 @@ import {
     Switch,
     Route,
 } from "react-router-dom";
-import { Container } from "@material-ui/core";
 import Header from "./components/header";
 import AuthPage from "./pages/auth";
 import SideMenu from "./components/side-menu";
 import HomePage from "./pages/home";
 import ProfilePage from "./pages/profile";
-import News from "./components/news";
+import NewsPage from "./pages/news";
+import AdministrationPage from "./pages/administration";
 
 const App = () => (
     <>
@@ -21,9 +21,9 @@ const App = () => (
             <Route path="/login" component={AuthPage} />
             <Route path="/registration" component={AuthPage} />
             <Route path="/profile" component={ProfilePage} />
-            <Container style={{ paddingTop: "16px" }}>
-                <Route path="/posts" component={News} />
-            </Container>
+            <Route path="/posts" component={NewsPage} />
+            <Route path="/administration" component={AdministrationPage} />
+            <Route render={() => <h1>404 Not Found</h1>} />
         </Switch>
     </>
 );
