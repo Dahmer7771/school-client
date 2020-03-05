@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import {
-    Action, UserRegistrationInfo, UserLoginInfo, SchoolService, User,
+    Action, UserRegistrationInfo, UserLoginInfo, SchoolService,
 } from "../types";
 
 // //////////////////////////LOGIN/////////////////////////////////////////
@@ -9,7 +9,7 @@ const loginRequest = (): Action => ({
     type: "LOGIN_REQUEST",
 });
 
-const loginSuccess = (currentUser: User): Action => ({
+const loginSuccess = (currentUser: any): Action => ({
     type: "LOGIN_SUCCESS",
     payload: currentUser,
 });
@@ -26,23 +26,18 @@ const login = (
     userInfo: UserLoginInfo,
     history: any,
 ) => () => async (dispatch: Dispatch) => {
-    let responseData: any = {
-        token: "",
-    };
-
     dispatch(loginRequest());
     try {
-        responseData = await schoolService.login(userInfo);
-        const user = {
-            name: responseData.name,
-            email: responseData.email,
-            token: responseData.token,
-        };
-        if (responseData.token != null) {
-            localStorage.setItem("school-user-with-jwt", JSON.stringify(responseData));
-            dispatch(loginSuccess(user));
-            history.push("/");
-        }
+        // const LSItem = localStorage.getItem("school-user-with-jwt");
+        // if (LSItem) {
+        //     dispatch(loginSuccess(JSON.parse(LSItem)));
+        //     history.push("/");
+        //     return;
+        // }
+        const user = await schoolService.login(userInfo);
+        localStorage.setItem("school-user-with-jwt", JSON.stringify(user));
+        dispatch(loginSuccess(user));
+        history.push("/");
     } catch (e) {
         dispatch(loginError(e));
     }
@@ -78,9 +73,9 @@ const registration = (
     dispatch(registrationRequest());
     try {
         const responseData = await schoolService.registration(userInfo);
-        dispatch(registrationSuccess());
         console.log(responseData);
-        history.push("/");
+        dispatch(registrationSuccess());
+        history.push("/login");
     } catch (e) {
         dispatch(registrationError(e));
     }

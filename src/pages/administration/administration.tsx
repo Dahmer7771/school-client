@@ -1,23 +1,32 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
 import {
     AppBar,
     Tabs,
     Tab,
 } from "@material-ui/core";
+import { bindActionCreators, Dispatch } from "redux";
 import TabPanel from "../../components/tab-panel";
 import News from "../news";
+import UsersList from "../../components/users-list";
+import withSchoolService from "../../components/hoc/with-school-service";
+import { usersActions } from "../../actions";
 
 const a11yProps = (index: any) => ({
     id: `simple-tab-${index}`,
     "aria-controls": `simple-tabpanel-${index}`,
 });
 
-const Administration = () => {
-    const [value, setValue] = React.useState(0);
+const Administration = ({ getAllUsers, users }: any) => {
+    const [value, setValue] = useState(0);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
+
+    useEffect(() => {
+        getAllUsers();
+    }, [getAllUsers]);
 
     return (
         <div>
@@ -30,7 +39,7 @@ const Administration = () => {
             </AppBar>
 
             <TabPanel value={value} index={0}>
-                Users
+                <UsersList users={users} />
             </TabPanel>
             <TabPanel value={value} index={1}>
                 <News />
@@ -42,4 +51,14 @@ const Administration = () => {
     );
 };
 
-export default Administration;
+const mapStateToProps = ({ usersReducer: { users, usersError, errorMessage } }: any) => ({
+    users,
+    usersError,
+    errorMessage,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch, ownProps: any) => bindActionCreators({
+    getAllUsers: () => usersActions.getAllUsers(ownProps.schoolService)(),
+}, dispatch);
+
+export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(Administration));

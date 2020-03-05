@@ -42,7 +42,7 @@ const registrationSuccess = (state: AuthReducerState) => ({
     ...state,
     authentication: false,
     authError: false,
-    isAuth: true,
+    isAuth: false,
 });
 
 const registrationError = (state: AuthReducerState, action: any) => ({

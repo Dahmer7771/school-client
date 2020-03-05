@@ -19,6 +19,11 @@ class SchoolService {
         headers.append("Content-Type", "application/json");
         headers.append("Accept", "application/json");
 
+        if (localStorage.getItem("school-user-with-jwt")) {
+            const token = JSON.parse(localStorage["school-user-with-jwt"]).token.toString();
+            headers.append("Authorization", token);
+        }
+
         const res = await fetch(`${this._baseUrl}${url}`, {
             method,
             headers,
@@ -41,6 +46,10 @@ class SchoolService {
     registration = async (userInfo: userRegistration) => (
         await this.getResource("/auth/registration", "POST", userInfo)
     );
+
+    getAllUsers = async () => (
+        await this.getResource("/user", "GET")
+    )
 }
 
 export default SchoolService;

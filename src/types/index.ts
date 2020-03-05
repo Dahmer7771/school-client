@@ -24,6 +24,7 @@ export interface FormData {
 export interface SchoolService {
     login: (userInfo: UserLoginInfo) => Promise<{}>,
     registration: (userInfo: UserRegistrationInfo) => Promise<{}>,
+    getAllUsers: () => Promise<{}>,
 }
 
 export interface LoginProps {
@@ -100,6 +101,12 @@ export interface TabPanelProps {
     children?: React.ReactNode;
     index: any;
     value: any;
+}
+
+export interface UsersListItem {
+    email: string,
+    name: string,
+    role: string,
 }
 
 export type ErrorMessage = string
