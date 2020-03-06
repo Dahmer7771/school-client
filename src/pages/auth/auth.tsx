@@ -13,6 +13,8 @@ const AuthLayout = ({ authError, errorMessage, clearAuthError }: AuthLayoutProps
     const classes = useAuthStyles();
     const location = useLocation();
 
+    console.log(errorMessage);
+
     return (
         <>
             <div className={classes.auth}>

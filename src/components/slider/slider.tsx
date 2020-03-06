@@ -7,7 +7,7 @@ import "./styles.scss";
 const Slider = () => (
     <div>
         <Typography variant="h4" gutterBottom>
-            Галерея глекiв
+            Gallery
         </Typography>
         <Carousel showStatus={false}>
             <div>

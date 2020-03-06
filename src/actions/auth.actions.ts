@@ -28,12 +28,6 @@ const login = (
 ) => () => async (dispatch: Dispatch) => {
     dispatch(loginRequest());
     try {
-        // const LSItem = localStorage.getItem("school-user-with-jwt");
-        // if (LSItem) {
-        //     dispatch(loginSuccess(JSON.parse(LSItem)));
-        //     history.push("/");
-        //     return;
-        // }
         const user = await schoolService.login(userInfo);
         localStorage.setItem("school-user-with-jwt", JSON.stringify(user));
         dispatch(loginSuccess(user));
@@ -42,6 +36,14 @@ const login = (
         dispatch(loginError(e));
     }
 };
+
+const checkAuthorization = () => (dispatch: Dispatch) => {
+    const LSItem = localStorage.getItem("school-user-with-jwt");
+    if (LSItem) {
+        dispatch(loginSuccess(JSON.parse(LSItem)));
+    }
+};
+
 
 const logout = () => (dispatch: Dispatch) => {
     localStorage.removeItem("school-user-with-jwt");
@@ -90,6 +92,7 @@ const authActions = {
     logout,
     registration,
     clearAuthError,
+    checkAuthorization,
 };
 
 export default authActions;

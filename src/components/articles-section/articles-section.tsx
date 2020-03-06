@@ -5,7 +5,7 @@ import {
 import useNewsStyles from "./styles";
 import Post from "../post/post";
 
-const News = () => {
+const ArticlesSection = () => {
     const classes = useNewsStyles();
     const date = new Date();
     const postTemplate = {
@@ -44,4 +44,4 @@ const News = () => {
     );
 };
 
-export default News;
+export default ArticlesSection;

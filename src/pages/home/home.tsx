@@ -2,7 +2,7 @@ import React from "react";
 import { Container } from "@material-ui/core";
 import useStyles from "./styles";
 import Slider from "../../components/slider";
-import News from "../../components/news";
+import ArticlesSection from "../../components/articles-section";
 
 const Home: React.FC = () => {
     const classes = useStyles();
@@ -10,7 +10,7 @@ const Home: React.FC = () => {
     return (
         <Container className={classes.container}>
             <Slider />
-            <News />
+            <ArticlesSection />
         </Container>
     );
 };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import {
@@ -45,11 +45,8 @@ const ElevationScroll = (props: ElevationScrollProps) => {
 };
 
 const ElevationHeader = ({ showMenu, isAuth }: ElevationHeaderProps) => {
+    const history = useHistory();
     const classes = useHeaderStyles();
-
-    useEffect(() => {
-        console.log(isAuth);
-    });
 
     return (
         <>
@@ -66,10 +63,10 @@ const ElevationHeader = ({ showMenu, isAuth }: ElevationHeaderProps) => {
                             <MenuIcon />
                         </IconButton>
                         <div className={classes.headerTitleWrapper}>
-                            <img className={classes.logo} alt="logo" src="./images/logo.png" />
+                            <img onClick={() => history.push("/")} className={classes.logo} alt="logo" src="./images/logo.png" />
                             <Typography variant="h6" className={classes.title}>
                                 <Link to="/">
-                                    Конотопська гивназия
+                                    Konotop gymnasium
                                 </Link>
                             </Typography>
                         </div>

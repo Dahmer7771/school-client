@@ -1,16 +1,16 @@
 import React from "react";
 import { Container } from "@material-ui/core";
-import NewsList from "../../components/news";
+import ArticlesSection from "../../components/articles-section";
 import useStyles from "./styles";
 
-const News: React.FC = () => {
+const Articles: React.FC = () => {
     const classes = useStyles();
 
     return (
         <Container className={classes.container}>
-            <NewsList />
+            <ArticlesSection />
         </Container>
     );
 };
 
-export default News;
+export default Articles;

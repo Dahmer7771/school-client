@@ -7,10 +7,11 @@ import {
 } from "@material-ui/core";
 import { bindActionCreators, Dispatch } from "redux";
 import TabPanel from "../../components/tab-panel";
-import News from "../news";
 import UsersList from "../../components/users-list";
 import withSchoolService from "../../components/hoc/with-school-service";
 import { usersActions } from "../../actions";
+import ArticleCreator from "../../components/article-creator/article-creator";
+import Timetable from "../../components/timetable/timetable";
 
 const a11yProps = (index: any) => ({
     id: `simple-tab-${index}`,
@@ -42,10 +43,10 @@ const Administration = ({ getAllUsers, users }: any) => {
                 <UsersList users={users} />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <News />
+                <ArticleCreator />
             </TabPanel>
             <TabPanel value={value} index={2}>
-                Timetable
+                <Timetable />
             </TabPanel>
         </div>
     );
