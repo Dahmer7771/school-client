@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Paper } from "@material-ui/core";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
 import { Editor } from "react-draft-wysiwyg";
@@ -22,7 +23,7 @@ const ArticleCreator = () => {
     };
 
     return (
-        <div>
+        <Paper elevation={2}>
             <Editor
                 editorState={editorState}
                 wrapperClassName="demo-wrapper"
@@ -34,7 +35,7 @@ const ArticleCreator = () => {
                 disabled
                 value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
             />
-        </div>
+        </Paper>
     );
 };
 

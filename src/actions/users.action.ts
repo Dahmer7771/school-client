@@ -1,5 +1,6 @@
 import { Dispatch } from "redux";
 import { Action, SchoolService } from "../types";
+import history from "../history";
 
 const usersRequest = (): Action => ({
     type: "USERS_REQUEST",
@@ -28,7 +29,12 @@ const getAllUsers = (
         dispatch(usersSuccess(responseData));
         console.log(responseData);
     } catch (e) {
-        dispatch(usersError(e));
+        if (e.status === 401) {
+            localStorage.removeItem("school-user-with-jwt");
+            dispatch({ type: "LOGOUT" });
+            history.push("/login");
+        }
+        dispatch(usersError(e.message));
     }
 };
 

@@ -1,20 +1,16 @@
-type method = "GET" | "POST" | "PUT" | "DELETE";
+import { UserLoginInfo, UserRegistrationInfo, RequestMethod } from "../types";
 
-interface userRegistration {
-    name: string,
-    email: string,
-    password: string,
-}
-
-interface userLogin {
-    email: string,
-    password: string,
+function Exception(message: string, status: number) {
+    return {
+        message,
+        status,
+    };
 }
 
 class SchoolService {
     _baseUrl = "http://localhost:5000/api";
 
-    getResource = async (url: string, method: method, body?: object) => {
+    getResource = async (url: string, method: RequestMethod, body?: object) => {
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         headers.append("Accept", "application/json");
@@ -31,19 +27,19 @@ class SchoolService {
         });
 
         if (!res.ok) {
+            if (res.status === 401) throw Exception("Unauthorized", res.status);
             const resJSON = await res.json();
-            // throw new Error(resJSON.message);
-            throw resJSON.message;
+            throw Exception(resJSON.message, res.status);
         }
 
         return await res.json();
     };
 
-    login = async (userInfo: userLogin) => (
+    login = async (userInfo: UserLoginInfo) => (
         await this.getResource("/auth/login", "POST", userInfo)
     );
 
-    registration = async (userInfo: userRegistration) => (
+    registration = async (userInfo: UserRegistrationInfo) => (
         await this.getResource("/auth/registration", "POST", userInfo)
     );
 

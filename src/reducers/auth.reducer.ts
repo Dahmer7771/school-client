@@ -28,7 +28,7 @@ const loginError = (state: AuthReducerState, action: any) => ({
 const logout = (state: AuthReducerState) => ({
     ...state,
     isAuth: false,
-    currentUser: null,
+    currentUser: {},
 });
 
 const registrationRequest = (state: AuthReducerState) => ({
@@ -66,7 +66,7 @@ const authReducer = (state: AuthReducerState, action: Action) => {
             authentication: false,
             authSuccess: false,
             authError: false,
-            currentUser: null,
+            currentUser: {},
             errorMessage: "",
         };
     }

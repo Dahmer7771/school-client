@@ -48,7 +48,7 @@ const menuItems: any = {
 
 const MenuList = ({ currentUser, hideMenu }: any) => {
     const history = useHistory();
-    const listItems = menuItems[currentUser.role];
+    const listItems = menuItems[currentUser.role || "PUBLIC"];
 
     return (
         <List>

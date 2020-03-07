@@ -33,7 +33,8 @@ const login = (
         dispatch(loginSuccess(user));
         history.push("/");
     } catch (e) {
-        dispatch(loginError(e));
+        console.log(e);
+        dispatch(loginError(e.message));
     }
 };
 
@@ -46,6 +47,7 @@ const checkAuthorization = () => (dispatch: Dispatch) => {
 
 
 const logout = () => (dispatch: Dispatch) => {
+    console.log("LOGOUT");
     localStorage.removeItem("school-user-with-jwt");
     dispatch({ type: "LOGOUT" });
 };
@@ -79,7 +81,7 @@ const registration = (
         dispatch(registrationSuccess());
         history.push("/login");
     } catch (e) {
-        dispatch(registrationError(e));
+        dispatch(registrationError(e.message));
     }
 };
 
