@@ -27,7 +27,6 @@ class SchoolService {
         });
 
         if (!res.ok) {
-            if (res.status === 401) throw Exception("Unauthorized", res.status);
             const resJSON = await res.json();
             throw Exception(resJSON.message, res.status);
         }
@@ -43,8 +42,32 @@ class SchoolService {
         await this.getResource("/auth/registration", "POST", userInfo)
     );
 
-    getAllUsers = async () => (
-        await this.getResource("/user", "GET")
+    getAllUsers = async (active: string = "") => (
+        await this.getResource(`/user?active=${active}`, "GET")
+    );
+
+    updateUser = async (userId: string, body: {}) => (
+        await this.getResource(`/user/${userId}`, "PATCH", body)
+    );
+
+    getAllArticles = async (skip: number = 0, limit: number = 0) => (
+        await this.getResource(`/article?limit=${limit}&skip=${skip}`, "GET")
+    );
+
+    getArticleById = async (articleId: string) => (
+        await this.getResource(`/article/${articleId}`, "GET")
+    );
+
+    createArticle = async (articleId: string, body: {}) => (
+        await this.getResource(`/article/${articleId}`, "POST", body)
+    );
+
+    updateArticle = async (articleId: string, body: {}) => (
+        await this.getResource(`/article/${articleId}`, "PATCH", body)
+    );
+
+    deleteArticle = async (articleId: string) => (
+        await this.getResource(`/article/${articleId}`, "DELETE")
     )
 }
 

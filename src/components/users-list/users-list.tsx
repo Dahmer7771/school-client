@@ -7,11 +7,11 @@ import {
     TableRow,
     TableCell,
     Paper,
-    Button,
 } from "@material-ui/core";
-import { UsersListItem } from "../../types";
+import { UsersListItemProps } from "../../types";
+import UsersListItem from "../users-list-item";
 
-const UsersList = ({ users }: any) => (
+const UsersList = ({ users, handleChangeRole, handleChangeActivity }: any) => (
     <TableContainer component={Paper}>
         <Table>
             <TableHead>
@@ -25,29 +25,22 @@ const UsersList = ({ users }: any) => (
                     <TableCell>
                         Role
                     </TableCell>
+                    <TableCell>
+                        Active
+                    </TableCell>
                     <TableCell align="right">
                         Ban
                     </TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>
-                {users.map(({ email, name, role }: UsersListItem) => (
-                    <TableRow>
-                        <TableCell>
-                            {name}
-                        </TableCell>
-                        <TableCell>
-                            {email}
-                        </TableCell>
-                        <TableCell>
-                            {role}
-                        </TableCell>
-                        <TableCell align="right">
-                            <Button variant="contained">
-                                BAN
-                            </Button>
-                        </TableCell>
-                    </TableRow>
+                {users.map((user: UsersListItemProps) => (
+                    <UsersListItem
+                        key={user._id}
+                        handleChangeRole={handleChangeRole}
+                        handleChangeActivity={handleChangeActivity}
+                        {...user}
+                    />
                 ))}
             </TableBody>
         </Table>

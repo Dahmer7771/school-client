@@ -10,7 +10,7 @@ const Home: React.FC = () => {
     return (
         <Container className={classes.container}>
             <Slider />
-            <ArticlesSection />
+            <ArticlesSection isLimited limit={3} />
         </Container>
     );
 };

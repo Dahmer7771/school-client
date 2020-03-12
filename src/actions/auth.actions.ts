@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import history from "../history";
 import {
     Action, UserRegistrationInfo, UserLoginInfo, SchoolService,
 } from "../types";
@@ -24,7 +25,6 @@ const loginError = (message: string): Action => ({
 const login = (
     schoolService: SchoolService,
     userInfo: UserLoginInfo,
-    history: any,
 ) => () => async (dispatch: Dispatch) => {
     dispatch(loginRequest());
     try {
@@ -33,23 +33,23 @@ const login = (
         dispatch(loginSuccess(user));
         history.push("/");
     } catch (e) {
-        console.log(e);
         dispatch(loginError(e.message));
     }
 };
 
 const checkAuthorization = () => (dispatch: Dispatch) => {
     const LSItem = localStorage.getItem("school-user-with-jwt");
-    if (LSItem) {
-        dispatch(loginSuccess(JSON.parse(LSItem)));
-    }
+    if (LSItem) dispatch(loginSuccess(JSON.parse(LSItem)));
 };
 
+const logoutRequest = (): Action => ({
+    type: "LOGOUT",
+});
 
 const logout = () => (dispatch: Dispatch) => {
-    console.log("LOGOUT");
     localStorage.removeItem("school-user-with-jwt");
-    dispatch({ type: "LOGOUT" });
+    dispatch(logoutRequest());
+    history.push("/");
 };
 
 // ////////////////////////////REGISTRATION//////////////////////////////////
@@ -72,7 +72,6 @@ const registrationError = (message: string): Action => ({
 const registration = (
     schoolService: SchoolService,
     userInfo: UserRegistrationInfo,
-    history: any,
 ) => () => async (dispatch: Dispatch) => {
     dispatch(registrationRequest());
     try {

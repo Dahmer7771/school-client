@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import {
     Button,
     FormControl,
@@ -19,14 +18,13 @@ import useAuthStyles from "./styles";
 
 const LogIn: React.FC<LoginProps> = ({ login, authentication }): JSX.Element => {
     const classes = useAuthStyles();
-    const history = useHistory();
 
     const {
         register, handleSubmit, errors,
     } = useForm<FormData>();
 
     const onSubmit = (data: UserLoginInfo) => {
-        login(data, history);
+        login(data);
     };
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
@@ -79,10 +77,9 @@ const mapStateToProps = ({ authReducer: { authentication } }: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: LoginProps) => bindActionCreators({
-    login: (userInfo: UserLoginInfo, history) => authActions.login(
+    login: (userInfo: UserLoginInfo) => authActions.login(
         ownProps.schoolService,
         userInfo,
-        history,
     )(),
 }, dispatch);
 

@@ -59,18 +59,16 @@ const clearAuthError = (state: AuthReducerState) => ({
     errorMessage: "",
 });
 
-const authReducer = (state: AuthReducerState, action: Action) => {
-    if (state === undefined) {
-        return {
-            isAuth: false,
-            authentication: false,
-            authSuccess: false,
-            authError: false,
-            currentUser: {},
-            errorMessage: "",
-        };
-    }
+const initialState = {
+    isAuth: false,
+    authentication: false,
+    authSuccess: false,
+    authError: false,
+    currentUser: {},
+    errorMessage: "",
+};
 
+const authReducer = (state: AuthReducerState = initialState, action: Action) => {
     switch (action.type) {
     case "LOGIN_REQUEST":
         return loginRequest(state);

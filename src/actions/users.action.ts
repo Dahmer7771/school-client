@@ -22,12 +22,12 @@ const usersError = (message: string): Action => ({
 
 const getAllUsers = (
     schoolService: SchoolService,
+    active: string = "",
 ) => () => async (dispatch: Dispatch) => {
     dispatch(usersRequest());
     try {
-        const responseData = await schoolService.getAllUsers();
+        const responseData = await schoolService.getAllUsers(active);
         dispatch(usersSuccess(responseData));
-        console.log(responseData);
     } catch (e) {
         if (e.status === 401) {
             localStorage.removeItem("school-user-with-jwt");
@@ -38,8 +38,29 @@ const getAllUsers = (
     }
 };
 
+const updateUser = (
+    schoolService: SchoolService,
+    userId: string,
+    role: string,
+    active?: string,
+) => () => async (dispatch: Dispatch) => {
+    try {
+        await schoolService.updateUser(userId, role);
+        const users = await schoolService.getAllUsers(active);
+        dispatch(usersSuccess(users));
+    } catch (e) {
+        if (e.status === 401) {
+            localStorage.removeItem("school-user-with-jwt");
+            dispatch({ type: "LOGOUT" });
+            history.push("/login");
+        }
+        console.log(e.message);
+    }
+};
+
 const usersActions = {
     getAllUsers,
+    updateUser,
 };
 
 export default usersActions;

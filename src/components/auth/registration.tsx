@@ -1,5 +1,4 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
 import {
     Button, FormControl, FormHelperText, Input, InputLabel, Typography,
 } from "@material-ui/core";
@@ -24,7 +23,6 @@ const Registration: React.FC<RegistrationProps> = ({
     registration, authentication,
 }): JSX.Element => {
     const classes = useAuthStyles();
-    const history = useHistory();
     const {
         register, handleSubmit, watch, errors,
     } = useForm<FormData>();
@@ -35,8 +33,7 @@ const Registration: React.FC<RegistrationProps> = ({
             name: data.name,
             password: data.password,
         };
-        console.log(registrationData);
-        registration(registrationData, history);
+        registration(registrationData);
     };
 
     return (
@@ -118,10 +115,9 @@ const mapStateToProps = ({ authReducer: { authentication } }: any) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, ownProps: RegistrationProps) => bindActionCreators({
-    registration: (userInfo: UserRegistrationInfo, history: any) => authActions.registration(
+    registration: (userInfo: UserRegistrationInfo) => authActions.registration(
         ownProps.schoolService,
         userInfo,
-        history,
     )(),
 }, dispatch);
 

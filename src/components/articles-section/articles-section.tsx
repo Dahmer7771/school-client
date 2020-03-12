@@ -1,29 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
     Typography, Divider, Grid,
 } from "@material-ui/core";
+import { connect } from "react-redux";
+import { bindActionCreators, Dispatch } from "redux";
 import useNewsStyles from "./styles";
 import Post from "../post/post";
+import { ArticlesSectionProps } from "../../types";
+import articlesActions from "../../actions/articles.actions";
+import withSchoolService from "../hoc/with-school-service";
 
-const ArticlesSection = () => {
+const ArticlesSection: React.FC<ArticlesSectionProps> = ({
+    limit = 0,
+    skip = 0,
+    getAllArticles,
+    articles,
+}) => {
     const classes = useNewsStyles();
-    const date = new Date();
-    const postTemplate = {
-        id: Math.random(),
-        title: "Post title",
-        image: "./images/1.jpg",
-        date: `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`,
-        authorFirstChar: "Mac Miller"[0].toUpperCase(),
-        author: "Mac Miller",
-        text: "This impressive paella is a perfect party\n"
-            + "dish and a fun meal to cook together with your\n"
-            + "guests. Add 1 cup of frozen peas along with the mussels, if you like.\n"
-            + "This impressive paella is a perfect party\n"
-            + "dish and a fun meal to cook together with your\n"
-            + "guests. Add 1 cup of frozen peas along with the mussels, if you like.",
-    };
 
-    const posts = new Array(10).fill(postTemplate);
+    useEffect((): void => {
+        getAllArticles(skip, limit);
+    }, [getAllArticles, skip, limit]);
 
     return (
         <div>
@@ -33,8 +30,8 @@ const ArticlesSection = () => {
             <Divider className={classes.divider} />
             <div>
                 <Grid container spacing={3}>
-                    {posts.map((post) => (
-                        <Grid item xs={12} sm={6} md={4}>
+                    {articles.map((post) => (
+                        <Grid key={post._id} item xs={12} sm={6} md={4}>
                             <Post {...post} />
                         </Grid>
                     ))}
@@ -44,4 +41,19 @@ const ArticlesSection = () => {
     );
 };
 
-export default ArticlesSection;
+const mapStateToProps = ({ articlesReducer: { articles } }: any) => ({
+    articles,
+});
+
+const mapDispatchToProps = (
+    dispatch: Dispatch,
+    ownProps: ArticlesSectionProps,
+) => bindActionCreators({
+    getAllArticles: (skip, limit) => {
+        return articlesActions.getAllArticles(ownProps.schoolService, skip, limit)();
+    },
+}, dispatch);
+
+export default withSchoolService()(
+    connect(mapStateToProps, mapDispatchToProps)(ArticlesSection),
+);

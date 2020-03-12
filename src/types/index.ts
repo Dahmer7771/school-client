@@ -24,19 +24,25 @@ export interface FormData {
 export interface SchoolService {
     login: (userInfo: UserLoginInfo) => Promise<{}>,
     registration: (userInfo: UserRegistrationInfo) => Promise<{}>,
-    getAllUsers: () => Promise<{}>,
+    getAllUsers: (active: string | undefined) => Promise<{}>,
+    updateUser: (userId: string, role: string) => Promise<{}>,
+    getAllArticles: (skip: number, limit: number) => Promise<{}>,
+    getArticleById: () => Promise<{}>,
+    createArticle: () => Promise<{}>,
+    updateArticle: () => Promise<{}>,
+    deleteArticle: () => Promise<{}>,
 }
 
 export interface LoginProps {
     schoolService: SchoolService,
     authentication: boolean,
-    login: (data: UserLoginInfo, history: any) => void,
+    login: (data: UserLoginInfo) => void,
 }
 
 export interface RegistrationProps {
     schoolService: SchoolService,
     authentication: boolean,
-    registration: (data: UserRegistrationInfo, history: any) => void,
+    registration: (data: UserRegistrationInfo) => void,
 }
 
 export interface ElevationScrollProps {
@@ -44,7 +50,7 @@ export interface ElevationScrollProps {
 }
 
 export interface PostProps {
-    id: number,
+    _id: string,
     author: string,
     title: string,
     authorFirstChar: string,
@@ -69,7 +75,7 @@ export interface AuthReducerState {
     authentication: boolean,
     authSuccess: boolean,
     authError: boolean,
-    currentUser: User,
+    currentUser: User | {},
     errorMessage: string,
 }
 
@@ -103,12 +109,28 @@ export interface TabPanelProps {
     value: any;
 }
 
-export interface UsersListItem {
+export interface UsersListItemProps {
+    _id: string,
     email: string,
     name: string,
     role: string,
 }
 
-export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
+export type RequestMethod = "GET" | "POST" | "PATCH" | "DELETE";
 
-export type ErrorMessage = string
+export type ErrorMessage = string;
+
+export interface ArticlesReducerState {
+    articles: Array<PostProps>,
+    currentArticle: {} | null,
+    articlesError: boolean,
+    articlesMessage: string,
+}
+
+export interface ArticlesSectionProps {
+    schoolService: SchoolService,
+    skip: number,
+    limit: number,
+    getAllArticles: (skip: number, limit: number) => void,
+    articles: Array<PostProps>,
+}
