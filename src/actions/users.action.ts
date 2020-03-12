@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { Action, SchoolService } from "../types";
-import history from "../history";
+import { authActions } from "./index";
 
 const usersRequest = (): Action => ({
     type: "USERS_REQUEST",
@@ -29,11 +29,7 @@ const getAllUsers = (
         const responseData = await schoolService.getAllUsers(active);
         dispatch(usersSuccess(responseData));
     } catch (e) {
-        if (e.status === 401) {
-            localStorage.removeItem("school-user-with-jwt");
-            dispatch({ type: "LOGOUT" });
-            history.push("/login");
-        }
+        if (e.status === 401) authActions.logout()(dispatch);
         dispatch(usersError(e.message));
     }
 };
@@ -49,11 +45,7 @@ const updateUser = (
         const users = await schoolService.getAllUsers(active);
         dispatch(usersSuccess(users));
     } catch (e) {
-        if (e.status === 401) {
-            localStorage.removeItem("school-user-with-jwt");
-            dispatch({ type: "LOGOUT" });
-            history.push("/login");
-        }
+        if (e.status === 401) authActions.logout()(dispatch);
         console.log(e.message);
     }
 };

@@ -1,11 +1,9 @@
 import { UserLoginInfo, UserRegistrationInfo, RequestMethod } from "../types";
 
-function Exception(message: string, status: number) {
-    return {
-        message,
-        status,
-    };
-}
+const Exception = (message: string, status: number) => ({
+    message,
+    status,
+});
 
 class SchoolService {
     _baseUrl = "http://localhost:5000/api";
@@ -27,6 +25,7 @@ class SchoolService {
         });
 
         if (!res.ok) {
+            if (res.status === 401) throw Exception("Unauthorized", res.status);
             const resJSON = await res.json();
             throw Exception(resJSON.message, res.status);
         }

@@ -49,7 +49,7 @@ const logoutRequest = (): Action => ({
 const logout = () => (dispatch: Dispatch) => {
     localStorage.removeItem("school-user-with-jwt");
     dispatch(logoutRequest());
-    history.push("/");
+    history.push("/login");
 };
 
 // ////////////////////////////REGISTRATION//////////////////////////////////
