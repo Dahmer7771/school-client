@@ -20,6 +20,13 @@ const useProfileDetailsStyles = makeStyles((theme) => ({
     detailsIcon: {
         marginRight: theme.spacing(2),
     },
+    profileHeader: {
+        display: "flex",
+        justifyContent: "space-between",
+    },
+    warningText: {
+        color: "red",
+    },
 }));
 
 export default useProfileDetailsStyles;

@@ -5,25 +5,22 @@ import {
     Scheduler,
     TodayButton,
     Toolbar,
-    WeekView,
+    AppointmentTooltip,
+    DayView,
 } from "@devexpress/dx-react-scheduler-material-ui";
 import { ViewState } from "@devexpress/dx-react-scheduler";
 import { Paper } from "@material-ui/core";
-// import useScheluderStyles from "./styles";
+import moment from "moment";
 
 const Timetable = () => {
-    const [currentDate, setCurrentDate] = useState("2018-06-27");
+    const today = moment("2020 03 20", "YYYY MM DD").toISOString();
+    const [currentDate, setCurrentDate] = useState(today);
     const currentDateChange = (date: any) => setCurrentDate(date);
     const data = [
         {
-            startDate: "2020-02-28 10:00",
-            endDate: "2020-02-28 11:00",
+            startDate: moment("2020 03 20 9:00", "YYYY MM DD kk:mm").toISOString(),
+            endDate: moment("2020 03 20 10:00", "YYYY MM DD kk:mm").toISOString(),
             title: "Meeting",
-        },
-        {
-            startDate: "2020-02-28 9:00",
-            endDate: "2020-02-28 19:30",
-            title: "Go to a gym",
         },
     ];
 
@@ -31,13 +28,12 @@ const Timetable = () => {
         <Paper>
             <Scheduler
                 data={data}
-                height={660}
             >
                 <ViewState
                     currentDate={currentDate}
                     onCurrentDateChange={currentDateChange}
                 />
-                <WeekView
+                <DayView
                     startDayHour={9}
                     endDayHour={19}
                 />
@@ -45,6 +41,7 @@ const Timetable = () => {
                 <DateNavigator />
                 <TodayButton />
                 <Appointments />
+                <AppointmentTooltip />
             </Scheduler>
         </Paper>
     );

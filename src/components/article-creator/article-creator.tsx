@@ -1,42 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { Paper } from "@material-ui/core";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { EditorState, convertToRaw, ContentState } from "draft-js";
-import { Editor } from "react-draft-wysiwyg";
-import draftToHtml from "draftjs-to-html";
-// import htmlToDraft from "html-to-draftjs";
-import useArticleCreatorStyles from "../../pages/administration/styles";
+import React from "react";
+import { connect } from "react-redux";
+import Button from "@material-ui/core/Button";
+import TextEditor from "../text-editor";
+import ArticleTitleInput from "../article-title-input";
+import ArticlePictureInsert from "../article-picture-insert";
+import useStyles from "./styles";
+import articleCreatorActions from "../../actions/article-creator.actions";
 
-const ArticleCreator = () => {
-    const classes = useArticleCreatorStyles();
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
-    // useEffect(() => {
-    //     const html = "<p>Текст...</p>";
-    //     const contentBlock = htmlToDraft(html);
-    //     const contentState = ContentState.createFromBlockArray(contentBlock.contentBlocks);
-    //     setEditorState(EditorState.createWithContent(contentState));
-    // }, [editorState]);
-
-    const onEditorStateChange = (newEditorState: any) => {
-        setEditorState(newEditorState);
+const ArticleCreator = ({
+    title, setTitle, image, setImage, content, setContent,
+}: any) => {
+    const classes = useStyles();
+    const onSubmit = (e: any) => {
+        e.preventDefault();
+        console.log("title", title);
+        console.log("image", image);
+        console.log("content", content);
     };
 
     return (
-        <Paper elevation={2}>
-            <Editor
-                editorState={editorState}
-                wrapperClassName="demo-wrapper"
-                editorClassName={classes.editor}
-                onEditorStateChange={onEditorStateChange}
+        <form onSubmit={onSubmit}>
+            <div className={classes.flexContainer}>
+                <ArticleTitleInput
+                    title={title}
+                    setTitle={setTitle}
+                />
+                <ArticlePictureInsert
+                    setImage={setImage}
+                />
+            </div>
+            <TextEditor
+                content={content}
+                setContent={setContent}
             />
-            <textarea
-                style={{ display: "none" }}
-                disabled
-                value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
-            />
-        </Paper>
+            <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                className={classes.submit}
+            >
+                Click
+            </Button>
+        </form>
     );
 };
 
-export default ArticleCreator;
+const mapStateToProps = ({ articleCreatorReducer: { title, image, content } }: any) => ({
+    title,
+    image,
+    content,
+});
+
+const mapDispatchToProps = {
+    setTitle: (title: string) => articleCreatorActions.setArticleTitle(title),
+    setImage: (image: any) => articleCreatorActions.setArticleImage(image),
+    setContent: (content: string) => articleCreatorActions.setArticleContent(content),
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArticleCreator);

@@ -5,6 +5,8 @@ import menuReducer from "./menu.reducer";
 import modalReducer from "./modal.reducer";
 import usersReducer from "./users.reducer";
 import articlesReducer from "./articles.reducer";
+import profileEditorReducer from "./profile-editor.reducer";
+import articleCreatorReducer from "./article-creator.reducer";
 
 const rootReducer = combineReducers({
     authReducer,
@@ -12,6 +14,8 @@ const rootReducer = combineReducers({
     modalReducer,
     usersReducer,
     articlesReducer,
+    profileEditorReducer,
+    articleCreatorReducer,
 });
 
 export default rootReducer;

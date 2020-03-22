@@ -12,7 +12,7 @@ const articlesReducer = (state: ArticlesReducerState = initialState, action: any
     case "ARTICLES_REQUEST":
         return { ...state, articlesError: false, articles: [] };
     case "ARTICLES_ERROR":
-        return { ...state, articlesError: true, ...action.payload.message };
+        return { ...state, articlesError: true, message: action.payload.message };
     case "ARTICLES_SUCCESS":
         return { ...state, articlesError: false, articles: action.payload.articles };
     default:

@@ -11,7 +11,7 @@ import UsersList from "../../components/users-list";
 import withSchoolService from "../../components/hoc/with-school-service";
 import { usersActions } from "../../actions";
 import ArticleCreator from "../../components/article-creator";
-import Timetable from "../../components/timetable/timetable";
+import Timetable from "../../components/timetable";
 import UsersSearchPanel from "../../components/users-search-panel";
 
 const a11yProps = (index: any) => ({
