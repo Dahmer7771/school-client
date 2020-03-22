@@ -6,8 +6,8 @@ const Exception = (message: string, status: number) => ({
 });
 
 class SchoolService {
-    // _baseUrl = "https://konotop-gymnasium.herokuapp.com/api";
-    _baseUrl = "http://localhost:5000/api";
+    _baseUrl = "https://konotop-gymnasium.herokuapp.com/api";
+    // _baseUrl = "http://localhost:5000/api";
 
     getResource = async (url: string, method: RequestMethod, body?: object) => {
         const headers = new Headers();

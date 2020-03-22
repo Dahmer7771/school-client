@@ -1,7 +1,7 @@
 import { Action } from "redux";
 
 const initialState = {
-    isProfileEditorOpen: true,
+    isProfileEditorOpen: false,
 };
 
 const profileEditorReducer = (state: object = initialState, action: Action) => {
