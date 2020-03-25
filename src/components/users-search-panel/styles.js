@@ -1,27 +1,24 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 const useUsersSearchPanelStyles = makeStyles((theme) => ({
-    panelContainer: {
+    flexContainer: {
         display: "flex",
-        alignItems: "center",
-        paddingBottom: theme.spacing(1),
-        [theme.breakpoints.down("xs")]: {
-            display: "block",
-        },
+        alignItems: "flex-start",
     },
     input: {
         flexGrow: 1,
-        [theme.breakpoints.down("xs")]: {
-            width: "100%",
-            marginBottom: theme.spacing(1),
-        },
+        marginBottom: theme.spacing(2),
     },
     buttonsGroup: {
+        marginLeft: 0,
+        marginBottom: theme.spacing(1),
+    },
+    searchButton: {
         marginLeft: theme.spacing(1),
-        [theme.breakpoints.down("xs")]: {
-            marginLeft: 0,
-            marginBottom: theme.spacing(1),
-        },
+        marginTop: "1px",
+    },
+    select: {
+        marginLeft: theme.spacing(2),
     },
 }));
 

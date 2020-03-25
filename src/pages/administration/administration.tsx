@@ -20,7 +20,18 @@ const a11yProps = (index: any) => ({
 });
 
 const Administration = ({
-    getAllUsers, updateUser, users, currentUser,
+    getAllUsers,
+    updateUser,
+    users,
+    currentUser,
+    findUsers,
+    showMode,
+    filterField,
+    setShowMode,
+    term,
+    setTerm,
+    loading,
+    setFilterField,
 }: any) => {
     const [value, setValue] = useState(0);
 
@@ -40,7 +51,7 @@ const Administration = ({
     };
 
     useEffect(() => {
-        getAllUsers();
+        getAllUsers("all");
     }, [getAllUsers]);
 
     return (
@@ -56,6 +67,14 @@ const Administration = ({
             <TabPanel value={value} index={0}>
                 <UsersSearchPanel
                     getAllUsers={getAllUsers}
+                    findUsers={findUsers}
+                    showMode={showMode}
+                    filterField={filterField}
+                    setShowMode={setShowMode}
+                    term={term}
+                    setTerm={setTerm}
+                    loading={loading}
+                    setFilterField={setFilterField}
                 />
                 <UsersList
                     users={users}
@@ -74,18 +93,30 @@ const Administration = ({
 };
 
 const mapStateToProps = ({
-    usersReducer: { users, usersError, errorMessage },
+    usersReducer: {
+        users, usersError, errorMessage, showMode, filterField, term, loading,
+    },
     authReducer: { currentUser },
 }: any) => ({
     users,
     usersError,
     errorMessage,
     currentUser,
+    showMode,
+    filterField,
+    term,
+    loading,
 });
 
-const mapDispatchToProps = (dispatch: Dispatch, ownProps: any) => bindActionCreators({
-    getAllUsers: (active) => usersActions.getAllUsers(ownProps.schoolService, active)(),
-    updateUser: (userId, role) => usersActions.updateUser(ownProps.schoolService, userId, role)(),
+const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
+    getAllUsers: (active) => usersActions.getAllUsers(schoolService, active)(),
+    updateUser: (userId, role) => usersActions.updateUser(schoolService, userId, role)(),
+    findUsers: (
+        active: string, filter: string, term: string,
+    ) => usersActions.findUsers(schoolService, active, filter, term)(),
+    setShowMode: (showMode: string) => usersActions.setShowMode(showMode),
+    setTerm: (term: string) => usersActions.setTerm(term),
+    setFilterField: (filterField: string) => usersActions.setFilterField(filterField),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(Administration));

@@ -4,18 +4,18 @@ import {
 } from "../types";
 
 const getAllArticlesRequest = (): Action => ({
-    type: "ARTICLES_REQUEST",
+    type: "GET_ARTICLES_REQUEST",
 });
 
 const getAllArticlesSuccess = (articles: any): Action => ({
-    type: "ARTICLES_SUCCESS",
+    type: "GET_ARTICLES_SUCCESS",
     payload: {
         articles,
     },
 });
 
 const getAllArticlesError = (message: string): Action => ({
-    type: "ARTICLES_ERROR",
+    type: "GET_ARTICLES_ERROR",
     payload: {
         message,
     },
@@ -41,11 +41,29 @@ const getAllArticles = (
 //
 // };
 //
-// const createArticle = (
-//     schoolService: SchoolService,
-// ) => () => (dispatch: Dispatch) => {
-//
-// };
+
+const createArticleSuccess = () => ({
+    type: "CREATE_ARTICLE_SUCCESS",
+});
+
+const createArticleError = (message: string) => ({
+    type: "GET_ARTICLES_ERROR",
+    payload: {
+        message,
+    },
+});
+
+const createArticle = (
+    schoolService: SchoolService,
+    formRef: any,
+) => () => async (dispatch: Dispatch) => {
+    try {
+        await schoolService.createArticle(formRef);
+        dispatch(createArticleSuccess());
+    } catch (e) {
+        dispatch(createArticleError(e));
+    }
+};
 //
 // const updateArticle = (
 //     schoolService: SchoolService,
@@ -61,6 +79,7 @@ const getAllArticles = (
 
 const articlesActions = {
     getAllArticles,
+    createArticle,
 };
 
 export default articlesActions;

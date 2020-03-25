@@ -22,7 +22,7 @@ const usersError = (message: string): Action => ({
 
 const getAllUsers = (
     schoolService: SchoolService,
-    active: string = "",
+    active: string = "all",
 ) => () => async (dispatch: Dispatch) => {
     dispatch(usersRequest());
     try {
@@ -50,9 +50,50 @@ const updateUser = (
     }
 };
 
+const findUsers = (
+    schoolService: SchoolService,
+    active: string = "all",
+    filter: string,
+    term: string,
+) => () => async (dispatch: Dispatch) => {
+    dispatch(usersRequest());
+    try {
+        const responseData = await schoolService.getAllUsers(active, filter, term);
+        dispatch(usersSuccess(responseData));
+    } catch (e) {
+        if (e.status === 401) authActions.logout()(dispatch);
+        dispatch(usersError(e.message));
+    }
+};
+
+const setShowMode = (showMode: string) => ({
+    type: "SET_SHOW_MODE",
+    payload: {
+        showMode,
+    },
+});
+
+const setTerm = (term: string) => ({
+    type: "SET_TERM",
+    payload: {
+        term,
+    },
+});
+
+const setFilterField = (filterField: string) => ({
+    type: "SET_FILTER_FIELD",
+    payload: {
+        filterField,
+    },
+});
+
 const usersActions = {
     getAllUsers,
     updateUser,
+    findUsers,
+    setShowMode,
+    setTerm,
+    setFilterField,
 };
 
 export default usersActions;

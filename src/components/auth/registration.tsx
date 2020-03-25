@@ -13,7 +13,7 @@ import {
     regExp,
 } from "../../validation";
 import {
-    FormData, RegistrationProps, UserRegistrationInfo,
+    UserRegistrationView, RegistrationProps, UserRegistrationInfo,
 } from "../../types";
 import withSchoolService from "../hoc/with-school-service";
 import useAuthStyles from "./styles";
@@ -25,7 +25,7 @@ const Registration: React.FC<RegistrationProps> = ({
     const classes = useAuthStyles();
     const {
         register, handleSubmit, watch, errors,
-    } = useForm<FormData>();
+    } = useForm<UserRegistrationView>();
 
     const onSubmit = (data: UserRegistrationInfo) => {
         const registrationData = {

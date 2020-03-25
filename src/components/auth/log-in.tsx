@@ -10,7 +10,7 @@ import {
 import { useForm } from "react-hook-form";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
-import { FormData, UserLoginInfo, LoginProps } from "../../types";
+import { UserRegistrationView, UserLoginInfo, LoginProps } from "../../types";
 import { authActions } from "../../actions";
 import { emailErrors, passwordErrors, regExp } from "../../validation";
 import withSchoolService from "../hoc/with-school-service";
@@ -21,7 +21,7 @@ const LogIn: React.FC<LoginProps> = ({ login, authentication }): JSX.Element => 
 
     const {
         register, handleSubmit, errors,
-    } = useForm<FormData>();
+    } = useForm<UserRegistrationView>();
 
     const onSubmit = (data: UserLoginInfo) => {
         login(data);

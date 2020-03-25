@@ -14,7 +14,7 @@ export interface UserLoginInfo {
     password: string,
 }
 
-export interface FormData {
+export interface UserRegistrationView {
     email: string,
     name: string,
     password: string,
@@ -24,11 +24,11 @@ export interface FormData {
 export interface SchoolService {
     login: (userInfo: UserLoginInfo) => Promise<{}>,
     registration: (userInfo: UserRegistrationInfo) => Promise<{}>,
-    getAllUsers: (active: string | undefined) => Promise<{}>,
+    getAllUsers: (active: string | undefined, filter?: string, term?: string) => Promise<{}>,
     updateUser: (userId: string, role: string) => Promise<{}>,
     getAllArticles: (skip: number, limit: number) => Promise<{}>,
     getArticleById: () => Promise<{}>,
-    createArticle: () => Promise<{}>,
+    createArticle: (data: any) => Promise<{}>,
     updateArticle: () => Promise<{}>,
     deleteArticle: () => Promise<{}>,
 }

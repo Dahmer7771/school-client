@@ -15,7 +15,7 @@ const ArticlePictureInsert = ({ setImage }: any) => {
                 type="file"
                 onChange={(e) => {
                     if (e.target.files !== null) setImage(e.target.files[0]);
-                    if (e.target.files !== null) console.log(e.target.files);
+                    if (e.target.files !== null) console.log(e.target.files[0]);
                 }}
             />
             <label htmlFor="contained-button-file">

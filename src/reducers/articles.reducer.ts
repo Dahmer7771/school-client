@@ -9,11 +9,11 @@ const initialState = {
 
 const articlesReducer = (state: ArticlesReducerState = initialState, action: any) => {
     switch (action.type) {
-    case "ARTICLES_REQUEST":
+    case "GET_ARTICLES_REQUEST":
         return { ...state, articlesError: false, articles: [] };
-    case "ARTICLES_ERROR":
+    case "GET_ARTICLES_ERROR":
         return { ...state, articlesError: true, message: action.payload.message };
-    case "ARTICLES_SUCCESS":
+    case "GET_ARTICLES_SUCCESS":
         return { ...state, articlesError: false, articles: action.payload.articles };
     default:
         return state;
