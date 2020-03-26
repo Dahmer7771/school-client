@@ -3,12 +3,12 @@ import {
     Avatar, Card, CardContent, CardHeader, CardMedia, Typography,
 } from "@material-ui/core";
 import { PostProps } from "../../types";
-import usePostStyles from "./styles";
+import useStyles from "./styles";
 
 const Post = ({
     title, date, authorFirstChar, author, text, image,
 }: PostProps) => {
-    const classes = usePostStyles();
+    const classes = useStyles();
 
     return (
         <Card className={classes.root}>

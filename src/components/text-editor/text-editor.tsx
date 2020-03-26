@@ -7,10 +7,10 @@ import {
 import { Paper } from "@material-ui/core";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import htmlToDraft from "html-to-draftjs";
-import useArticleCreatorStyles from "./styles";
+import useStyles from "./styles";
 
 const TextEditor = ({ content, setContent }: any) => {
-    const classes = useArticleCreatorStyles();
+    const classes = useStyles();
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
     useEffect(() => {

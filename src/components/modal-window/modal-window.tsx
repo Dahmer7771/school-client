@@ -6,12 +6,12 @@ import {
 } from "@material-ui/core";
 import modalActions from "../../actions/modal.actions";
 import { ModalProps } from "../../types";
-import useModalWindowStyles from "./styles";
+import useStyles from "./styles";
 
 const ModalWindow: React.FC<ModalProps> = ({
     title, text, isModalOpen, close,
 }: ModalProps) => {
-    const classes = useModalWindowStyles();
+    const classes = useStyles();
 
     return (
         <Modal

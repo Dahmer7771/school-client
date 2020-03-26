@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useProfileDetailsStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     avatar: {
         width: "100px",
         height: "100px",
@@ -29,4 +29,4 @@ const useProfileDetailsStyles = makeStyles((theme) => ({
     },
 }));
 
-export default useProfileDetailsStyles;
+export default useStyles;

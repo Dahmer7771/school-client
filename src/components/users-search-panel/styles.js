@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useUsersSearchPanelStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     flexContainer: {
         display: "flex",
         alignItems: "flex-start",
@@ -22,4 +22,4 @@ const useUsersSearchPanelStyles = makeStyles((theme) => ({
     },
 }));
 
-export default useUsersSearchPanelStyles;
+export default useStyles;

@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useEditProfileStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     flexContainer: {
         display: "flex",
         justifyContent: "space-between",
@@ -11,4 +11,4 @@ const useEditProfileStyles = makeStyles((theme) => ({
     },
 }));
 
-export default useEditProfileStyles;
+export default useStyles;

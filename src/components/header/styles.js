@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useHeaderStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
     },
@@ -37,4 +37,4 @@ const useHeaderStyles = makeStyles((theme) => ({
     },
 }));
 
-export default useHeaderStyles;
+export default useStyles;

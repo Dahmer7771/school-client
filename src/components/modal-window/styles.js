@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useModalWindowStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     paper: {
         position: "absolute",
         width: 400,
@@ -14,4 +14,4 @@ const useModalWindowStyles = makeStyles((theme) => ({
     },
 }));
 
-export default useModalWindowStyles;
+export default useStyles;

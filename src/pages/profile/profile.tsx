@@ -3,11 +3,11 @@ import {
     Container, Grid,
 } from "@material-ui/core";
 import Timetable from "../../components/timetable";
-import useProfileStyles from "./styles";
+import useStyles from "./styles";
 import ProfileDetails from "../../components/profile-details";
 
 const Profile = ({ currentUser }: any) => {
-    const classes = useProfileStyles();
+    const classes = useStyles();
 
     return (
         <Container className={classes.container}>

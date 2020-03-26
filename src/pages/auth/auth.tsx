@@ -7,10 +7,10 @@ import LogIn from "../../components/auth/log-in";
 import ModalWindow from "../../components/modal-window/modal-window";
 import { AuthLayoutProps } from "../../types";
 import authActions from "../../actions/auth.actions";
-import useAuthStyles from "./styles";
+import useStyles from "./styles";
 
 const AuthLayout = ({ authError, errorMessage, clearAuthError }: AuthLayoutProps) => {
-    const classes = useAuthStyles();
+    const classes = useStyles();
     const location = useLocation();
 
     return (

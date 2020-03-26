@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useAuthStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     form: {
         display: "flex",
         flexDirection: "column",
@@ -20,4 +20,4 @@ const useAuthStyles = makeStyles((theme) => ({
     },
 }));
 
-export default useAuthStyles;
+export default useStyles;

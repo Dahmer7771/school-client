@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useAuthStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     auth: {
         maxWidth: "520px",
         margin: "0 auto",
@@ -27,4 +27,4 @@ const useAuthStyles = makeStyles((theme) => ({
     },
 }));
 
-export default useAuthStyles;
+export default useStyles;

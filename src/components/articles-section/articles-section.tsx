@@ -4,7 +4,7 @@ import {
 } from "@material-ui/core";
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
-import useNewsStyles from "./styles";
+import useStyles from "./styles";
 import Post from "../post/post";
 import { ArticlesSectionProps } from "../../types";
 import articlesActions from "../../actions/articles.actions";
@@ -16,7 +16,7 @@ const ArticlesSection: React.FC<ArticlesSectionProps> = ({
     getAllArticles,
     articles,
 }) => {
-    const classes = useNewsStyles();
+    const classes = useStyles();
 
     useEffect((): void => {
         getAllArticles(skip, limit);
@@ -49,9 +49,9 @@ const mapDispatchToProps = (
     dispatch: Dispatch,
     ownProps: ArticlesSectionProps,
 ) => bindActionCreators({
-    getAllArticles: (skip, limit) => {
-        return articlesActions.getAllArticles(ownProps.schoolService, skip, limit)();
-    },
+    getAllArticles: (
+        skip, limit,
+    ) => articlesActions.getAllArticles(ownProps.schoolService, skip, limit)(),
 }, dispatch);
 
 export default withSchoolService()(

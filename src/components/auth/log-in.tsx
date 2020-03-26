@@ -14,10 +14,10 @@ import { UserRegistrationView, UserLoginInfo, LoginProps } from "../../types";
 import { authActions } from "../../actions";
 import { emailErrors, passwordErrors, regExp } from "../../validation";
 import withSchoolService from "../hoc/with-school-service";
-import useAuthStyles from "./styles";
+import useStyles from "./styles";
 
 const LogIn: React.FC<LoginProps> = ({ login, authentication }): JSX.Element => {
-    const classes = useAuthStyles();
+    const classes = useStyles();
 
     const {
         register, handleSubmit, errors,

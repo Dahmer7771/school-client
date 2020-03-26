@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useScheluderStyles = makeStyles(() => ({
+const useStyles = makeStyles(() => ({
 
 }));
 
-export default useScheluderStyles;
+export default useStyles;

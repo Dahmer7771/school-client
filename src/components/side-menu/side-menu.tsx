@@ -8,12 +8,12 @@ import {
 } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import { SideMenuProps } from "../../types";
-import useSideMenuStyles from "./styles";
+import useStyles from "./styles";
 import { menuActions } from "../../actions";
 import MenuList from "../menu-list";
 
 const SideMenu = ({ isMenuOpen, hideMenu, showMenu }: SideMenuProps) => {
-    const classes = useSideMenuStyles();
+    const classes = useStyles();
 
     return (
         <SwipeableDrawer

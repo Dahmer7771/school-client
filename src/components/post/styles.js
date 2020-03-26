@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { red } from "@material-ui/core/colors";
 
-const usePostStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         display: "flex",
         margin: theme.spacing(2, 0),
@@ -38,4 +38,4 @@ const usePostStyles = makeStyles((theme) => ({
     },
 }));
 
-export default usePostStyles;
+export default useStyles;

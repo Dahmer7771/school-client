@@ -12,7 +12,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import { ElevationHeaderProps, ElevationScrollProps } from "../../types";
 import { menuActions } from "../../actions";
-import useHeaderStyles from "./styles";
+import useStyles from "./styles";
 import LogoutButton from "../logout-button/logout-button";
 
 const AuthButton = () => {
@@ -46,7 +46,7 @@ const ElevationScroll = (props: ElevationScrollProps) => {
 
 const ElevationHeader = ({ showMenu, isAuth }: ElevationHeaderProps) => {
     const history = useHistory();
-    const classes = useHeaderStyles();
+    const classes = useStyles();
 
     return (
         <>

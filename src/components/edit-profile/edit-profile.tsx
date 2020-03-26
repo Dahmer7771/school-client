@@ -8,10 +8,10 @@ import { TextField, InputLabel, Select } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 import Button from "@material-ui/core/Button";
 import profileEditorActions from "../../actions/profile-editor.actions";
-import useEditProfileStyles from "./styles";
+import useStyles from "./styles";
 
 const EditProfile = ({ isProfileEditorOpen, closeEditor }: any) => {
-    const classes = useEditProfileStyles();
+    const classes = useStyles();
 
     const handleChangeStage = (e: any) => {
         console.log("Change", e);

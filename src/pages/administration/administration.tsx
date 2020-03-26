@@ -13,6 +13,7 @@ import { usersActions } from "../../actions";
 import ArticleCreator from "../../components/article-creator";
 import Timetable from "../../components/timetable";
 import UsersSearchPanel from "../../components/users-search-panel";
+import ArticlesList from "../../components/articles-list/articles-list";
 
 const a11yProps = (index: any) => ({
     id: `simple-tab-${index}`,
@@ -24,14 +25,6 @@ const Administration = ({
     updateUser,
     users,
     currentUser,
-    findUsers,
-    showMode,
-    filterField,
-    setShowMode,
-    term,
-    setTerm,
-    loading,
-    setFilterField,
 }: any) => {
     const [value, setValue] = useState(0);
 
@@ -65,17 +58,7 @@ const Administration = ({
             </AppBar>
 
             <TabPanel value={value} index={0}>
-                <UsersSearchPanel
-                    getAllUsers={getAllUsers}
-                    findUsers={findUsers}
-                    showMode={showMode}
-                    filterField={filterField}
-                    setShowMode={setShowMode}
-                    term={term}
-                    setTerm={setTerm}
-                    loading={loading}
-                    setFilterField={setFilterField}
-                />
+                <UsersSearchPanel />
                 <UsersList
                     users={users}
                     handleChangeRole={handleChangeRole}
@@ -83,7 +66,8 @@ const Administration = ({
                 />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                <ArticleCreator />
+                {/*<ArticleCreator />*/}
+                <ArticlesList />
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <Timetable />
@@ -94,7 +78,7 @@ const Administration = ({
 
 const mapStateToProps = ({
     usersReducer: {
-        users, usersError, errorMessage, showMode, filterField, term, loading,
+        users, usersError, errorMessage,
     },
     authReducer: { currentUser },
 }: any) => ({
@@ -102,21 +86,11 @@ const mapStateToProps = ({
     usersError,
     errorMessage,
     currentUser,
-    showMode,
-    filterField,
-    term,
-    loading,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
     getAllUsers: (active) => usersActions.getAllUsers(schoolService, active)(),
     updateUser: (userId, role) => usersActions.updateUser(schoolService, userId, role)(),
-    findUsers: (
-        active: string, filter: string, term: string,
-    ) => usersActions.findUsers(schoolService, active, filter, term)(),
-    setShowMode: (showMode: string) => usersActions.setShowMode(showMode),
-    setTerm: (term: string) => usersActions.setTerm(term),
-    setFilterField: (filterField: string) => usersActions.setFilterField(filterField),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(Administration));

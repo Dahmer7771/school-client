@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useSideMenuStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     drawer: {
         width: "280px",
         flexShrink: 0,
@@ -33,4 +33,4 @@ const useSideMenuStyles = makeStyles((theme) => ({
     },
 }));
 
-export default useSideMenuStyles;
+export default useStyles;

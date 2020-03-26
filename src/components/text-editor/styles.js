@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 
-const useArticleCreatorStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     editor: {
         backgroundColor: "#fff",
         minHeight: "300px",
@@ -8,4 +8,4 @@ const useArticleCreatorStyles = makeStyles((theme) => ({
     },
 }));
 
-export default useArticleCreatorStyles;
+export default useStyles;

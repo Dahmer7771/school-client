@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import {
     TextField,
     Button,
@@ -11,12 +12,15 @@ import {
     ToggleButton,
     ToggleButtonGroup,
 } from "@material-ui/lab";
-import useUsersSearchPanelStyles from "./styles";
+import { bindActionCreators, Dispatch } from "redux";
+import useStyles from "./styles";
+import { usersActions } from "../../actions";
+import withSchoolService from "../hoc/with-school-service";
 
 const UsersSearchPanel = ({
     findUsers, showMode, filterField, setShowMode, term, setTerm, loading, setFilterField,
 }: any) => {
-    const classes = useUsersSearchPanelStyles();
+    const classes = useStyles();
 
     return (
         <>
@@ -83,4 +87,24 @@ const UsersSearchPanel = ({
     );
 };
 
-export default UsersSearchPanel;
+const mapStateToProps = ({
+    usersReducer: {
+        showMode, filterField, term, loading,
+    },
+}: any) => ({
+    showMode,
+    filterField,
+    term,
+    loading,
+});
+
+const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
+    findUsers: (
+        active: string, filter: string, term: string,
+    ) => usersActions.findUsers(schoolService, active, filter, term)(),
+    setShowMode: (showMode: string) => usersActions.setShowMode(showMode),
+    setTerm: (term: string) => usersActions.setTerm(term),
+    setFilterField: (filterField: string) => usersActions.setFilterField(filterField),
+}, dispatch);
+
+export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(UsersSearchPanel));

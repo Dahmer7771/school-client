@@ -7,14 +7,14 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import SchoolIcon from "@material-ui/icons/School";
 import MailIcon from "@material-ui/icons/Mail";
 import CreateIcon from "@material-ui/icons/Create";
-import useProfileDetailsStyles from "./styles";
+import useStyles from "./styles";
 import profileEditorActions from "../../actions/profile-editor.actions";
 import EditProfile from "../edit-profile";
 
 const ProfileDetails = ({
     name, email, grade, openEditor,
 }: any) => {
-    const classes = useProfileDetailsStyles();
+    const classes = useStyles();
 
     return (
         <>
