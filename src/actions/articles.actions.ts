@@ -2,6 +2,7 @@ import { Dispatch } from "redux";
 import {
     Action, SchoolService,
 } from "../types";
+import { authActions } from "./index";
 
 const getAllArticlesRequest = (): Action => ({
     type: "GET_ARTICLES_REQUEST",
@@ -32,6 +33,7 @@ const getAllArticles = (
         const responseData = await schoolService.getAllArticles(skip, limit, term);
         dispatch(getAllArticlesSuccess(responseData));
     } catch (e) {
+        if (e.status === 401) authActions.logout()(dispatch);
         dispatch(getAllArticlesError(e.message));
     }
 };
@@ -58,6 +60,7 @@ const getArticleById = (
         const responseData = await schoolService.getArticleById(id);
         dispatch(getArticleByIdSuccess(responseData));
     } catch (e) {
+        if (e.status === 401) authActions.logout()(dispatch);
         dispatch(getArticleByIdError(e.message));
     }
 };
@@ -81,6 +84,7 @@ const createArticle = (
         await schoolService.createArticle(data);
         dispatch(createArticleSuccess());
     } catch (e) {
+        if (e.status === 401) authActions.logout()(dispatch);
         dispatch(createArticleError(e.message));
     }
 };
@@ -91,11 +95,10 @@ const updateArticle = (
     data: any,
 ) => () => async (dispatch: Dispatch) => {
     try {
-        console.log(id);
-        const res = await schoolService.updateArticle(id, data);
-        console.log(res);
+        await schoolService.updateArticle(id, data);
         dispatch(createArticleSuccess());
     } catch (e) {
+        if (e.status === 401) authActions.logout()(dispatch);
         dispatch(createArticleError(e.message));
     }
 };
@@ -116,6 +119,7 @@ const deleteArticle = (
         const responseData = await schoolService.getAllArticles(0, 0, "");
         dispatch(getAllArticlesSuccess(responseData));
     } catch (e) {
+        if (e.status === 401) authActions.logout()(dispatch);
         deleteArticleError(e.message);
     }
 };
@@ -127,12 +131,24 @@ const setArticlesTerm = (term: string) => ({
     },
 });
 
-const setArticleEditing = (editing: boolean, id: string) => ({
+const setArticleEditing = (editing: boolean, id?: string) => ({
     type: "SET_ARTICLE_EDITING",
     payload: {
         editing,
         id,
     },
+});
+
+const setUpdate = () => ({
+    type: "SET_UPDATE",
+});
+
+const setCreate = () => ({
+    type: "SET_CREATE",
+});
+
+const clearCurrentArticle = () => ({
+    type: "CLEAR_CURRENT_ARTICLE",
 });
 
 const articlesActions = {
@@ -143,6 +159,9 @@ const articlesActions = {
     setArticleEditing,
     getArticleById,
     updateArticle,
+    setUpdate,
+    setCreate,
+    clearCurrentArticle,
 };
 
 export default articlesActions;

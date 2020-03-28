@@ -19,7 +19,7 @@ import ArticlesSearchPanel from "../articles-search-panel";
 import useStyles from "./styles";
 
 const ArticlesList = ({
-    articles, getAllArticles, deleteArticle, setArticleEditing,
+    articles, getAllArticles, deleteArticle, setArticleEditing, setUpdate,
 }: any) => {
     const classes = useStyles();
 
@@ -48,7 +48,14 @@ const ArticlesList = ({
                                         <Button onClick={() => deleteArticle(_id)} className={classes.button} size="small">
                                             <DeleteForeverIcon />
                                         </Button>
-                                        <Button onClick={() => setArticleEditing(true, _id)} className={classes.button} size="small">
+                                        <Button
+                                            onClick={() => {
+                                                setArticleEditing(true, _id);
+                                                setUpdate();
+                                            }}
+                                            className={classes.button}
+                                            size="small"
+                                        >
                                             <CreateIcon />
                                         </Button>
                                     </div>
@@ -96,6 +103,7 @@ const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindA
         editing: boolean,
         id: string,
     ) => articlesActions.setArticleEditing(editing, id),
+    setUpdate: () => articlesActions.setUpdate(),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(ArticlesList));

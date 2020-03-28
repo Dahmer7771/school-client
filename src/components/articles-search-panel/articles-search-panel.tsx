@@ -9,12 +9,13 @@ import articlesActions from "../../actions/articles.actions";
 import withSchoolService from "../hoc/with-school-service";
 import useStyles from "./styles";
 
-const ArticlesSearchPanel = ({ term, setArticlesTerm, getAllArticles }: any) => {
+const ArticlesSearchPanel = ({
+    term, setArticlesTerm, getAllArticles, setArticleEditing, setCreate,
+}: any) => {
     const classes = useStyles();
 
     const onSubmit = (e: any) => {
         e.preventDefault();
-        console.log("submit");
         getAllArticles(term);
     };
 
@@ -29,6 +30,17 @@ const ArticlesSearchPanel = ({ term, setArticlesTerm, getAllArticles }: any) => 
                 onChange={(e) => setArticlesTerm(e.target.value)}
             />
             <Button type="submit" className={classes.button} variant="contained" color="primary">Поиск</Button>
+            <Button
+                className={classes.button}
+                variant="contained"
+                color="primary"
+                onClick={() => {
+                    setArticleEditing();
+                    setCreate();
+                }}
+            >
+                Создать
+            </Button>
         </form>
     );
 };
@@ -40,6 +52,8 @@ const mapStateToProps = ({ articlesReducer: { term } }: any) => ({
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
     setArticlesTerm: (term: string) => articlesActions.setArticlesTerm(term),
     getAllArticles: (term: string) => articlesActions.getAllArticles(schoolService, 0, 0, term)(),
+    setArticleEditing: () => articlesActions.setArticleEditing(true),
+    setCreate: () => articlesActions.setCreate(),
 }, dispatch);
 
 export default withSchoolService()(

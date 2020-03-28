@@ -2,13 +2,17 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import { bindActionCreators, Dispatch } from "redux";
+import CloseIcon from "@material-ui/icons/Close";
 import TextEditor from "../text-editor";
 import ArticleTitleInput from "../article-title-input";
 import ArticlePictureInsert from "../article-picture-insert";
-import useStyles from "./styles";
 import articleCreatorActions from "../../actions/article-creator.actions";
 import articlesActions from "../../actions/articles.actions";
 import withSchoolService from "../hoc/with-school-service";
+import Spinner from "../spinner/spinner";
+import useStyles from "./styles";
+import DialogWindow from "../dialog-window/dialog-window";
+import dialogWindowActions from "../../actions/dialog-window.actions";
 
 const ArticleCreator = ({
     title,
@@ -22,7 +26,16 @@ const ArticleCreator = ({
     getArticleById,
     editingArticleId,
     currentArticle,
-    editing,
+    clearCurrentArticle,
+    setArticleEditing,
+    create,
+    update,
+    dialogWindowOpen,
+    openDialogWindow,
+    closeDialogWindow,
+    dialogTitle,
+    dialogContent,
+    dialogCb,
 }: any) => {
     const classes = useStyles();
 
@@ -42,53 +55,84 @@ const ArticleCreator = ({
         const data: any = new FormData();
         data.append("title", title);
         data.append("content", content);
-        if (image) data.append("image", image, "image");
-        console.log(currentArticle);
-        if (editing) updateArticle(currentArticle._id, data);
-        else createArticle(data);
+        if (image) data.append("image", image);
+        if (update) updateArticle(currentArticle._id, data);
+        if (create) createArticle(data);
     };
 
+    const onClose = () => {
+        setArticleEditing(false);
+        setTitle("");
+        setImage(null);
+        setContent("");
+        clearCurrentArticle();
+    };
+
+    if (update && !content) return <Spinner />;
+
+    console.log(dialogTitle);
+    console.log(dialogContent);
+    console.log(dialogCb);
+
     return (
-        <form id="create-article-form" onSubmit={onSubmit}>
-            <div className={classes.flexContainer}>
-                <ArticleTitleInput
-                    title={title}
-                    setTitle={setTitle}
-                />
-                <ArticlePictureInsert
-                    setImage={setImage}
-                />
+        <>
+            <div className={classes.closeButton}>
+                <Button
+                    onClick={() => {
+                        openDialogWindow(
+                            "Сonfirm closing form",
+                            "Do you want to close?",
+                            onClose,
+                        );
+                    }}
+                >
+                    <CloseIcon />
+                </Button>
             </div>
+            <form id="create-article-form" onSubmit={onSubmit}>
+                <div className={classes.flexContainer}>
+                    <ArticleTitleInput
+                        title={title}
+                        setTitle={setTitle}
+                    />
+                    <ArticlePictureInsert
+                        setImage={setImage}
+                    />
+                </div>
 
-            {editing && content && (
                 <TextEditor
                     content={content}
                     setContent={setContent}
                 />
-            )}
 
-            {!editing && (
-                <TextEditor
-                    content={content}
-                    setContent={setContent}
-                />
-            )}
-
-            <Button
-                type="submit"
-                color="primary"
-                variant="contained"
-                className={classes.submit}
-            >
-                Click
-            </Button>
-        </form>
+                <Button
+                    type="submit"
+                    color="primary"
+                    variant="contained"
+                    className={classes.submit}
+                >
+                    Click
+                </Button>
+            </form>
+            <DialogWindow
+                open={dialogWindowOpen}
+                handleClose={closeDialogWindow}
+                title={dialogTitle}
+                content={dialogContent}
+                cb={dialogCb}
+            />
+        </>
     );
 };
 
 const mapStateToProps = ({
     articleCreatorReducer: { title, image, content },
-    articlesReducer: { currentArticle, editingArticleId, editing },
+    articlesReducer: {
+        currentArticle, editingArticleId, editing, create, update,
+    },
+    dialogWindowReducer: {
+        dialogWindowOpen, dialogTitle, dialogContent, dialogCb,
+    },
 }: any) => ({
     title,
     image,
@@ -96,6 +140,12 @@ const mapStateToProps = ({
     currentArticle,
     editingArticleId,
     editing,
+    create,
+    update,
+    dialogWindowOpen,
+    dialogTitle,
+    dialogContent,
+    dialogCb,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
@@ -108,6 +158,14 @@ const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindA
     setImage: (image: any) => articleCreatorActions.setArticleImage(image),
     setContent: (content: string) => articleCreatorActions.setArticleContent(content),
     getArticleById: (id: string) => articlesActions.getArticleById(schoolService, id)(),
+    setArticleEditing: (editing: boolean) => articlesActions.setArticleEditing(editing),
+    clearCurrentArticle: () => articlesActions.clearCurrentArticle(),
+    openDialogWindow: (
+        title: string,
+        content: string,
+        cb: any,
+    ) => dialogWindowActions.openDialogWindow(title, content, cb),
+    closeDialogWindow: () => dialogWindowActions.closeDialogWindow(),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(ArticleCreator));

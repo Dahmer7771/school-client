@@ -9,6 +9,25 @@ const initialState = {
     editingArticleId: null,
     articleByIdError: false,
     articleByIdMessage: "",
+    update: false,
+    create: false,
+};
+
+const setArticleEditing = (state: any, action: any) => {
+    if (action.payload.editing) {
+        return {
+            ...state,
+            editing: action.payload.editing,
+            editingArticleId: action.payload.id,
+        };
+    }
+    return {
+        ...state,
+        editing: false,
+        editingArticleId: null,
+        update: false,
+        create: false,
+    };
 };
 
 const articlesReducer = (state: any = initialState, action: any) => {
@@ -45,11 +64,7 @@ const articlesReducer = (state: any = initialState, action: any) => {
             deleteErrorMessage: action.payload.message,
         };
     case "SET_ARTICLE_EDITING":
-        return {
-            ...state,
-            editing: action.payload.editing,
-            editingArticleId: action.payload.id,
-        };
+        return setArticleEditing(state, action);
     case "GET_ARTICLE_BY_ID_SUCCESS":
         return {
             ...state,
@@ -60,6 +75,23 @@ const articlesReducer = (state: any = initialState, action: any) => {
             ...state,
             articleByIdError: true,
             articleByIdMessage: action.payload.message,
+        };
+    case "SET_UPDATE":
+        return {
+            ...state,
+            update: true,
+            create: false,
+        };
+    case "SET_CREATE":
+        return {
+            ...state,
+            update: false,
+            create: true,
+        };
+    case "CLEAR_CURRENT_ARTICLE":
+        return {
+            ...state,
+            currentArticle: null,
         };
     default:
         return state;

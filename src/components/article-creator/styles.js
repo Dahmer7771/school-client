@@ -10,6 +10,10 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: "auto",
         display: "block",
     },
+    closeButton: {
+        display: "flex",
+        justifyContent: "flex-end",
+    },
 }));
 
 export default useStyles;
