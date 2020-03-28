@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import { bindActionCreators, Dispatch } from "redux";
@@ -11,25 +11,41 @@ import articlesActions from "../../actions/articles.actions";
 import withSchoolService from "../hoc/with-school-service";
 
 const ArticleCreator = ({
-    title, setTitle, image, setImage, content, setContent, createArticle,
+    title,
+    setTitle,
+    image,
+    setImage,
+    content,
+    setContent,
+    createArticle,
+    updateArticle,
+    getArticleById,
+    editingArticleId,
+    currentArticle,
+    editing,
 }: any) => {
     const classes = useStyles();
+
+    useEffect(() => {
+        if (editingArticleId && currentArticle === null) {
+            getArticleById(editingArticleId);
+        }
+        if (editingArticleId && currentArticle) {
+            setTitle(currentArticle.title);
+            setImage(currentArticle.image);
+            setContent(currentArticle.content);
+        }
+    }, [currentArticle, editingArticleId, setTitle, setImage, setContent, getArticleById]);
+
     const onSubmit = (e: any) => {
         e.preventDefault();
-        console.log("title", title);
-        console.log("image", image);
-        console.log("content", content);
         const data: any = new FormData();
         data.append("title", title);
-        data.append("image", image, "image");
         data.append("content", content);
-        // const data: any = {
-        //     title,
-        //     image,
-        //     content,
-        // };
-        console.log(data);
-        createArticle(data);
+        if (image) data.append("image", image, "image");
+        console.log(currentArticle);
+        if (editing) updateArticle(currentArticle._id, data);
+        else createArticle(data);
     };
 
     return (
@@ -43,10 +59,21 @@ const ArticleCreator = ({
                     setImage={setImage}
                 />
             </div>
-            <TextEditor
-                content={content}
-                setContent={setContent}
-            />
+
+            {editing && content && (
+                <TextEditor
+                    content={content}
+                    setContent={setContent}
+                />
+            )}
+
+            {!editing && (
+                <TextEditor
+                    content={content}
+                    setContent={setContent}
+                />
+            )}
+
             <Button
                 type="submit"
                 color="primary"
@@ -59,17 +86,28 @@ const ArticleCreator = ({
     );
 };
 
-const mapStateToProps = ({ articleCreatorReducer: { title, image, content } }: any) => ({
+const mapStateToProps = ({
+    articleCreatorReducer: { title, image, content },
+    articlesReducer: { currentArticle, editingArticleId, editing },
+}: any) => ({
     title,
     image,
     content,
+    currentArticle,
+    editingArticleId,
+    editing,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
-    createArticle: (data:any) => articlesActions.createArticle(schoolService, data)(),
+    createArticle: (data: any) => articlesActions.createArticle(schoolService, data)(),
+    updateArticle: (
+        id: string,
+        data: any,
+    ) => articlesActions.updateArticle(schoolService, id, data)(),
     setTitle: (title: string) => articleCreatorActions.setArticleTitle(title),
     setImage: (image: any) => articleCreatorActions.setArticleImage(image),
     setContent: (content: string) => articleCreatorActions.setArticleContent(content),
+    getArticleById: (id: string) => articlesActions.getArticleById(schoolService, id)(),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(ArticleCreator));

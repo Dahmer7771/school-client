@@ -26,11 +26,11 @@ export interface SchoolService {
     registration: (userInfo: UserRegistrationInfo) => Promise<{}>,
     getAllUsers: (active: string | undefined, filter?: string, term?: string) => Promise<{}>,
     updateUser: (userId: string, role: string) => Promise<{}>,
-    getAllArticles: (skip: number, limit: number) => Promise<{}>,
-    getArticleById: () => Promise<{}>,
+    getAllArticles: (skip: number, limit: number, term?: string) => Promise<{}>,
+    getArticleById: (id: string) => Promise<{}>,
     createArticle: (data: any) => Promise<{}>,
-    updateArticle: () => Promise<{}>,
-    deleteArticle: () => Promise<{}>,
+    updateArticle: (id: string, data: any) => Promise<{}>,
+    deleteArticle: (id: string) => Promise<{}>,
 }
 
 export interface LoginProps {

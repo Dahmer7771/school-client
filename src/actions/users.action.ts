@@ -73,8 +73,8 @@ const setShowMode = (showMode: string) => ({
     },
 });
 
-const setTerm = (term: string) => ({
-    type: "SET_TERM",
+const setUsersTerm = (term: string) => ({
+    type: "SET_USERS_TERM",
     payload: {
         term,
     },
@@ -92,7 +92,7 @@ const usersActions = {
     updateUser,
     findUsers,
     setShowMode,
-    setTerm,
+    setUsersTerm,
     setFilterField,
 };
 

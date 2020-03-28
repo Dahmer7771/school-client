@@ -18,14 +18,14 @@ import { usersActions } from "../../actions";
 import withSchoolService from "../hoc/with-school-service";
 
 const UsersSearchPanel = ({
-    findUsers, showMode, filterField, setShowMode, term, setTerm, loading, setFilterField,
+    findUsers, showMode, filterField, setShowMode, term, setUsersTerm, loading, setFilterField,
 }: any) => {
     const classes = useStyles();
 
     return (
         <>
             <div className={classes.flexContainer}>
-                <TextField onChange={(e) => setTerm(e.target.value)} className={classes.input} label="Поиск" variant="outlined" size="small" />
+                <TextField onChange={(e) => setUsersTerm(e.target.value)} className={classes.input} label="Поиск" variant="outlined" size="small" />
                 <Button
                     disabled={loading}
                     variant="contained"
@@ -103,7 +103,7 @@ const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindA
         active: string, filter: string, term: string,
     ) => usersActions.findUsers(schoolService, active, filter, term)(),
     setShowMode: (showMode: string) => usersActions.setShowMode(showMode),
-    setTerm: (term: string) => usersActions.setTerm(term),
+    setUsersTerm: (term: string) => usersActions.setUsersTerm(term),
     setFilterField: (filterField: string) => usersActions.setFilterField(filterField),
 }, dispatch);
 

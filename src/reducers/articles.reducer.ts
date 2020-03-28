@@ -1,20 +1,66 @@
-import { ArticlesReducerState } from "../types";
-
 const initialState = {
     articles: [],
     currentArticle: null,
     articlesError: false,
     articlesMessage: "",
+    term: "",
+    deleteErrorMessage: "",
+    editing: false,
+    editingArticleId: null,
+    articleByIdError: false,
+    articleByIdMessage: "",
 };
 
-const articlesReducer = (state: ArticlesReducerState = initialState, action: any) => {
+const articlesReducer = (state: any = initialState, action: any) => {
     switch (action.type) {
     case "GET_ARTICLES_REQUEST":
-        return { ...state, articlesError: false, articles: [] };
+        return {
+            ...state,
+            articlesError: false,
+            articles: [],
+            loading: true,
+        };
     case "GET_ARTICLES_ERROR":
-        return { ...state, articlesError: true, message: action.payload.message };
+        return {
+            ...state,
+            articlesError: true,
+            message: action.payload.message,
+            loading: false,
+        };
     case "GET_ARTICLES_SUCCESS":
-        return { ...state, articlesError: false, articles: action.payload.articles };
+        return {
+            ...state,
+            articlesError: false,
+            articles: action.payload.articles,
+            loading: false,
+        };
+    case "SET_ARTICLES_TERM":
+        return {
+            ...state,
+            term: action.payload.term,
+        };
+    case "DELETE_MESSAGE_ERROR":
+        return {
+            ...state,
+            deleteErrorMessage: action.payload.message,
+        };
+    case "SET_ARTICLE_EDITING":
+        return {
+            ...state,
+            editing: action.payload.editing,
+            editingArticleId: action.payload.id,
+        };
+    case "GET_ARTICLE_BY_ID_SUCCESS":
+        return {
+            ...state,
+            currentArticle: action.payload.article,
+        };
+    case "GET_ARTICLE_BY_ID_ERROR":
+        return {
+            ...state,
+            articleByIdError: true,
+            articleByIdMessage: action.payload.message,
+        };
     default:
         return state;
     }

@@ -63,8 +63,8 @@ class SchoolService {
         await this.getResource(`/user/${userId}`, "PATCH", body)
     );
 
-    getAllArticles = async (skip: number = 0, limit: number = 0) => (
-        await this.getResource(`/article?limit=${limit}&skip=${skip}`, "GET")
+    getAllArticles = async (skip: number = 0, limit: number = 0, term: string = "") => (
+        await this.getResource(`/article?limit=${limit}&skip=${skip}&term=${term}`, "GET")
     );
 
     getArticleById = async (articleId: string) => (
@@ -76,7 +76,7 @@ class SchoolService {
     );
 
     updateArticle = async (articleId: string, body: {}) => (
-        await this.getResource(`/article/${articleId}`, "PATCH", body)
+        await this.getResource(`/article/${articleId}`, "PATCH", body, true)
     );
 
     deleteArticle = async (articleId: string) => (

@@ -14,8 +14,11 @@ const useStyles = makeStyles((theme) => ({
         "-webkit-box-orient": "vertical",
         overflow: "hidden",
         margin: 0,
+        "& p": {
+            margin: 0,
+        },
     },
-    contentContainer: {
+    content: {
         marginLeft: theme.spacing(1),
         width: "100%",
         display: "flex",
@@ -23,10 +26,10 @@ const useStyles = makeStyles((theme) => ({
     },
     secondaryText: {
         fontSize: "14px",
-        "& p": {
-            marginTop: theme.spacing(1),
-            marginBottom: theme.spacing(1),
-        },
+        // "& p": {
+        //     marginTop: theme.spacing(1),
+        //     marginBottom: theme.spacing(1),
+        // },
     },
     date: {
         width: "200px",
@@ -34,6 +37,21 @@ const useStyles = makeStyles((theme) => ({
         textAlign: "right",
         fontSize: "12px",
         color: "rgb(0, 0, 0, 0.5)",
+    },
+    titleAndButtons: {
+        display: "flex",
+        marginLeft: theme.spacing(1),
+        "& > div": {
+            flexGrow: 1,
+        },
+    },
+    contentWrapper: {
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+    },
+    button: {
+        minWidth: "auto",
     },
 }));
 

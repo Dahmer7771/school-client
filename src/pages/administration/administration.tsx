@@ -13,7 +13,7 @@ import { usersActions } from "../../actions";
 import ArticleCreator from "../../components/article-creator";
 import Timetable from "../../components/timetable";
 import UsersSearchPanel from "../../components/users-search-panel";
-import ArticlesList from "../../components/articles-list/articles-list";
+import ArticlesList from "../../components/articles-list";
 
 const a11yProps = (index: any) => ({
     id: `simple-tab-${index}`,
@@ -25,6 +25,7 @@ const Administration = ({
     updateUser,
     users,
     currentUser,
+    editing,
 }: any) => {
     const [value, setValue] = useState(0);
 
@@ -66,8 +67,7 @@ const Administration = ({
                 />
             </TabPanel>
             <TabPanel value={value} index={1}>
-                {/*<ArticleCreator />*/}
-                <ArticlesList />
+                {editing ? <ArticleCreator /> : <ArticlesList />}
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <Timetable />
@@ -81,11 +81,13 @@ const mapStateToProps = ({
         users, usersError, errorMessage,
     },
     authReducer: { currentUser },
+    articlesReducer: { editing },
 }: any) => ({
     users,
     usersError,
     errorMessage,
     currentUser,
+    editing,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({

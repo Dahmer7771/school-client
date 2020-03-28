@@ -7,13 +7,20 @@ import {
     Avatar,
     Typography,
     Divider,
+    Button,
+    Paper,
 } from "@material-ui/core";
+import DeleteForeverIcon from "@material-ui/icons/DeleteForever";
+import CreateIcon from "@material-ui/icons/Create";
 import { bindActionCreators, Dispatch } from "redux";
-import useStyles from "./styles";
 import withSchoolService from "../hoc/with-school-service";
 import articlesActions from "../../actions/articles.actions";
+import ArticlesSearchPanel from "../articles-search-panel";
+import useStyles from "./styles";
 
-const ArticlesList = ({ articles, getAllArticles }: any) => {
+const ArticlesList = ({
+    articles, getAllArticles, deleteArticle, setArticleEditing,
+}: any) => {
     const classes = useStyles();
 
     useEffect(() => {
@@ -21,53 +28,74 @@ const ArticlesList = ({ articles, getAllArticles }: any) => {
     }, [getAllArticles]);
 
     return (
-        <List className={classes.root}>
-            {articles.map(({
-                _id, title, content, image, date,
-            }: any, index: number) => (
-                <React.Fragment key={_id}>
-                    <ListItem alignItems="flex-start">
-                        <ListItemAvatar>
-                            <Avatar alt="Remy Sharp" src={image} />
-                        </ListItemAvatar>
-                        <div className={classes.contentContainer}>
-                            <div className="primaryText">
-                                {title}
-                            </div>
-                            <div className={classes.secondaryText}>
-                                <Typography
-                                    component="span"
-                                    variant="body2"
-                                    className={classes.inline}
-                                    color="textPrimary"
-                                >
-                                    Ali Connors
-                                </Typography>
-                                <div
-                                    dangerouslySetInnerHTML={{ __html: content }}
-                                    className={classes.contentPreview}
-                                />
-                            </div>
-                            <div className={classes.date}>
-                                {date}
-                            </div>
-                        </div>
-                    </ListItem>
-                    {(index !== articles.length - 1) && <Divider component="li" />}
-                </React.Fragment>
-            ))}
-        </List>
+        <>
+            <ArticlesSearchPanel />
+            <Paper>
+                <List className={classes.root}>
+                    {articles.map(({
+                        _id, title, content, image, date,
+                    }: any, index: number) => (
+                        <React.Fragment key={_id}>
+                            <ListItem alignItems="flex-start">
+                                <ListItemAvatar>
+                                    <Avatar alt="Remy Sharp" src={image} />
+                                </ListItemAvatar>
+                                <div className={classes.contentWrapper}>
+                                    <div className={classes.titleAndButtons}>
+                                        <div className="primaryText">
+                                            {title}
+                                        </div>
+                                        <Button onClick={() => deleteArticle(_id)} className={classes.button} size="small">
+                                            <DeleteForeverIcon />
+                                        </Button>
+                                        <Button onClick={() => setArticleEditing(true, _id)} className={classes.button} size="small">
+                                            <CreateIcon />
+                                        </Button>
+                                    </div>
+                                    <div className={classes.content}>
+                                        <div className={classes.secondaryText}>
+                                            <Typography
+                                                component="span"
+                                                variant="body2"
+                                                className={classes.inline}
+                                                color="textPrimary"
+                                            >
+                                                Ali Connors
+                                            </Typography>
+                                            <div
+                                                dangerouslySetInnerHTML={{ __html: content }}
+                                                className={classes.contentPreview}
+                                            />
+                                        </div>
+                                        <div className={classes.date}>
+                                            {date}
+                                        </div>
+                                    </div>
+                                </div>
+                            </ListItem>
+                            {(index !== articles.length - 1) && <Divider component="li" />}
+                        </React.Fragment>
+                    ))}
+                </List>
+            </Paper>
+        </>
     );
 };
 
-const mapStateToProps = ({ articlesReducer: { articles } }: any) => ({
+const mapStateToProps = ({ articlesReducer: { articles, editing } }: any) => ({
     articles,
+    editing,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
     getAllArticles: (
         skip, limit,
     ) => articlesActions.getAllArticles(schoolService, skip, limit)(),
+    deleteArticle: (id: string) => articlesActions.deleteArticle(schoolService, id)(),
+    setArticleEditing: (
+        editing: boolean,
+        id: string,
+    ) => articlesActions.setArticleEditing(editing, id),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(ArticlesList));

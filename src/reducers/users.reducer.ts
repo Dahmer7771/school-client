@@ -49,6 +49,11 @@ const usersReducer = (state: any = initialState, action: any) => {
             ...state,
             filterField: action.payload.filterField,
         };
+    case "SET_USERS_TERM":
+        return {
+            ...state,
+            term: action.payload.term,
+        };
     default:
         return state;
     }
