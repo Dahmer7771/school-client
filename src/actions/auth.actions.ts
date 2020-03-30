@@ -94,6 +94,7 @@ const authActions = {
     registration,
     clearAuthError,
     checkAuthorization,
+    loginSuccess,
 };
 
 export default authActions;

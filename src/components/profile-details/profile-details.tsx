@@ -8,11 +8,11 @@ import SchoolIcon from "@material-ui/icons/School";
 import MailIcon from "@material-ui/icons/Mail";
 import CreateIcon from "@material-ui/icons/Create";
 import useStyles from "./styles";
-import profileEditorActions from "../../actions/profile-editor.actions";
 import EditProfile from "../edit-profile";
+import editProfileActions from "../../actions/edit-profile.actions";
 
 const ProfileDetails = ({
-    name, email, grade, openEditor,
+    currentUser, openEditor,
 }: any) => {
     const classes = useStyles();
 
@@ -32,15 +32,15 @@ const ProfileDetails = ({
                     <div className={classes.detailsText}>
                         <AccountCircleIcon className={classes.detailsIcon} />
                         <Typography variant="body1">
-                            {name}
+                            {currentUser.name}
                         </Typography>
                     </div>
                     <div className={classes.detailsText}>
                         <SchoolIcon className={classes.detailsIcon} />
                         <Typography variant="body1">
                             {
-                                grade
-                                    ? `Ученик(ца) ${grade} класса`
+                                currentUser.grade
+                                    ? `Ученик(ца) ${currentUser.grade} класса`
                                     : (
                                         <span className={classes.warningText}>
                                             Укажите свой класс
@@ -52,7 +52,7 @@ const ProfileDetails = ({
                     <div className={classes.detailsText}>
                         <MailIcon className={classes.detailsIcon} />
                         <Typography variant="body1">
-                            {email}
+                            {currentUser.email}
                         </Typography>
                     </div>
                 </div>
@@ -64,16 +64,14 @@ const ProfileDetails = ({
 
 const mapStateToProps = ({
     authReducer: {
-        currentUser: { name, email, grade },
+        currentUser,
     },
 }: any) => ({
-    name,
-    email,
-    grade,
+    currentUser,
 });
 
 const mapDispatchToProps = {
-    openEditor: () => profileEditorActions.openProfileEditor(),
+    openEditor: () => editProfileActions.openProfileEditor(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileDetails);

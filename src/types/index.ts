@@ -21,11 +21,19 @@ export interface UserRegistrationView {
     passwordConfirm: string
 }
 
+export interface ProfileDetailsView {
+    email: string,
+    name: string,
+    grade: string,
+}
+
 export interface SchoolService {
     login: (userInfo: UserLoginInfo) => Promise<{}>,
     registration: (userInfo: UserRegistrationInfo) => Promise<{}>,
     getAllUsers: (active: string | undefined, filter?: string, term?: string) => Promise<{}>,
-    updateUser: (userId: string, role: string) => Promise<{}>,
+    updateUser: (userId: string, data: {}) => Promise<{
+        token: string;
+    }>,
     getAllArticles: (skip: number, limit: number, term?: string) => Promise<{}>,
     getArticleById: (id: string) => Promise<{}>,
     createArticle: (data: any) => Promise<{}>,

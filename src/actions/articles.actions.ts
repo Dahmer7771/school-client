@@ -65,15 +65,19 @@ const getArticleById = (
     }
 };
 
-const createArticleSuccess = () => ({
-    type: "CREATE_ARTICLE_SUCCESS",
+const updateOrCreateArticleSuccess = () => ({
+    type: "UPDATE_OR_CREATE_ARTICLE_SUCCESS",
 });
 
-const createArticleError = (message: string) => ({
-    type: "GET_ARTICLES_ERROR",
+const updateOrCreateArticleError = (updateOrCreateMessage: string) => ({
+    type: "UPDATE_OR_CREATE_ARTICLE_ERROR",
     payload: {
-        message,
+        updateOrCreateMessage,
     },
+});
+
+const clearUpdateAndCreateError = () => ({
+    type: "CLEAR_UPDATE_AND_CREATE_ERROR",
 });
 
 const createArticle = (
@@ -82,10 +86,10 @@ const createArticle = (
 ) => () => async (dispatch: Dispatch) => {
     try {
         await schoolService.createArticle(data);
-        dispatch(createArticleSuccess());
+        dispatch(updateOrCreateArticleSuccess());
     } catch (e) {
         if (e.status === 401) authActions.logout()(dispatch);
-        dispatch(createArticleError(e.message));
+        dispatch(updateOrCreateArticleError(e.message));
     }
 };
 
@@ -96,10 +100,10 @@ const updateArticle = (
 ) => () => async (dispatch: Dispatch) => {
     try {
         await schoolService.updateArticle(id, data);
-        dispatch(createArticleSuccess());
+        dispatch(updateOrCreateArticleSuccess());
     } catch (e) {
         if (e.status === 401) authActions.logout()(dispatch);
-        dispatch(createArticleError(e.message));
+        dispatch(updateOrCreateArticleError(e.message));
     }
 };
 
@@ -162,6 +166,7 @@ const articlesActions = {
     setUpdate,
     setCreate,
     clearCurrentArticle,
+    clearUpdateAndCreateError,
 };
 
 export default articlesActions;

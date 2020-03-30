@@ -22,11 +22,13 @@ const UsersList = ({
         if (currentUser._id === id) return;
         const role = event.target.value;
         updateUser(id, { role });
+        getAllUsers("all");
     };
 
     const handleChangeActivity = (id: string, active: boolean) => {
         if (currentUser._id === id) return;
         updateUser(id, { active });
+        getAllUsers("all");
     };
 
     useEffect(() => {
@@ -80,7 +82,7 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
     getAllUsers: (active) => usersActions.getAllUsers(schoolService, active)(),
-    updateUser: (userId, role) => usersActions.updateUser(schoolService, userId, role)(),
+    updateUser: (userId, data) => usersActions.updateUser(schoolService, userId, data)(),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(UsersList));

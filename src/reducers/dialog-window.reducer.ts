@@ -3,6 +3,7 @@ const initialState = {
     dialogTitle: "",
     dialogContent: "",
     dialogCb: null,
+    confirm: false,
 };
 
 const dialogWindowReducer = (state: object = initialState, action: any) => {
@@ -13,6 +14,7 @@ const dialogWindowReducer = (state: object = initialState, action: any) => {
             dialogTitle: action.payload.dialogTitle,
             dialogContent: action.payload.dialogContent,
             dialogCb: action.payload.dialogCb,
+            confirm: action.payload.confirm,
         };
     case "CLOSE_DIALOG_WINDOW":
         return {
@@ -20,6 +22,7 @@ const dialogWindowReducer = (state: object = initialState, action: any) => {
             dialogTitle: "",
             dialogContent: "",
             dialogCb: null,
+            confirm: false,
         };
     default:
         return state;

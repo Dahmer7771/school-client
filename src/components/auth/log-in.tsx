@@ -26,6 +26,7 @@ const LogIn: React.FC<LoginProps> = ({ login, authentication }): JSX.Element => 
     const onSubmit = (data: UserLoginInfo) => {
         login(data);
     };
+
     return (
         <form className={classes.form} onSubmit={handleSubmit(onSubmit)}>
             <Typography variant="h5" align="center" gutterBottom>

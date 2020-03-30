@@ -11,6 +11,8 @@ const initialState = {
     articleByIdMessage: "",
     update: false,
     create: false,
+    updateOrCreateError: null,
+    updateOrCreateMessage: "",
 };
 
 const setArticleEditing = (state: any, action: any) => {
@@ -81,17 +83,37 @@ const articlesReducer = (state: any = initialState, action: any) => {
             ...state,
             update: true,
             create: false,
+            operationSuccess: null,
         };
     case "SET_CREATE":
         return {
             ...state,
             update: false,
             create: true,
+            operationSuccess: null,
         };
     case "CLEAR_CURRENT_ARTICLE":
         return {
             ...state,
             currentArticle: null,
+        };
+    case "UPDATE_OR_CREATE_ARTICLE_SUCCESS":
+        return {
+            ...state,
+            updateOrCreateError: false,
+            updateOrCreateMessage: "",
+        };
+    case "UPDATE_OR_CREATE_ARTICLE_ERROR":
+        return {
+            ...state,
+            updateOrCreateError: true,
+            updateOrCreateMessage: action.payload.updateOrCreateMessage,
+        };
+    case "CLEAR_UPDATE_AND_CREATE_ERROR":
+        return {
+            ...state,
+            updateOrCreateError: null,
+            updateOrCreateMessage: "",
         };
     default:
         return state;

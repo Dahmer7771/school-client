@@ -8,6 +8,7 @@ import articlesReducer from "./articles.reducer";
 import profileEditorReducer from "./profile-editor.reducer";
 import articleCreatorReducer from "./article-creator.reducer";
 import dialogWindowReducer from "./dialog-window.reducer";
+import editProfileReducer from "./edit-profile.reducer";
 
 const rootReducer = combineReducers({
     authReducer,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     profileEditorReducer,
     articleCreatorReducer,
     dialogWindowReducer,
+    editProfileReducer,
 });
 
 export default rootReducer;

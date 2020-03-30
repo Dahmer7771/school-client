@@ -17,9 +17,15 @@ import withSchoolService from "../hoc/with-school-service";
 import articlesActions from "../../actions/articles.actions";
 import ArticlesSearchPanel from "../articles-search-panel";
 import useStyles from "./styles";
+import dialogWindowActions from "../../actions/dialog-window.actions";
 
 const ArticlesList = ({
-    articles, getAllArticles, deleteArticle, setArticleEditing, setUpdate,
+    articles,
+    getAllArticles,
+    deleteArticle,
+    setArticleEditing,
+    setUpdate,
+    openDialogWindow,
 }: any) => {
     const classes = useStyles();
 
@@ -45,7 +51,17 @@ const ArticlesList = ({
                                         <div className="primaryText">
                                             {title}
                                         </div>
-                                        <Button onClick={() => deleteArticle(_id)} className={classes.button} size="small">
+                                        <Button
+                                            onClick={() => {
+                                                openDialogWindow(
+                                                    "Confirm",
+                                                    "Do you want to delete this article?",
+                                                    () => deleteArticle(_id),
+                                                );
+                                            }}
+                                            className={classes.button}
+                                            size="small"
+                                        >
                                             <DeleteForeverIcon />
                                         </Button>
                                         <Button
@@ -89,7 +105,9 @@ const ArticlesList = ({
     );
 };
 
-const mapStateToProps = ({ articlesReducer: { articles, editing } }: any) => ({
+const mapStateToProps = ({
+    articlesReducer: { articles, editing },
+}: any) => ({
     articles,
     editing,
 });
@@ -104,6 +122,11 @@ const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindA
         id: string,
     ) => articlesActions.setArticleEditing(editing, id),
     setUpdate: () => articlesActions.setUpdate(),
+    openDialogWindow: (
+        title: string,
+        content: string,
+        cb: any,
+    ) => dialogWindowActions.openDialogWindow(title, content, cb),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(ArticlesList));

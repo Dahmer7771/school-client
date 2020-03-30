@@ -37,13 +37,10 @@ const getAllUsers = (
 const updateUser = (
     schoolService: SchoolService,
     userId: string,
-    role: string,
-    active?: string,
+    data: {},
 ) => () => async (dispatch: Dispatch) => {
     try {
-        await schoolService.updateUser(userId, role);
-        const users = await schoolService.getAllUsers(active);
-        dispatch(usersSuccess(users));
+        await schoolService.updateUser(userId, data);
     } catch (e) {
         if (e.status === 401) authActions.logout()(dispatch);
         console.log(e.message);

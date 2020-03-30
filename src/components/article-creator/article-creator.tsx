@@ -11,7 +11,6 @@ import articlesActions from "../../actions/articles.actions";
 import withSchoolService from "../hoc/with-school-service";
 import Spinner from "../spinner/spinner";
 import useStyles from "./styles";
-import DialogWindow from "../dialog-window/dialog-window";
 import dialogWindowActions from "../../actions/dialog-window.actions";
 
 const ArticleCreator = ({
@@ -30,14 +29,20 @@ const ArticleCreator = ({
     setArticleEditing,
     create,
     update,
-    dialogWindowOpen,
     openDialogWindow,
-    closeDialogWindow,
-    dialogTitle,
-    dialogContent,
-    dialogCb,
+    updateOrCreateError,
+    clearUpdateAndCreateError,
+    updateOrCreateMessage,
 }: any) => {
     const classes = useStyles();
+    const onClose = () => {
+        setArticleEditing(false);
+        setTitle("");
+        setImage(null);
+        setContent("");
+        clearCurrentArticle();
+        clearUpdateAndCreateError();
+    };
 
     useEffect(() => {
         if (editingArticleId && currentArticle === null) {
@@ -50,6 +55,20 @@ const ArticleCreator = ({
         }
     }, [currentArticle, editingArticleId, setTitle, setImage, setContent, getArticleById]);
 
+    useEffect(() => {
+        if (updateOrCreateError) {
+            openDialogWindow(
+                "Error",
+                `${updateOrCreateMessage}`,
+                () => clearUpdateAndCreateError(),
+                true,
+            );
+        }
+        if (updateOrCreateError === false) {
+            onClose();
+        }
+    });
+
     const onSubmit = (e: any) => {
         e.preventDefault();
         const data: any = new FormData();
@@ -60,19 +79,7 @@ const ArticleCreator = ({
         if (create) createArticle(data);
     };
 
-    const onClose = () => {
-        setArticleEditing(false);
-        setTitle("");
-        setImage(null);
-        setContent("");
-        clearCurrentArticle();
-    };
-
     if (update && !content) return <Spinner />;
-
-    console.log(dialogTitle);
-    console.log(dialogContent);
-    console.log(dialogCb);
 
     return (
         <>
@@ -111,16 +118,9 @@ const ArticleCreator = ({
                     variant="contained"
                     className={classes.submit}
                 >
-                    Click
+                    {update ? "Update" : "Create"}
                 </Button>
             </form>
-            <DialogWindow
-                open={dialogWindowOpen}
-                handleClose={closeDialogWindow}
-                title={dialogTitle}
-                content={dialogContent}
-                cb={dialogCb}
-            />
         </>
     );
 };
@@ -128,10 +128,13 @@ const ArticleCreator = ({
 const mapStateToProps = ({
     articleCreatorReducer: { title, image, content },
     articlesReducer: {
-        currentArticle, editingArticleId, editing, create, update,
-    },
-    dialogWindowReducer: {
-        dialogWindowOpen, dialogTitle, dialogContent, dialogCb,
+        currentArticle,
+        editingArticleId,
+        editing,
+        create,
+        update,
+        updateOrCreateError,
+        updateOrCreateMessage,
     },
 }: any) => ({
     title,
@@ -142,10 +145,8 @@ const mapStateToProps = ({
     editing,
     create,
     update,
-    dialogWindowOpen,
-    dialogTitle,
-    dialogContent,
-    dialogCb,
+    updateOrCreateError,
+    updateOrCreateMessage,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
@@ -164,8 +165,9 @@ const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindA
         title: string,
         content: string,
         cb: any,
-    ) => dialogWindowActions.openDialogWindow(title, content, cb),
-    closeDialogWindow: () => dialogWindowActions.closeDialogWindow(),
+        confirm: boolean,
+    ) => dialogWindowActions.openDialogWindow(title, content, cb, confirm),
+    clearUpdateAndCreateError: () => articlesActions.clearUpdateAndCreateError(),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(ArticleCreator));

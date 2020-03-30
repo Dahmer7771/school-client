@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 
 const DialogWindow = ({
-    open, handleClose, title, content, cb,
+    open, handleClose, title, content, cb, confirm = false,
 }: any) => (
     <Dialog
         open={open}
@@ -35,14 +35,16 @@ const DialogWindow = ({
             >
                 Ok
             </Button>
-            <Button
-                onClick={() => {
-                    handleClose();
-                }}
-                color="primary"
-            >
-                Cancel
-            </Button>
+            { !confirm && (
+                <Button
+                    onClick={() => {
+                        handleClose();
+                    }}
+                    color="primary"
+                >
+                    Cancel
+                </Button>
+            )}
         </DialogActions>
     </Dialog>
 );

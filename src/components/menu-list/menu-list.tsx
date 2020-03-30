@@ -53,15 +53,18 @@ const MenuList = ({ currentUser, hideMenu }: any) => {
     return (
         <List>
             {listItems.map(({ id, title, route }: any) => (
-                <ListItem button key={id}>
+                <ListItem
+                    button
+                    key={id}
+                    onClick={() => {
+                        history.push(route);
+                        hideMenu();
+                    }}
+                >
                     <ListItemIcon>
                         <MailIcon />
                     </ListItemIcon>
                     <ListItemText
-                        onClick={() => {
-                            history.push(route);
-                            hideMenu();
-                        }}
                         primary={title}
                     />
                 </ListItem>
