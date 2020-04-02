@@ -5,7 +5,6 @@ import {
     ListItem,
     ListItemAvatar,
     Avatar,
-    Typography,
     Divider,
     Button,
     Paper,
@@ -39,7 +38,7 @@ const ArticlesList = ({
             <Paper>
                 <List className={classes.root}>
                     {articles.map(({
-                        _id, title, content, image, date,
+                        _id, title, image, date,
                     }: any, index: number) => (
                         <React.Fragment key={_id}>
                             <ListItem alignItems="flex-start">
@@ -76,20 +75,6 @@ const ArticlesList = ({
                                         </Button>
                                     </div>
                                     <div className={classes.content}>
-                                        <div className={classes.secondaryText}>
-                                            <Typography
-                                                component="span"
-                                                variant="body2"
-                                                className={classes.inline}
-                                                color="textPrimary"
-                                            >
-                                                Ali Connors
-                                            </Typography>
-                                            <div
-                                                dangerouslySetInnerHTML={{ __html: content }}
-                                                className={classes.contentPreview}
-                                            />
-                                        </div>
                                         <div className={classes.date}>
                                             {date}
                                         </div>

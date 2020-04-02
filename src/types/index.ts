@@ -62,7 +62,7 @@ export interface PostProps {
     author: string,
     title: string,
     authorFirstChar: string,
-    text: string,
+    content: string,
     date: string,
     image: string,
 }

@@ -70,6 +70,7 @@ const articlesReducer = (state: any = initialState, action: any) => {
     case "GET_ARTICLE_BY_ID_SUCCESS":
         return {
             ...state,
+            articleByIdError: false,
             currentArticle: action.payload.article,
         };
     case "GET_ARTICLE_BY_ID_ERROR":

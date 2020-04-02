@@ -15,6 +15,7 @@ import AdministrationPage from "./pages/administration";
 import authActions from "./actions/auth.actions";
 import DialogWindow from "./components/dialog-window/dialog-window";
 import dialogWindowActions from "./actions/dialog-window.actions";
+import ArticlePage from "./pages/article";
 
 const App = ({
     checkAuthorization,
@@ -35,6 +36,7 @@ const App = ({
             <SideMenu />
             <Switch>
                 <Route exact path="/" component={HomePage} />
+                <Route path="/article/:id" component={ArticlePage} />
                 <Route path="/login" component={AuthPage} />
                 <Route path="/registration" component={AuthPage} />
                 <Route path="/profile" component={ProfilePage} />

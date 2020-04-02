@@ -9,10 +9,6 @@ const useStyles = makeStyles((theme) => ({
         display: "inline",
     },
     contentPreview: {
-        display: "-webkit-box",
-        "-webkit-line-clamp": 2,
-        "-webkit-box-orient": "vertical",
-        overflow: "hidden",
         margin: 0,
         "& p": {
             margin: 0,
@@ -26,12 +22,9 @@ const useStyles = makeStyles((theme) => ({
     },
     secondaryText: {
         fontSize: "14px",
-        // "& p": {
-        //     marginTop: theme.spacing(1),
-        //     marginBottom: theme.spacing(1),
-        // },
     },
     date: {
+        marginTop: theme.spacing(2),
         width: "200px",
         alignSelf: "flex-end",
         textAlign: "right",

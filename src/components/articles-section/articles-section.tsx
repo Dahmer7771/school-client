@@ -5,7 +5,7 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators, Dispatch } from "redux";
 import useStyles from "./styles";
-import Post from "../post/post";
+import ArticleCard from "../article-card/article-card";
 import { ArticlesSectionProps } from "../../types";
 import articlesActions from "../../actions/articles.actions";
 import withSchoolService from "../hoc/with-school-service";
@@ -32,7 +32,7 @@ const ArticlesSection: React.FC<ArticlesSectionProps> = ({
                 <Grid container spacing={3}>
                     {articles.map((post) => (
                         <Grid key={post._id} item xs={12} sm={6} md={4}>
-                            <Post {...post} />
+                            <ArticleCard {...post} />
                         </Grid>
                     ))}
                 </Grid>

@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
         "-webkit-line-clamp": 3,
         "-webkit-box-orient": "vertical",
         overflow: "hidden",
+        "& p": {
+            margin: 0,
+        },
     },
     avatar: {
         backgroundColor: red[500],
