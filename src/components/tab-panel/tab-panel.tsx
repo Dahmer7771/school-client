@@ -9,11 +9,12 @@ const TabPanel = (props: TabPanelProps) => {
 
     return (
         <Typography
+            style={{ flexGrow: 1 }}
             component="div"
             role="tabpanel"
             hidden={value !== index}
-            id={`simple-tabpanel-${index}`}
-            aria-labelledby={`simple-tab-${index}`}
+            id={`vertical-tabpanel-${index}`}
+            aria-labelledby={`vertical-tab-${index}`}
             {...other}
         >
             {value === index && <Box p={3}>{children}</Box>}

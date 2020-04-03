@@ -39,6 +39,11 @@ export interface SchoolService {
     createArticle: (data: any) => Promise<{}>,
     updateArticle: (id: string, data: any) => Promise<{}>,
     deleteArticle: (id: string) => Promise<{}>,
+    getAllClasses: () => Promise<{}>,
+    getClassById: (id: string) => Promise<{}>,
+    createClass: (data: any) => Promise<{}>,
+    updateClass: (id: string, data: any) => Promise<{}>,
+    deleteClass: (id: string) => Promise<{}>,
 }
 
 export interface LoginProps {

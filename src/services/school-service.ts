@@ -81,6 +81,26 @@ class SchoolService {
 
     deleteArticle = async (articleId: string) => (
         await this.getResource(`/article/${articleId}`, "DELETE")
+    );
+
+    getAllClasses = async () => (
+        await this.getResource(`/grade`, "GET")
+    );
+
+    getClassById = async (classId: string) => (
+        await this.getResource(`/grade/${classId}`, "GET")
+    );
+
+    createClass = async (body: {}) => (
+        await this.getResource(`/grade`, "POST", body)
+    );
+
+    updateClass = async (classId: string, body: {}) => (
+        await this.getResource(`/grade/${classId}`, "PATCH", body)
+    );
+
+    deleteClass = async (classId: string) => (
+        await this.getResource(`/grade/${classId}`, "DELETE")
     )
 }
 
