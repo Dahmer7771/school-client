@@ -13,17 +13,17 @@ import ProfilePage from "./pages/profile";
 import NewsPage from "./pages/articles";
 import AdministrationPage from "./pages/administration";
 import authActions from "./actions/auth.actions";
-import DialogWindow from "./components/dialog-window/dialog-window";
-import dialogWindowActions from "./actions/dialog-window.actions";
+import Alert from "./components/alert";
+import alertActions from "./actions/alert.actions";
 import ArticlePage from "./pages/article";
 
 const App = ({
     checkAuthorization,
-    dialogWindowOpen,
-    dialogTitle,
-    dialogContent,
-    dialogCb,
-    closeDialogWindow,
+    alertOpen,
+    alertTitle,
+    alertContent,
+    alertCb,
+    closeAlert,
     confirm,
 }: any) => {
     useEffect(() => {
@@ -44,12 +44,12 @@ const App = ({
                 <Route path="/administration" component={AdministrationPage} />
                 <Route render={() => <h1>404 Not Found</h1>} />
             </Switch>
-            <DialogWindow
-                open={dialogWindowOpen}
-                handleClose={closeDialogWindow}
-                title={dialogTitle}
-                content={dialogContent}
-                cb={dialogCb}
+            <Alert
+                open={alertOpen}
+                handleClose={closeAlert}
+                title={alertTitle}
+                content={alertContent}
+                cb={alertCb}
                 confirm={confirm}
             />
         </>
@@ -57,20 +57,20 @@ const App = ({
 };
 
 const mapStateToProps = ({
-    dialogWindowReducer: {
-        dialogWindowOpen, dialogTitle, dialogContent, dialogCb, confirm,
+    alertReducer: {
+        alertOpen, alertTitle, alertContent, alertCb, confirm,
     },
 }: any) => ({
-    dialogWindowOpen,
-    dialogTitle,
-    dialogContent,
-    dialogCb,
+    alertOpen,
+    alertTitle,
+    alertContent,
+    alertCb,
     confirm,
 });
 
 const mapDispatchToProps = {
     checkAuthorization: () => authActions.checkAuthorization(),
-    closeDialogWindow: () => dialogWindowActions.closeDialogWindow(),
+    closeAlert: () => alertActions.closeAlert(),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

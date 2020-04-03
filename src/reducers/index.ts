@@ -7,7 +7,7 @@ import usersReducer from "./users.reducer";
 import articlesReducer from "./articles.reducer";
 import profileEditorReducer from "./profile-editor.reducer";
 import articleCreatorReducer from "./article-creator.reducer";
-import dialogWindowReducer from "./dialog-window.reducer";
+import alertReducer from "./alert.reducer";
 import editProfileReducer from "./edit-profile.reducer";
 import classReducer from "./class.reducer";
 
@@ -19,7 +19,7 @@ const rootReducer = combineReducers({
     articlesReducer,
     profileEditorReducer,
     articleCreatorReducer,
-    dialogWindowReducer,
+    alertReducer,
     editProfileReducer,
     classReducer,
 });

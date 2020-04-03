@@ -16,7 +16,7 @@ import withSchoolService from "../hoc/with-school-service";
 import articlesActions from "../../actions/articles.actions";
 import ArticlesSearchPanel from "../articles-search-panel";
 import useStyles from "./styles";
-import dialogWindowActions from "../../actions/dialog-window.actions";
+import alertActions from "../../actions/alert.actions";
 
 const ArticlesList = ({
     articles,
@@ -24,7 +24,7 @@ const ArticlesList = ({
     deleteArticle,
     setArticleEditing,
     setUpdate,
-    openDialogWindow,
+    openAlert,
 }: any) => {
     const classes = useStyles();
 
@@ -52,7 +52,7 @@ const ArticlesList = ({
                                         </div>
                                         <Button
                                             onClick={() => {
-                                                openDialogWindow(
+                                                openAlert(
                                                     "Confirm",
                                                     "Do you want to delete this article?",
                                                     () => deleteArticle(_id),
@@ -107,11 +107,11 @@ const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindA
         id: string,
     ) => articlesActions.setArticleEditing(editing, id),
     setUpdate: () => articlesActions.setUpdate(),
-    openDialogWindow: (
+    openAlert: (
         title: string,
         content: string,
         cb: any,
-    ) => dialogWindowActions.openDialogWindow(title, content, cb),
+    ) => alertActions.openAlert(title, content, cb),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(ArticlesList));

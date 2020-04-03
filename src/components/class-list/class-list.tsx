@@ -21,7 +21,14 @@ import classActions from "../../actions/class.actions";
 import Spinner from "../spinner/spinner";
 
 const ClassList = ({
-    getAllClasses, classList, classError, classErrorMessage, loading,
+    getAllClasses,
+    classList,
+    classError,
+    classErrorMessage,
+    loading,
+    openClassEditor,
+    setEditing,
+    getClassById,
 }: any) => {
     const classes = useStyles();
     useEffect(() => {
@@ -56,6 +63,7 @@ const ClassList = ({
                 <Button
                     variant="contained"
                     color="primary"
+                    onClick={openClassEditor}
                 >
                     Створити
                 </Button>
@@ -72,7 +80,14 @@ const ClassList = ({
                                         secondary={item.classroomTeacher.name}
                                     />
                                     <ListItemSecondaryAction>
-                                        <IconButton aria-label="edit">
+                                        <IconButton
+                                            onClick={() => {
+                                                getClassById(item._id);
+                                                setEditing(true);
+                                                openClassEditor();
+                                            }}
+                                            aria-label="edit"
+                                        >
                                             <CreateIcon />
                                         </IconButton>
                                         <IconButton aria-label="delete">
@@ -101,10 +116,12 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
     getAllClasses: () => classActions.getAllClasses(schoolService)(),
-    // getClassById: (classId: string) => getClassById(schoolService, classId),
+    getClassById: (classId: string) => classActions.getClassById(schoolService, classId)(),
     // createClass: (data: {}) => createClass(schoolService, data),
     // updateClass: (classId: string, data: {}) => updateClass(schoolService, classId, data),
     // deleteClass: (classId: string) => deleteClass(schoolService, classId),
+    openClassEditor: () => classActions.openClassEditor(),
+    setEditing: (editing: boolean) => classActions.setEditing(editing),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(ClassList));

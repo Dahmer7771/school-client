@@ -1,5 +1,6 @@
 const initialState = {
     users: [],
+    teachers: [],
     usersError: false,
     errorMessage: "",
     filterField: "name",
@@ -33,6 +34,11 @@ const usersReducer = (state: any = initialState, action: any) => {
             usersError: true,
             errorMessage: action.payload.message,
             loading: false,
+        };
+    case "TEACHERS_SUCCESS":
+        return {
+            ...state,
+            teachers: action.payload.teachers,
         };
     case "SET_SHOW_MODE":
         return {

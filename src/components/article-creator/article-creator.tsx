@@ -11,7 +11,7 @@ import articlesActions from "../../actions/articles.actions";
 import withSchoolService from "../hoc/with-school-service";
 import Spinner from "../spinner/spinner";
 import useStyles from "./styles";
-import dialogWindowActions from "../../actions/dialog-window.actions";
+import alertActions from "../../actions/alert.actions";
 
 const ArticleCreator = ({
     title,
@@ -29,7 +29,7 @@ const ArticleCreator = ({
     setArticleEditing,
     create,
     update,
-    openDialogWindow,
+    openAlert,
     updateOrCreateError,
     clearUpdateAndCreateError,
     updateOrCreateMessage,
@@ -57,7 +57,7 @@ const ArticleCreator = ({
 
     useEffect(() => {
         if (updateOrCreateError) {
-            openDialogWindow(
+            openAlert(
                 "Error",
                 `${updateOrCreateMessage}`,
                 () => clearUpdateAndCreateError(),
@@ -86,7 +86,7 @@ const ArticleCreator = ({
             <div className={classes.closeButton}>
                 <Button
                     onClick={() => {
-                        openDialogWindow(
+                        openAlert(
                             "Сonfirm closing form",
                             "Do you want to close?",
                             onClose,
@@ -161,12 +161,12 @@ const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindA
     getArticleById: (id: string) => articlesActions.getArticleById(schoolService, id)(),
     setArticleEditing: (editing: boolean) => articlesActions.setArticleEditing(editing),
     clearCurrentArticle: () => articlesActions.clearCurrentArticle(),
-    openDialogWindow: (
+    openAlert: (
         title: string,
         content: string,
         cb: any,
         confirm: boolean,
-    ) => dialogWindowActions.openDialogWindow(title, content, cb, confirm),
+    ) => alertActions.openAlert(title, content, cb, confirm),
     clearUpdateAndCreateError: () => articlesActions.clearUpdateAndCreateError(),
 }, dispatch);
 

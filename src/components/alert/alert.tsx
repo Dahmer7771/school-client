@@ -8,7 +8,7 @@ import {
     Button,
 } from "@material-ui/core";
 
-const DialogWindow = ({
+const Alert = ({
     open, handleClose, title, content, cb, confirm = false,
 }: any) => (
     <Dialog
@@ -49,4 +49,4 @@ const DialogWindow = ({
     </Dialog>
 );
 
-export default DialogWindow;
+export default Alert;

@@ -30,7 +30,12 @@ export interface ProfileDetailsView {
 export interface SchoolService {
     login: (userInfo: UserLoginInfo) => Promise<{}>,
     registration: (userInfo: UserRegistrationInfo) => Promise<{}>,
-    getAllUsers: (active: string | undefined, filter?: string, term?: string) => Promise<{}>,
+    getAllUsers: (
+        active: string | undefined,
+        filter?: string,
+        term?: string,
+        teachers?: boolean
+    ) => Promise<{}>,
     updateUser: (userId: string, data: {}) => Promise<{
         token: string;
     }>,

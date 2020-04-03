@@ -34,6 +34,27 @@ const getAllUsers = (
     }
 };
 
+const teachersSuccess = (teachers: any): Action => ({
+    type: "TEACHERS_SUCCESS",
+    payload: {
+        teachers,
+    },
+});
+
+const getAllTeachers = (
+    schoolService: SchoolService,
+    active: string = "all",
+) => () => async (dispatch: Dispatch) => {
+    dispatch(usersRequest());
+    try {
+        const responseData = await schoolService.getAllUsers(active, "", "", true);
+        dispatch(teachersSuccess(responseData));
+    } catch (e) {
+        if (e.status === 401) authActions.logout()(dispatch);
+        dispatch(usersError(e.message));
+    }
+};
+
 const updateUser = (
     schoolService: SchoolService,
     userId: string,
@@ -91,6 +112,7 @@ const usersActions = {
     setShowMode,
     setUsersTerm,
     setFilterField,
+    getAllTeachers,
 };
 
 export default usersActions;

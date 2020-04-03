@@ -55,8 +55,8 @@ class SchoolService {
         await this.getResource("/auth/registration", "POST", userInfo)
     );
 
-    getAllUsers = async (showMode: string = "all", filterField?: string, term?: string) => (
-        await this.getResource(`/user?showMode=${showMode}&filterField=${filterField || ""}&term=${term || ""}`, "GET")
+    getAllUsers = async (showMode: string = "all", filterField?: string, term?: string, teachers?: boolean) => (
+        await this.getResource(`/user?showMode=${showMode}&filterField=${filterField || ""}&term=${term || ""}$teachers=${teachers}`, "GET")
     );
 
     updateUser = async (userId: string, body: {}) => (

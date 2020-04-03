@@ -11,6 +11,7 @@ import UsersSearchPanel from "../../components/users-search-panel";
 import ArticlesList from "../../components/articles-list";
 import ClassList from "../../components/class-list";
 import useStyles from "./styles";
+import ClassEditor from "../../components/class-editor/class-editor";
 
 const a11yProps = (index: any) => ({
     id: `vertical-tab-${index}`,
@@ -48,6 +49,7 @@ const Administration = ({ editing }: any) => {
             </TabPanel>
             <TabPanel value={value} index={2}>
                 <ClassList />
+                <ClassEditor />
             </TabPanel>
         </div>
     );

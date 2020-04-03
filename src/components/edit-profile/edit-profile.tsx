@@ -51,14 +51,14 @@ const EditProfile = ({
             maxWidth="lg"
         >
             <div className={classes.flexContainer}>
-                <DialogTitle>Title</DialogTitle>
+                <DialogTitle>Profile editor</DialogTitle>
                 <Button onClick={onClose}>
                     <CloseIcon />
                 </Button>
             </div>
             <DialogContent>
                 <DialogContentText>
-                    This is the content of modal window
+                    Update your profile details
                 </DialogContentText>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField
