@@ -15,6 +15,7 @@ const ProfileDetails = ({
     currentUser, openEditor,
 }: any) => {
     const classes = useStyles();
+    console.log(currentUser);
 
     return (
         <>
@@ -40,7 +41,7 @@ const ProfileDetails = ({
                         <Typography variant="body1">
                             {
                                 currentUser.grade
-                                    ? `Ученик(ца) ${currentUser.grade} класса`
+                                    ? `Ученик(ца) ${currentUser.grade.name} класса`
                                     : (
                                         <span className={classes.warningText}>
                                             Укажите свой класс

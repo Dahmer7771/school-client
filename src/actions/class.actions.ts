@@ -5,18 +5,18 @@ const getAllClassesRequest = () => ({
     type: "GET_ALL_CLASSES_REQUEST",
 });
 
-const getAllClassesSuccess = (classList: any) => ({
+const getAllClassesSuccess = (classesList: any) => ({
     type: "GET_ALL_CLASSES_SUCCESS",
-    payload: {
-        classList,
-    },
+    payload: { classesList },
 });
 
 const getAllClassesError = (message: string) => ({
     type: "GET_ALL_CLASSES_ERROR",
-    payload: {
-        message,
-    },
+    payload: { message },
+});
+
+const clearGetAllClassesError = () => ({
+    type: "CLEAR_GET_ALL_CLASSES_ERROR",
 });
 
 const getAllClasses = (
@@ -24,10 +24,41 @@ const getAllClasses = (
 ) => () => async (dispatch: Dispatch) => {
     try {
         dispatch(getAllClassesRequest());
-        const classList = await schoolService.getAllClasses();
-        dispatch(getAllClassesSuccess(classList));
+        const classesList = await schoolService.getAllClasses();
+        dispatch(getAllClassesSuccess(classesList));
     } catch (e) {
         dispatch(getAllClassesError(e.message));
+    }
+};
+
+const getClassByIdRequest = () => ({
+    type: "GET_CLASS_BY_ID_REQUEST",
+});
+
+const getClassByIdSuccess = (classesItem: any) => ({
+    type: "GET_CLASS_BY_ID_SUCCESS",
+    payload: { classesItem },
+});
+
+const getClassByIdError = (message: string) => ({
+    type: "GET_CLASS_BY_ID_ERROR",
+    payload: { message },
+});
+
+const clearGetClassByIdError = () => ({
+    type: "CLEAR_GET_CLASS_BY_ID_ERROR",
+});
+
+const getClassById = (
+    schoolService: SchoolService,
+    id: string,
+) => () => async (dispatch: Dispatch) => {
+    try {
+        dispatch(getClassByIdRequest());
+        const classesItem = await schoolService.getClassById(id);
+        dispatch(getClassByIdSuccess(classesItem));
+    } catch (e) {
+        dispatch(getClassByIdError(e.message));
     }
 };
 
@@ -37,16 +68,16 @@ const createClassRequest = () => ({
 
 const createClassSuccess = (newClass: any) => ({
     type: "CREATE_CLASS_SUCCESS",
-    payload: {
-        newClass,
-    },
+    payload: { newClass },
 });
 
 const createClassError = (message: string) => ({
     type: "CREATE_CLASS_ERROR",
-    payload: {
-        message,
-    },
+    payload: { message },
+});
+
+const clearCreateClassError = () => ({
+    type: "CLEAR_CREATE_CLASS_ERROR",
 });
 
 const createClass = (
@@ -57,10 +88,29 @@ const createClass = (
         dispatch(createClassRequest());
         const newClass = await schoolService.createClass(data);
         dispatch(createClassSuccess(newClass));
+        getAllClasses(schoolService)()(dispatch);
     } catch (e) {
         dispatch(createClassError(e.message));
     }
 };
+
+const updateClassRequest = () => ({
+    type: "UPDATE_CLASS_REQUEST",
+});
+
+const updateClassSuccess = (updatedClass: any) => ({
+    type: "UPDATE_CLASS_SUCCESS",
+    payload: { updatedClass },
+});
+
+const updateClassError = (message: string) => ({
+    type: "UPDATE_CLASS_ERROR",
+    payload: { message },
+});
+
+const clearUpdateClassError = () => ({
+    type: "CLEAR_UPDATE_CLASS_ERROR",
+});
 
 const updateClass = (
     schoolService: SchoolService,
@@ -68,30 +118,44 @@ const updateClass = (
     data: any,
 ) => () => async (dispatch: Dispatch) => {
     try {
-        dispatch(createClassRequest());
-        const newClass = await schoolService.updateClass(id, data);
-        dispatch(createClassSuccess(newClass));
+        dispatch(updateClassRequest());
+        const updatedClass = await schoolService.updateClass(id, data);
+        dispatch(updateClassSuccess(updatedClass));
+        getAllClasses(schoolService)()(dispatch);
     } catch (e) {
-        dispatch(createClassError(e.message));
+        dispatch(updateClassError(e.message));
     }
 };
 
-const getClassByIdSuccess = (currentClass: any) => ({
-    type: "GET_CLASS_BY_ID_SUCCESS",
-    payload: {
-        currentClass,
-    },
+const deleteClassRequest = () => ({
+    type: "DELETE_CLASS_REQUEST",
 });
 
-const getClassById = (
+const deleteClassSuccess = (deletedClass: any) => ({
+    type: "DELETE_CLASS_SUCCESS",
+    payload: { deletedClass },
+});
+
+const deleteClassError = (message: string) => ({
+    type: "DELETE_CLASS_ERROR",
+    payload: { message },
+});
+
+const clearDeleteClassError = () => ({
+    type: "CLEAR_DELETE_CLASS_ERROR",
+});
+
+const deleteClass = (
     schoolService: SchoolService,
     id: string,
 ) => () => async (dispatch: Dispatch) => {
     try {
-        const newClass = await schoolService.getClassById(id);
-        dispatch(getClassByIdSuccess(newClass));
+        dispatch(deleteClassRequest());
+        const deletedClass = await schoolService.deleteClass(id);
+        dispatch(deleteClassSuccess(deletedClass));
+        getAllClasses(schoolService)()(dispatch);
     } catch (e) {
-        dispatch(createClassError(e.message));
+        dispatch(deleteClassError(e.message));
     }
 };
 
@@ -105,16 +169,20 @@ const closeClassEditor = () => ({
 
 const setEditing = (editing: boolean) => ({
     type: "SET_EDITING",
-    payload: {
-        editing,
-    },
+    payload: { editing },
 });
 
 const classActions = {
     getAllClasses,
+    getClassById,
     createClass,
     updateClass,
-    getClassById,
+    deleteClass,
+    clearGetAllClassesError,
+    clearGetClassByIdError,
+    clearCreateClassError,
+    clearUpdateClassError,
+    clearDeleteClassError,
     openClassEditor,
     closeClassEditor,
     setEditing,

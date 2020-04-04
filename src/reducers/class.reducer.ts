@@ -1,12 +1,18 @@
 const initialState = {
-    classList: [],
-    classError: false,
-    classErrorMessage: "",
-    createClassError: false,
+    classesList: [],
+    getAllError: false,
+    getAllMessage: "",
+    currentClass: null,
+    getByIdError: false,
+    getByIdMessage: "",
+    updateError: false,
+    updateMessage: "",
+    createError: false,
+    createMessage: "",
+    deleteError: false,
+    deleteMessage: "",
+    classEditorOpen: false,
     loading: false,
-    editing: false,
-    editorOpen: false,
-    currentClass: {},
 };
 
 const classReducer = (state: any = initialState, action: any) => {
@@ -14,68 +20,148 @@ const classReducer = (state: any = initialState, action: any) => {
     case "GET_ALL_CLASSES_REQUEST":
         return {
             ...state,
-            classList: [],
-            classError: false,
-            classErrorMessage: "",
+            classesList: [],
+            getAllError: false,
+            getAllMessage: "",
             loading: true,
         };
     case "GET_ALL_CLASSES_SUCCESS":
         return {
             ...state,
-            classList: action.payload.classList,
-            classError: false,
-            classErrorMessage: "",
+            classesList: action.payload.classesList,
+            getAllError: false,
+            getAllMessage: "",
             loading: false,
         };
     case "GET_ALL_CLASSES_ERROR":
         return {
             ...state,
-            classList: [],
-            classError: false,
-            classErrorMessage: action.payload.message,
+            classesList: [],
+            getAllError: true,
+            getAllMessage: action.payload.message,
             loading: false,
         };
-    case "CREATE_CLASS_REQUEST":
+    case "CLEAR_GET_ALL_CLASSES_ERROR":
         return {
             ...state,
-            createClassError: false,
-            classErrorMessage: "",
-            loading: true,
+            getAllError: false,
+            getAllMessage: "",
         };
-    case "CREATE_CLASS_SUCCESS":
+    case "GET_CLASS_BY_ID_REQUEST":
         return {
             ...state,
-            createClassError: false,
-            classErrorMessage: "",
-            loading: false,
-        };
-    case "CREATE_CLASS_ERROR":
-        return {
-            ...state,
-            createClassError: true,
-            classErrorMessage: action.payload.message,
-            loading: false,
+            currentClass: null,
+            getByIdError: false,
+            getByIdMessage: "",
         };
     case "GET_CLASS_BY_ID_SUCCESS":
         return {
             ...state,
-            currentClass: action.payload.currentClass,
+            currentClass: action.payload.classesItem,
+            getByIdError: false,
+            getByIdMessage: "",
+        };
+    case "GET_CLASS_BY_ID_ERROR":
+        return {
+            ...state,
+            currentClass: null,
+            getByIdError: true,
+            getByIdMessage: action.payload.message,
+        };
+    case "CLEAR_GET_CLASS_BY_ID_ERROR":
+        return {
+            ...state,
+            getByIdError: false,
+            getByIdMessage: "",
+        };
+    case "CREATE_CLASS_REQUEST":
+        return {
+            ...state,
+            createError: false,
+            createMessage: "",
+        };
+    case "CREATE_CLASS_SUCCESS":
+        return {
+            ...state,
+            createError: false,
+            createMessage: "",
+        };
+    case "CREATE_CLASS_ERROR":
+        return {
+            ...state,
+            createError: true,
+            createMessage: action.payload.message,
+        };
+    case "CLEAR_CREATE_CLASS_ERROR":
+        return {
+            ...state,
+            createError: false,
+            createMessage: "",
+        };
+    case "UPDATE_CLASS_REQUEST":
+        return {
+            ...state,
+            updateError: false,
+            updateMessage: "",
+        };
+    case "UPDATE_CLASS_SUCCESS":
+        return {
+            ...state,
+            updateError: false,
+            updateMessage: "",
+        };
+    case "UPDATE_CLASS_ERROR":
+        return {
+            ...state,
+            updateError: true,
+            updateMessage: action.payload.message,
+        };
+    case "CLEAR_UPDATE_CLASS_ERROR":
+        return {
+            ...state,
+            updateError: false,
+            updateMessage: "",
+        };
+    case "DELETE_CLASS_REQUEST":
+        return {
+            ...state,
+            deleteError: false,
+            deleteMessage: "",
+        };
+    case "DELETE_CLASS_SUCCESS":
+        return {
+            ...state,
+            deleteError: false,
+            deleteMessage: "",
+        };
+    case "DELETE_CLASS_ERROR":
+        return {
+            ...state,
+            deleteError: true,
+            deleteMessage: action.payload.message,
+        };
+    case "CLEAR_DELETE_CLASS_ERROR":
+        return {
+            ...state,
+            deleteError: false,
+            deleteMessage: "",
         };
     case "OPEN_CLASS_EDITOR":
         return {
             ...state,
-            editorOpen: true,
+            classEditorOpen: true,
         };
     case "CLOSE_CLASS_EDITOR":
         return {
             ...state,
-            editorOpen: false,
+            classEditorOpen: false,
+            currentClass: null,
+            editing: false,
         };
     case "SET_EDITING":
         return {
             ...state,
             editing: action.payload.editing,
-            createClassError: false,
         };
     default:
         return state;

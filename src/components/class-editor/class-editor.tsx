@@ -20,18 +20,13 @@ import classActions from "../../actions/class.actions";
 const ClassEditor = ({
     teachers,
     getAllTeachers,
-    createClass,
-    createClassError,
-    classErrorMessage,
     loading,
-    openAlert,
-    getAllClasses,
-    closeClassEditor,
-    editorOpen,
     editing,
-    updateClass,
+    closeClassEditor,
+    classEditorOpen,
+    createClass,
     currentClass,
-    setEditing,
+    updateClass,
 }: any) => {
     const classes = useStyles();
     const {
@@ -45,33 +40,27 @@ const ClassEditor = ({
     }, [getAllTeachers]);
 
     useEffect(() => {
-        if (createClassError) {
-            openAlert(
-                "Error",
-                classErrorMessage,
-                () => console.log("err"),
-            );
-        }
-    });
-
-    useEffect(() => {
-        if (editing && currentClass) {
+        if (currentClass) {
             setName(currentClass.name);
             setTeacher(currentClass.classroomTeacher._id);
         }
     }, [currentClass]);
 
     const onSubmit = (data: ProfileDetailsView) => {
-        if (editing) updateClass(currentClass._id, data);
-        else createClass(data);
-        getAllClasses();
-        setEditing(false);
-        closeClassEditor();
+        if (editing) {
+            console.log("update");
+            updateClass(currentClass._id, data);
+        } else {
+            console.log("create");
+            createClass(data);
+        }
     };
+
+    if (editing && !currentClass) return null;
 
     return (
         <Dialog
-            open={editorOpen}
+            open={classEditorOpen}
             onClose={closeClassEditor}
             maxWidth="lg"
         >
@@ -87,7 +76,7 @@ const ClassEditor = ({
                 </DialogContentText>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <TextField
-                        value={name}
+                        defaultValue={name}
                         error={!!errors.name}
                         name="name"
                         label="Name"
@@ -100,7 +89,7 @@ const ClassEditor = ({
                     <Select
                         native
                         name="classroomTeacher"
-                        value={teacher}
+                        defaultValue={teacher}
                         className={classes.input}
                         inputRef={register}
                         onChange={(e: any) => setTeacher(e.target.value.toString())}
@@ -122,16 +111,23 @@ const ClassEditor = ({
 const mapStateToProps = ({
     usersReducer: { teachers },
     classReducer: {
-        createClassError, loading, editorOpen, editing, updateClass, currentClass,
+        createClassError,
+        loading,
+        classEditorOpen,
+        editing,
+        updateClass,
+        currentClass,
+        classErrorMessage,
     },
 }: any) => ({
     teachers,
     createClassError,
     loading,
-    editorOpen,
+    classEditorOpen,
     editing,
     updateClass,
     currentClass,
+    classErrorMessage,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
@@ -140,6 +136,7 @@ const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindA
     createClass: (data: any) => classActions.createClass(schoolService, data)(),
     updateClass: (id: string, data: any) => classActions.updateClass(schoolService, id, data)(),
     closeClassEditor: () => classActions.closeClassEditor(),
+    clearGetClassByIdError: () => classActions.clearGetClassByIdError(),
     openAlert: (
         title: string,
         content: string,

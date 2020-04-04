@@ -16,6 +16,7 @@ import editProfileActions from "../../actions/edit-profile.actions";
 import withSchoolService from "../hoc/with-school-service";
 import { ProfileDetailsView } from "../../types";
 import { emailErrors, nameErrors, regExp } from "../../validation";
+import classActions from "../../actions/class.actions";
 
 const EditProfile = ({
     isProfileEditorOpen,
@@ -23,6 +24,8 @@ const EditProfile = ({
     currentUser,
     loading,
     updateUser,
+    classList,
+    getAllClasses,
 }: any) => {
     const classes = useStyles();
     const {
@@ -37,6 +40,10 @@ const EditProfile = ({
         setEmail(currentUser.email);
         setGrade(currentUser.grade);
     }, [currentUser]);
+
+    useEffect(() => {
+        getAllClasses();
+    }, [getAllClasses]);
 
     const onSubmit = (data: ProfileDetailsView) => {
         updateUser(currentUser._id, data);
@@ -88,9 +95,9 @@ const EditProfile = ({
                         inputRef={register}
                     >
                         <option aria-label="None" value="" />
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
+                        {classList.map((item: any) => (
+                            <option value={item._id}>{item.name}</option>
+                        ))}
                     </Select>
                     <Button disabled={loading} type="submit">
                         Update
@@ -106,16 +113,19 @@ const mapStateToProps = ({
         editProfileError, editProfileMessage, isProfileEditorOpen, loading,
     },
     authReducer: { currentUser },
+    classReducer: { classList },
 }: any) => ({
     isProfileEditorOpen,
     currentUser,
     editProfileError,
     editProfileMessage,
     loading,
+    classList,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
     closeEditor: () => editProfileActions.closeProfileEditor(),
+    getAllClasses: () => classActions.getAllClasses(schoolService)(),
     updateUser: (
         id: string,
         data: {},
