@@ -24,7 +24,7 @@ const EditProfile = ({
     currentUser,
     loading,
     updateUser,
-    classList,
+    classesList,
     getAllClasses,
 }: any) => {
     const classes = useStyles();
@@ -95,7 +95,7 @@ const EditProfile = ({
                         inputRef={register}
                     >
                         <option aria-label="None" value="" />
-                        {classList.map((item: any) => (
+                        {classesList.map((item: any) => (
                             <option value={item._id}>{item.name}</option>
                         ))}
                     </Select>
@@ -113,14 +113,14 @@ const mapStateToProps = ({
         editProfileError, editProfileMessage, isProfileEditorOpen, loading,
     },
     authReducer: { currentUser },
-    classReducer: { classList },
+    classReducer: { classesList },
 }: any) => ({
     isProfileEditorOpen,
     currentUser,
     editProfileError,
     editProfileMessage,
     loading,
-    classList,
+    classesList,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({

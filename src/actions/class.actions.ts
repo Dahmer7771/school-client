@@ -88,7 +88,7 @@ const createClass = (
         dispatch(createClassRequest());
         const newClass = await schoolService.createClass(data);
         dispatch(createClassSuccess(newClass));
-        getAllClasses(schoolService)()(dispatch);
+        // getAllClasses(schoolService)()(dispatch);
     } catch (e) {
         dispatch(createClassError(e.message));
     }
@@ -121,7 +121,7 @@ const updateClass = (
         dispatch(updateClassRequest());
         const updatedClass = await schoolService.updateClass(id, data);
         dispatch(updateClassSuccess(updatedClass));
-        getAllClasses(schoolService)()(dispatch);
+        // getAllClasses(schoolService)()(dispatch);
     } catch (e) {
         dispatch(updateClassError(e.message));
     }

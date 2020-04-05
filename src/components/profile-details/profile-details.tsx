@@ -12,10 +12,10 @@ import EditProfile from "../edit-profile";
 import editProfileActions from "../../actions/edit-profile.actions";
 
 const ProfileDetails = ({
-    currentUser, openEditor,
+    currentUser,
+    openEditor,
 }: any) => {
     const classes = useStyles();
-    console.log(currentUser);
 
     return (
         <>
@@ -41,10 +41,38 @@ const ProfileDetails = ({
                         <Typography variant="body1">
                             {
                                 currentUser.grade
-                                    ? `Ученик(ца) ${currentUser.grade.name} класса`
+                                    ? `Учень ${currentUser.grade.name} класу`
                                     : (
                                         <span className={classes.warningText}>
-                                            Укажите свой класс
+                                            Вкажіть свій клас
+                                        </span>
+                                    )
+                            }
+                        </Typography>
+                    </div>
+                    <div className={classes.detailsText}>
+                        <SchoolIcon className={classes.detailsIcon} />
+                        <Typography variant="body1">
+                            {
+                                currentUser.grade
+                                    ? `Класний керівник: ${currentUser.grade.classroomTeacher.name}`
+                                    : (
+                                        <span className={classes.warningText}>
+                                            Вкажіть свій клас
+                                        </span>
+                                    )
+                            }
+                        </Typography>
+                    </div>
+                    <div className={classes.detailsText}>
+                        <SchoolIcon className={classes.detailsIcon} />
+                        <Typography variant="body1">
+                            {
+                                currentUser.grade
+                                    ? `Email класного керівника: ${currentUser.grade.classroomTeacher.email}`
+                                    : (
+                                        <span className={classes.warningText}>
+                                            Вкажіть свій клас
                                         </span>
                                     )
                             }

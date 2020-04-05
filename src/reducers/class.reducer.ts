@@ -12,7 +12,8 @@ const initialState = {
     deleteError: false,
     deleteMessage: "",
     classEditorOpen: false,
-    loading: false,
+    getAllLoading: false,
+    getByIdLoading: false,
 };
 
 const classReducer = (state: any = initialState, action: any) => {
@@ -23,7 +24,7 @@ const classReducer = (state: any = initialState, action: any) => {
             classesList: [],
             getAllError: false,
             getAllMessage: "",
-            loading: true,
+            getAllLoading: true,
         };
     case "GET_ALL_CLASSES_SUCCESS":
         return {
@@ -31,7 +32,7 @@ const classReducer = (state: any = initialState, action: any) => {
             classesList: action.payload.classesList,
             getAllError: false,
             getAllMessage: "",
-            loading: false,
+            getAllLoading: false,
         };
     case "GET_ALL_CLASSES_ERROR":
         return {
@@ -39,7 +40,7 @@ const classReducer = (state: any = initialState, action: any) => {
             classesList: [],
             getAllError: true,
             getAllMessage: action.payload.message,
-            loading: false,
+            getAllLoading: false,
         };
     case "CLEAR_GET_ALL_CLASSES_ERROR":
         return {
@@ -53,6 +54,7 @@ const classReducer = (state: any = initialState, action: any) => {
             currentClass: null,
             getByIdError: false,
             getByIdMessage: "",
+            getByIdLoading: true,
         };
     case "GET_CLASS_BY_ID_SUCCESS":
         return {
@@ -60,6 +62,7 @@ const classReducer = (state: any = initialState, action: any) => {
             currentClass: action.payload.classesItem,
             getByIdError: false,
             getByIdMessage: "",
+            getByIdLoading: false,
         };
     case "GET_CLASS_BY_ID_ERROR":
         return {
@@ -67,6 +70,7 @@ const classReducer = (state: any = initialState, action: any) => {
             currentClass: null,
             getByIdError: true,
             getByIdMessage: action.payload.message,
+            getByIdLoading: false,
         };
     case "CLEAR_GET_CLASS_BY_ID_ERROR":
         return {
@@ -79,18 +83,21 @@ const classReducer = (state: any = initialState, action: any) => {
             ...state,
             createError: false,
             createMessage: "",
+            getByIdLoading: true,
         };
     case "CREATE_CLASS_SUCCESS":
         return {
             ...state,
             createError: false,
             createMessage: "",
+            getByIdLoading: false,
         };
     case "CREATE_CLASS_ERROR":
         return {
             ...state,
             createError: true,
             createMessage: action.payload.message,
+            getByIdLoading: false,
         };
     case "CLEAR_CREATE_CLASS_ERROR":
         return {
@@ -103,18 +110,21 @@ const classReducer = (state: any = initialState, action: any) => {
             ...state,
             updateError: false,
             updateMessage: "",
+            getByIdLoading: true,
         };
     case "UPDATE_CLASS_SUCCESS":
         return {
             ...state,
             updateError: false,
             updateMessage: "",
+            getByIdLoading: false,
         };
     case "UPDATE_CLASS_ERROR":
         return {
             ...state,
             updateError: true,
             updateMessage: action.payload.message,
+            getByIdLoading: false,
         };
     case "CLEAR_UPDATE_CLASS_ERROR":
         return {

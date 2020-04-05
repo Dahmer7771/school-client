@@ -25,7 +25,7 @@ const ClassList = ({
     classesList,
     getAllError,
     getAllMessage,
-    loading,
+    getAllLoading,
     getAllClasses,
     openClassEditor,
     openAlert,
@@ -74,7 +74,7 @@ const ClassList = ({
                     Створити
                 </Button>
             </form>
-            {loading
+            {getAllLoading
                 ? <Spinner />
                 : (
                     <Paper>
@@ -122,13 +122,13 @@ const ClassList = ({
 
 const mapStateToProps = ({
     classReducer: {
-        classesList, getAllError, getAllMessage, loading, deleteError,
+        classesList, getAllError, getAllMessage, getAllLoading, deleteError,
     },
 }: any) => ({
     classesList,
     getAllError,
     getAllMessage,
-    loading,
+    getAllLoading,
     deleteError,
 });
 

@@ -20,13 +20,21 @@ import classActions from "../../actions/class.actions";
 const ClassEditor = ({
     teachers,
     getAllTeachers,
-    loading,
+    getByIdLoading,
     editing,
     closeClassEditor,
     classEditorOpen,
     createClass,
     currentClass,
     updateClass,
+    getAllClasses,
+    createError,
+    createMessage,
+    clearCreateError,
+    updateError,
+    updateMessage,
+    clearUpdateError,
+    openAlert,
 }: any) => {
     const classes = useStyles();
     const {
@@ -35,25 +43,34 @@ const ClassEditor = ({
     const [name, setName] = useState("");
     const [teacher, setTeacher] = useState("");
 
+    const clearInputs = () => {
+        setName("");
+        setTeacher("");
+    };
+
+    if (createError) openAlert("Помилка", createMessage, clearCreateError, true);
+    if (updateError) openAlert("Помилка", updateMessage, clearUpdateError, true);
+
     useEffect(() => {
         getAllTeachers();
     }, [getAllTeachers]);
 
     useEffect(() => {
-        if (currentClass) {
+        if (editing && currentClass) {
             setName(currentClass.name);
             setTeacher(currentClass.classroomTeacher._id);
+        } else if (!editing) {
+            clearInputs();
         }
-    }, [currentClass]);
+    }, [currentClass, editing]);
 
     const onSubmit = (data: ProfileDetailsView) => {
         if (editing) {
-            console.log("update");
             updateClass(currentClass._id, data);
         } else {
-            console.log("create");
             createClass(data);
         }
+        getAllClasses();
     };
 
     if (editing && !currentClass) return null;
@@ -61,12 +78,19 @@ const ClassEditor = ({
     return (
         <Dialog
             open={classEditorOpen}
-            onClose={closeClassEditor}
+            onClose={() => {
+                clearInputs();
+                closeClassEditor();
+            }}
             maxWidth="lg"
         >
             <div className={classes.flexContainer}>
                 <DialogTitle>Class editor</DialogTitle>
-                <Button onClick={closeClassEditor}>
+                <Button onClick={() => {
+                    clearInputs();
+                    closeClassEditor();
+                }}
+                >
                     <CloseIcon />
                 </Button>
             </div>
@@ -99,8 +123,8 @@ const ClassEditor = ({
                             <option key={item._id} value={item._id}>{item.name}</option>
                         ))}
                     </Select>
-                    <Button type="submit" color="primary" disabled={loading}>
-                        Update
+                    <Button type="submit" color="primary" disabled={getByIdLoading}>
+                        {editing ? "Оновити" : "Створити"}
                     </Button>
                 </form>
             </DialogContent>
@@ -111,23 +135,27 @@ const ClassEditor = ({
 const mapStateToProps = ({
     usersReducer: { teachers },
     classReducer: {
-        createClassError,
-        loading,
+        getByIdLoading,
         classEditorOpen,
         editing,
         updateClass,
         currentClass,
-        classErrorMessage,
+        createError,
+        createMessage,
+        updateError,
+        updateMessage,
     },
 }: any) => ({
     teachers,
-    createClassError,
-    loading,
+    getByIdLoading,
     classEditorOpen,
     editing,
     updateClass,
     currentClass,
-    classErrorMessage,
+    createError,
+    createMessage,
+    updateError,
+    updateMessage,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindActionCreators({
@@ -143,6 +171,8 @@ const mapDispatchToProps = (dispatch: Dispatch, { schoolService }: any) => bindA
         cb: any,
     ) => alertActions.openAlert(title, content, cb, true),
     setEditing: (editing: boolean) => classActions.setEditing(editing),
+    clearCreateError: () => classActions.clearCreateClassError(),
+    clearUpdateError: () => classActions.clearUpdateClassError(),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(ClassEditor));
