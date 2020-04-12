@@ -35,9 +35,11 @@ const EditProfile = ({
     const [grade, setGrade] = useState("");
 
     useEffect(() => {
-        setName(currentUser.name);
-        setEmail(currentUser.email);
-        setGrade(currentUser.grade);
+        if (currentUser && currentUser.grade) {
+            setName(currentUser.name);
+            setEmail(currentUser.email);
+            setGrade(currentUser.grade._id);
+        }
     }, [currentUser]);
 
     useEffect(() => {
@@ -49,6 +51,8 @@ const EditProfile = ({
     };
 
     const onClose = () => closeEditor();
+
+    if (currentUser) console.log(currentUser);
 
     return (
         <Dialog
@@ -95,7 +99,7 @@ const EditProfile = ({
                     >
                         <option aria-label="None" value="" />
                         {classesList.map((item) => (
-                            <option value={item._id}>{item.name}</option>
+                            <option key={item._id} value={item._id}>{item.name}</option>
                         ))}
                     </Select>
                     <Button disabled={loading} type="submit">

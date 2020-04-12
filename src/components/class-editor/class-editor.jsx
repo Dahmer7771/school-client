@@ -11,7 +11,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import { useForm } from "react-hook-form";
 import { bindActionCreators } from "redux";
 import useStyles from "./styles";
-import { nameErrors, regExp } from "../../validation";
+import { gradeErrors, regExp } from "../../validation";
 import withSchoolService from "../hoc/with-school-service";
 import { alertActions, usersActions } from "../../actions/index";
 import classActions from "../../actions/class.actions";
@@ -104,8 +104,8 @@ const ClassEditor = ({
                         name="name"
                         label="Name"
                         className={classes.input}
-                        helperText={errors.name && nameErrors[errors.name.type]}
-                        inputRef={register({ required: true, pattern: regExp.name })}
+                        helperText={errors.name && gradeErrors[errors.name.type]}
+                        inputRef={register({ required: true, pattern: regExp.grade })}
                         onChange={(e) => setName(e.target.value)}
                     />
                     <InputLabel htmlFor="teacher">Teacher</InputLabel>
