@@ -24,12 +24,13 @@ const useStyles = makeStyles((theme) => ({
         fontSize: "14px",
     },
     date: {
-        marginTop: theme.spacing(2),
+        marginTop: theme.spacing(1),
         width: "200px",
-        alignSelf: "flex-end",
-        textAlign: "right",
         fontSize: "12px",
         color: "rgb(0, 0, 0, 0.5)",
+    },
+    dateText: {
+        color: theme.palette.text.primary,
     },
     titleAndButtons: {
         display: "flex",

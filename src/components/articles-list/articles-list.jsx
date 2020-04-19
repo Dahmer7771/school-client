@@ -3,8 +3,6 @@ import { connect } from "react-redux";
 import {
     List,
     ListItem,
-    ListItemAvatar,
-    Avatar,
     Divider,
     Button,
     Paper,
@@ -38,17 +36,22 @@ const ArticlesList = ({
             <Paper>
                 <List className={classes.root}>
                     {articles.map(({
-                        _id, title, image, date,
+                        _id, title, date,
                     }, index) => (
                         <React.Fragment key={_id}>
                             <ListItem alignItems="flex-start">
-                                <ListItemAvatar>
-                                    <Avatar alt="Remy Sharp" src={image} />
-                                </ListItemAvatar>
                                 <div className={classes.contentWrapper}>
                                     <div className={classes.titleAndButtons}>
                                         <div className="primaryText">
-                                            {title}
+                                            <div>
+                                                {title}
+                                            </div>
+                                            <div className={classes.date}>
+                                                <span className={classes.dateText}>
+                                                    {`Создано:  `}
+                                                </span>
+                                                {date}
+                                            </div>
                                         </div>
                                         <Button
                                             onClick={() => {
@@ -73,11 +76,6 @@ const ArticlesList = ({
                                         >
                                             <CreateIcon />
                                         </Button>
-                                    </div>
-                                    <div className={classes.content}>
-                                        <div className={classes.date}>
-                                            {date}
-                                        </div>
                                     </div>
                                 </div>
                             </ListItem>

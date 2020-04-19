@@ -11,7 +11,9 @@ import SideMenu from "./components/side-menu";
 import HomePage from "./pages/home";
 import ProfilePage from "./pages/profile";
 import NewsPage from "./pages/articles";
-import AdministrationPage from "./pages/administration";
+import ArticlesAdministrationPage from "./pages/articles-administration";
+import ClassesAdministrationPage from "./pages/classes-administration";
+import UsersAdministrationPage from "./pages/users-administration";
 import authActions from "./actions/auth.actions";
 import Alert from "./components/alert";
 import alertActions from "./actions/alert.actions";
@@ -41,7 +43,9 @@ const App = ({
                 <Route path="/registration" component={AuthPage} />
                 <Route path="/profile" component={ProfilePage} />
                 <Route path="/posts" component={NewsPage} />
-                <Route path="/administration" component={AdministrationPage} />
+                <Route path="/users-editing" component={UsersAdministrationPage} />
+                <Route path="/articles-editing" component={ArticlesAdministrationPage} />
+                <Route path="/classes-editing" component={ClassesAdministrationPage} />
                 <Route render={() => <h1>404 Not Found</h1>} />
             </Switch>
             <Alert

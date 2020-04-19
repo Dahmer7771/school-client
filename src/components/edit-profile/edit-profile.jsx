@@ -33,12 +33,16 @@ const EditProfile = ({
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [grade, setGrade] = useState("");
+    const [avatar, setAvatar] = useState("");
 
     useEffect(() => {
-        if (currentUser && currentUser.grade) {
+        if (currentUser) {
             setName(currentUser.name);
             setEmail(currentUser.email);
-            setGrade(currentUser.grade._id);
+            setAvatar(currentUser.avatar);
+            if (currentUser.grade) {
+                setGrade(currentUser.grade._id);
+            }
         }
     }, [currentUser]);
 
@@ -47,12 +51,18 @@ const EditProfile = ({
     }, [getAllClasses]);
 
     const onSubmit = (data) => {
-        updateUser(currentUser._id, data);
+        const formData = new FormData();
+        console.log(data.name);
+        console.log(data.email);
+        console.log(data.grade);
+        formData.append("name", data.name);
+        formData.append("email", data.email);
+        formData.append("grade", data.grade);
+        if (avatar) formData.append("avatar", avatar);
+        updateUser(currentUser._id, formData);
     };
 
     const onClose = () => closeEditor();
-
-    if (currentUser) console.log(currentUser);
 
     return (
         <Dialog
@@ -102,6 +112,19 @@ const EditProfile = ({
                             <option key={item._id} value={item._id}>{item.name}</option>
                         ))}
                     </Select>
+                    <input
+                        accept="image/*"
+                        style={{ display: "none" }}
+                        id="upload-avatar"
+                        multiple
+                        type="file"
+                        onChange={(e) => {
+                            if (e.target.files !== null) setAvatar(e.target.files[0]);
+                        }}
+                    />
+                    <label htmlFor="upload-avatar">
+                        <Button disabled={loading} component="span">Upload avatar</Button>
+                    </label>
                     <Button disabled={loading} type="submit">
                         Update
                     </Button>

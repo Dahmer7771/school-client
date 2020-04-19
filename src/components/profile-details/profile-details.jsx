@@ -16,19 +16,28 @@ const ProfileDetails = ({
     openEditor,
 }) => {
     const classes = useStyles();
+    let imagePath;
+    if (currentUser.avatar) {
+        imagePath = currentUser.avatar.replace("\\", "/");
+    }
 
     return (
         <>
             <Paper className={classes.detailsContainer}>
                 <div className={classes.profileHeader}>
                     <Typography variant="h6">
-                        Profile Details
+                        Профиль
                     </Typography>
                     <Button onClick={openEditor}>
                         <CreateIcon />
                     </Button>
                 </div>
-                <Avatar alt="Remy Sharp" src="./images/1.jpg" className={classes.avatar} />
+                {/* <Avatar */}
+                {/*    alt={currentUser.name} */}
+                {/*    src={`${window.origin}/${imagePath}`} */}
+                {/*    className={classes.avatar} */}
+                {/* /> */}
+                <Avatar alt={currentUser.name} src={`http://localhost:5000/${imagePath}`} className={classes.avatar} />
                 <div className={classes.detailsTextContainer}>
                     <div className={classes.detailsText}>
                         <AccountCircleIcon className={classes.detailsIcon} />

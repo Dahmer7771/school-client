@@ -2,9 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
-    List, ListItem, ListItemIcon, ListItemText,
+    List, ListItem, ListItemText,
 } from "@material-ui/core";
-import MailIcon from "@material-ui/icons/Mail";
 import { menuActions } from "../../actions/index";
 
 const menuItems = {
@@ -21,8 +20,18 @@ const menuItems = {
         },
         {
             id: 3,
-            title: "Администрирование",
-            route: "/administration",
+            title: "Управление пользователями",
+            route: "/users-editing",
+        },
+        {
+            id: 4,
+            title: "Управление классами",
+            route: "/classes-editing",
+        },
+        {
+            id: 5,
+            title: "Управление статьями",
+            route: "/articles-editing",
         },
     ],
     USER: [
@@ -61,9 +70,6 @@ const MenuList = ({ currentUser, hideMenu }) => {
                         hideMenu();
                     }}
                 >
-                    <ListItemIcon>
-                        <MailIcon />
-                    </ListItemIcon>
                     <ListItemText
                         primary={title}
                     />

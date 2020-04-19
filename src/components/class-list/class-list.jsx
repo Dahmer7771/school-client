@@ -83,10 +83,13 @@ const ClassList = ({
                                 <ListItem key={item._id}>
                                     <ListItemText
                                         primary={item.name}
-                                        secondary={item.classroomTeacher.name}
+                                        secondary={
+                                            `Руководитель: ${item.classroomTeacher ? item.classroomTeacher.name : "Не выбран"}`
+                                        }
                                     />
                                     <ListItemSecondaryAction>
                                         <IconButton
+                                            size="small"
                                             onClick={() => {
                                                 getClassById(item._id);
                                                 setEditing(true);
@@ -97,6 +100,7 @@ const ClassList = ({
                                             <CreateIcon />
                                         </IconButton>
                                         <IconButton
+                                            size="small"
                                             onClick={() => {
                                                 openAlert(
                                                     "Delete class",

@@ -57,7 +57,9 @@ const ClassEditor = ({
     useEffect(() => {
         if (editing && currentClass) {
             setName(currentClass.name);
-            setTeacher(currentClass.classroomTeacher._id);
+            if (!currentClass.classroomTeacher) {
+                setTeacher("");
+            } else setTeacher(currentClass.classroomTeacher._id);
         } else if (!editing) {
             clearInputs();
         }

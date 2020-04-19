@@ -61,6 +61,9 @@ const updateUser = (
 ) => () => async (dispatch) => {
     try {
         await schoolService.updateUser(userId, data);
+        dispatch(usersRequest());
+        const responseData = await schoolService.getAllUsers("all");
+        dispatch(usersSuccess(responseData));
     } catch (e) {
         if (e.status === 401) authActions.logout()(dispatch);
     }

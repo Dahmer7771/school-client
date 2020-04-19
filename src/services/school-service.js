@@ -12,6 +12,9 @@ class SchoolService {
         const headers = new Headers();
         headers.append("Accept", "application/json");
         if (isFormData) {
+            console.log(method);
+            console.log(body.get("name"));
+            console.log(isFormData);
             if (localStorage.getItem("school-user-with-jwt")) {
                 const token = JSON.parse(localStorage["school-user-with-jwt"]).token.toString();
                 headers.append("Authorization", token);
@@ -58,7 +61,7 @@ class SchoolService {
     );
 
     updateUser = async (userId, body) => (
-        await this.getResource(`/user/${userId}`, "PATCH", body)
+        await this.getResource(`/user/${userId}`, "PATCH", body, true)
     );
 
     getAllArticles = async (skip = 0, limit = 0, term = "") => (

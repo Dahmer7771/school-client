@@ -1,13 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
-    TableContainer,
-    Table,
-    TableHead,
-    TableBody,
-    TableRow,
-    TableCell,
-    Paper,
+    Grid,
 } from "@material-ui/core";
 import { bindActionCreators } from "redux";
 import UsersListItem from "../users-list-item";
@@ -21,13 +15,18 @@ const UsersList = ({
         if (currentUser._id === id) return;
         const role = event.target.value;
         updateUser(id, { role });
-        getAllUsers("all");
     };
 
     const handleChangeActivity = (id, active) => {
         if (currentUser._id === id) return;
         updateUser(id, { active });
-        getAllUsers("all");
+    };
+
+    const handleChangeStatus = (event, id) => {
+        let isStudent;
+        if (event.target.value === "true") isStudent = true;
+        else isStudent = false;
+        updateUser(id, { isStudent });
     };
 
     useEffect(() => {
@@ -35,39 +34,17 @@ const UsersList = ({
     }, [getAllUsers]);
 
     return (
-        <TableContainer component={Paper}>
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <TableCell>
-                            Name
-                        </TableCell>
-                        <TableCell>
-                            Email
-                        </TableCell>
-                        <TableCell>
-                            Role
-                        </TableCell>
-                        <TableCell>
-                            Active
-                        </TableCell>
-                        <TableCell align="right">
-                            Ban
-                        </TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {users.map((user) => (
-                        <UsersListItem
-                            key={user._id}
-                            handleChangeRole={handleChangeRole}
-                            handleChangeActivity={handleChangeActivity}
-                            {...user}
-                        />
-                    ))}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Grid container spacing={2}>
+            {users.map((user) => (
+                <UsersListItem
+                    key={user._id}
+                    handleChangeRole={handleChangeRole}
+                    handleChangeActivity={handleChangeActivity}
+                    handleChangeStatus={handleChangeStatus}
+                    {...user}
+                />
+            ))}
+        </Grid>
     );
 };
 
