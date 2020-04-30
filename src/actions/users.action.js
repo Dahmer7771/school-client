@@ -58,9 +58,10 @@ const updateUser = (
     schoolService,
     userId,
     data,
+    isForm = true,
 ) => () => async (dispatch) => {
     try {
-        await schoolService.updateUser(userId, data);
+        await schoolService.updateUser(userId, data, isForm);
         dispatch(usersRequest());
         const responseData = await schoolService.getAllUsers("all");
         dispatch(usersSuccess(responseData));

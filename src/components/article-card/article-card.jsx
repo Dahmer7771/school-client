@@ -6,11 +6,12 @@ import {
 import useStyles from "./styles";
 
 const ArticleCard = ({
-    _id, title, date, authorFirstChar, author, content, image,
+    _id, title, date, authorFirstChar, postedBy, content, image,
 }) => {
     const classes = useStyles();
     const history = useHistory();
     const imagePath = image.replace("\\", "/");
+    const avatarPath = postedBy.avatar.replace("\\", "/");
 
     const makeContentPreview = (text) => {
         const lastBracer = text.indexOf(">");
@@ -32,11 +33,12 @@ const ArticleCard = ({
                 <CardActionArea onClick={() => history.push(`/article/${_id}`)}>
                     <CardHeader
                         avatar={(
-                            <Avatar aria-label="recipe" className={classes.avatar}>
-                                {authorFirstChar}
-                            </Avatar>
+                            <Avatar
+                                src={`${window.origin}/${avatarPath}`}
+                                className={classes.avatar}
+                            />
                         )}
-                        title={author}
+                        title="Новини"
                         subheader={date}
                     />
                     <CardMedia

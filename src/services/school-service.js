@@ -13,7 +13,6 @@ class SchoolService {
         headers.append("Accept", "application/json");
         if (isFormData) {
             console.log(method);
-            console.log(body.get("name"));
             console.log(isFormData);
             if (localStorage.getItem("school-user-with-jwt")) {
                 const token = JSON.parse(localStorage["school-user-with-jwt"]).token.toString();
@@ -60,8 +59,8 @@ class SchoolService {
         await this.getResource(`/user?showMode=${showMode}&filterField=${filterField || ""}&term=${term || ""}&teachers=${teachers}`, "GET")
     );
 
-    updateUser = async (userId, body) => (
-        await this.getResource(`/user/${userId}`, "PATCH", body, true)
+    updateUser = async (userId, body, isForm = true) => (
+        await this.getResource(`/user/${userId}`, "PATCH", body, isForm)
     );
 
     getAllArticles = async (skip = 0, limit = 0, term = "") => (

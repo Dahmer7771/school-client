@@ -52,14 +52,11 @@ const EditProfile = ({
 
     const onSubmit = (data) => {
         const formData = new FormData();
-        console.log(data.name);
-        console.log(data.email);
-        console.log(data.grade);
         formData.append("name", data.name);
         formData.append("email", data.email);
         formData.append("grade", data.grade);
         if (avatar) formData.append("avatar", avatar);
-        updateUser(currentUser._id, formData);
+        updateUser(currentUser._id, formData, true);
     };
 
     const onClose = () => closeEditor();
@@ -155,7 +152,8 @@ const mapDispatchToProps = (dispatch, { schoolService }) => bindActionCreators({
     updateUser: (
         id,
         data,
-    ) => editProfileActions.updateProfileData(schoolService, id, data)(),
+        isForm,
+    ) => editProfileActions.updateProfileData(schoolService, id, data, isForm)(),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(EditProfile));

@@ -49,11 +49,12 @@ const updateProfileData = (
     schoolService,
     id,
     data,
+    isForm,
 ) => () => async (dispatch) => {
     try {
         dispatch(updateProfileDataRequest());
         const { token } = JSON.parse(localStorage.getItem("school-user-with-jwt"));
-        const updatedUser = await schoolService.updateUser(id, data);
+        const updatedUser = await schoolService.updateUser(id, data, isForm);
         updatedUser.token = token;
         dispatch(authActions.loginSuccess(updatedUser));
         localStorage.setItem("school-user-with-jwt", JSON.stringify(updatedUser));

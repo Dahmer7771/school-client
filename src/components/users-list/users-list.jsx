@@ -14,19 +14,20 @@ const UsersList = ({
     const handleChangeRole = (event, id) => {
         if (currentUser._id === id) return;
         const role = event.target.value;
-        updateUser(id, { role });
+        updateUser(id, { role }, false);
     };
 
     const handleChangeActivity = (id, active) => {
+        console.log(active);
         if (currentUser._id === id) return;
-        updateUser(id, { active });
+        updateUser(id, { active }, false);
     };
 
     const handleChangeStatus = (event, id) => {
         let isStudent;
         if (event.target.value === "true") isStudent = true;
         else isStudent = false;
-        updateUser(id, { isStudent });
+        updateUser(id, { isStudent }, false);
     };
 
     useEffect(() => {
@@ -58,7 +59,11 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch, { schoolService }) => bindActionCreators({
     getAllUsers: (active) => usersActions.getAllUsers(schoolService, active)(),
-    updateUser: (userId, data) => usersActions.updateUser(schoolService, userId, data)(),
+    updateUser: (
+        userId,
+        data,
+        isForm,
+    ) => usersActions.updateUser(schoolService, userId, data, isForm)(),
 }, dispatch);
 
 export default withSchoolService()(connect(mapStateToProps, mapDispatchToProps)(UsersList));
